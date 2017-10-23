@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/backgroundColor"
+                android:id="@+id/relativeLayout">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/cra_rlContent"
+        android:padding="10dp">
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/scrollView3">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvPartnerCode"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="@dimen/FontSize_18"
+                    android:text="Your code is: 0"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_none_background"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/grayColor"
+                        android:textSize="@dimen/FontSize_15"
+                        android:text="@string/CustomerApplication"
+                        android:textStyle="bold"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="5dp">
+
+                        <Button
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/GenerateQrCode"
+                            android:id="@+id/btnGenCustomerQr"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_orange"
+                            android:textSize="@dimen/FontSize_15"/>
+
+                        <Button
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/send_sms"
+                            android:id="@+id/btnSendCustomerSms"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_orange"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="@dimen/FontSize_15"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_none_background"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/grayColor"
+                        android:textSize="@dimen/FontSize_15"
+                        android:text="@string/DriverClient"
+                        android:textStyle="bold"
+                        android:id="@+id/textView3"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <Button
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/GenerateQrCode"
+                            android:id="@+id/btnGenDriverQr"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_orange"
+                            android:textSize="@dimen/FontSize_15"/>
+
+                        <Button
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/send_sms"
+                            android:id="@+id/btnSendDriverSms"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_orange"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="@dimen/FontSize_15"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:id="@+id/ivQrImage"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</RelativeLayout>

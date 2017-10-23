@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/backgroundColor"
+                android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/oha_rlContent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/primaryColor"
+            android:gravity="center_vertical">
+
+            <Spinner
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spnrPeriod"
+                android:layout_weight="1"/>
+
+            <Spinner
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spnrType"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/ibtnSearch"
+                android:src="@drawable/ic_magnify"
+                android:background="@drawable/btn_transparent"
+                android:layout_margin="3dp"/>
+        </LinearLayout>
+
+
+            <ListView
+                android:id="@+id/oha_lvOrders"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:cacheColorHint="#00000000"
+                android:divider="@color/liteGrayColor2"
+                android:dividerHeight="1dp"
+                android:scrollingCache="false"/>
+
+    </LinearLayout>
+</RelativeLayout>

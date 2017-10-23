@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:descendantFocusability="blocksDescendants"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lso_l1"
+        android:gravity="center_vertical"
+        android:layout_toLeftOf="@+id/layout">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/lso_ivRouteAndAddress"
+            android:src="@drawable/ic_home_map_marker_dark"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="route"
+            android:id="@+id/lso_tvAddresAndRoute"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/primaryColor"
+            android:textSize="19sp"
+            android:focusable="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lso_l2"
+        android:layout_below="@+id/lso_l1"
+        android:gravity="center_vertical"
+        android:focusable="false"
+        android:layout_toLeftOf="@+id/layout">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/lso_ivTime"
+            android:src="@drawable/ic_clock_dark"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="order_time"
+            android:id="@+id/lso_tvTime"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/primaryColor"
+            android:textSize="19sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lso_l3"
+        android:layout_below="@+id/lso_l2"
+        android:gravity="center_vertical"
+        android:layout_toLeftOf="@+id/layout">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/lso_ivCost"
+            android:src="@drawable/ic_cash_multiple_dark"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="order_cost"
+            android:id="@+id/lso_tvCost"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/primaryColor"
+            android:textSize="19sp"
+            android:focusableInTouchMode="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lso_l4"
+        android:layout_below="@+id/lso_l3"
+        android:gravity="center_vertical"
+        android:layout_toLeftOf="@+id/layout">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/lso_ivStatus"
+            android:src="@drawable/ic_magnify_dark"
+            android:longClickable="false"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="order_status"
+            android:id="@+id/lso_tvStatus"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/primaryColor"
+            android:textSize="19sp"
+            android:focusable="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lso_l5"
+        android:layout_below="@+id/lso_l4"
+        android:gravity="center_vertical"
+        android:layout_toLeftOf="@+id/layout"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/imageView5"
+            android:src="@drawable/ic_taxi_dark"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="car_info"
+            android:id="@+id/tvCarInfo"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/primaryColor"
+            android:textSize="19sp"
+            android:focusable="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout"
+        android:layout_alignParentRight="true"
+        >
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lso_ibtnRemove"
+            android:background="@drawable/btn_orange"
+            android:src="@drawable/ic_delete"
+            android:layout_alignParentRight="true"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lso_ibtnMap"
+            android:background="@drawable/btn_orange"
+            android:src="@drawable/ic_google_maps"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/lso_ibtnRemove"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentBottom="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="LocaleName">
+        <item>Русский</item>
+        <item>Deutsch</item>
+        <item>English</item>
+    </array>
+
+    <array name="LocaleCode">
+        <item>ru</item>
+        <item>de</item>
+        <item>en</item>
+    </array>
+
+    <array name="TimePeriods">
+        <item>@string/OnMonth</item>
+        <item>@string/OnWeek</item>
+        <item>@string/Yesterday</item>
+        <item>@string/Today</item>
+    </array>
+
+    <array name="Type">
+        <item>@string/Everything</item>
+        <item>@string/Complete</item>
+        <item>@string/Cancelled</item>
+    </array>
+</resources>

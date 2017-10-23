@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#ffffffff"
+              android:gravity="center_horizontal">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:background="@color/toolbarColor"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/appName"
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/FontSize_18"
+            android:textColor="@color/primaryColor"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/img_dispatcher"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Машина подана! Приятной поездки!"
+        android:textColor="@color/grayColor"
+        android:layout_marginTop="20dp"
+        android:textSize="@dimen/FontSize_18"
+        android:gravity="center"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/grayColor"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/FontSize_18"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:id="@+id/tvCarDescription"
+        android:visibility="gone"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/i_am_ready"
+        android:shadowColor="@color/grayColor"
+        android:shadowDy="1"
+        android:shadowDx="1"
+        android:shadowRadius="0.5"
+        android:id="@+id/nds_btnIamReady"
+        android:background="@drawable/btn_orange"
+        android:textColor="@color/whiteColor"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"/>
+</LinearLayout>

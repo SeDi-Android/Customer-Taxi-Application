@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/backgroundColor"
+                android:id="@+id/relativeLayout">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/ap_rlContent"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="70dp"
+                android:id="@+id/imageView2"
+                android:src="@drawable/qiwi_logo"
+                android:scaleType="fitCenter"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone_"
+                    android:layout_weight="0.35"
+                    android:textSize="@dimen/FontSize_18"
+                    android:textColor="@color/primaryColor"/>
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:textCursorDrawable="@drawable/cursor_line"
+                    android:ems="10"
+                    android:id="@+id/ap_etPhoneNumber"
+                    android:layout_weight="0.25"
+                    android:textColor="@color/primaryColor"
+                    android:enabled="true"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout"
+                android:layout_marginTop="5dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sum_"
+                        android:layout_weight="0.35"
+                        android:textSize="@dimen/FontSize_18"
+                        android:textColor="@color/primaryColor"/>
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:id="@+id/ap_etPaymentSumm"
+                        android:textCursorDrawable="@drawable/cursor_line"
+                        android:layout_weight="0.25"
+                        android:textColor="@color/primaryColor"
+                        android:hint="@string/input_sum"
+                        android:textIsSelectable="false"
+                        android:inputType="numberDecimal"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ap_tvMessage"
+                    android:textColor="@color/grayColor"
+                    android:textSize="@dimen/FontSize_15"/>
+            </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pay"
+                android:id="@+id/ap_btnPaymentAction"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/btn_orange"
+                android:drawableLeft="@drawable/ic_white_qiwi"
+                android:textColor="@color/whiteColor"
+                android:singleLine="false"/>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

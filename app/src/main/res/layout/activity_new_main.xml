@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ru.sedi.customerclient.activitys.new_main.NewMainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/llBottomLayout"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:animateLayoutChanges="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <fragment
+                    android:id="@+id/frmntMapInputAddress"
+                    class="ru.sedi.customerclient.fragments.InputAddressMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <RelativeLayout
+                    android:id="@+id/rlTariffInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primaryColor"
+                    android:visibility="gone">
+
+                    <ProgressBar
+                        android:id="@+id/pbTariffLoading"
+                        style="@style/MyProgressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvSingleTariffInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_information_outline"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="19sp"
+                        android:textStyle="normal|bold"
+                        android:visibility="visible"/>
+                </RelativeLayout>
+
+                <FrameLayout
+                    android:visibility="gone"
+                    android:id="@+id/view_shadow"
+                    android:background="#70000000"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
+
+            <include layout="@layout/main_bottom_panel"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llBottomLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/backgroundColor"
+            android:orientation="vertical"
+            android:paddingBottom="5dp"
+            >
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/liteGrayColor2"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/ibtnCallToDispatcher"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/btn_orange"
+                    android:padding="0dp"
+                    android:scaleType="centerInside"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_phone_in_talk"/>
+
+                <Button
+                    android:id="@+id/btnGetTaxi"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/ma_llList"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_none_background"
+                    android:drawableLeft="@drawable/ic_taxi_dark"
+                    android:drawablePadding="5dp"
+                    android:text="@string/get_taxi"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="15dp"/>
+
+                <ImageButton
+                    android:id="@+id/ibtnMenu"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/btn_orange"
+                    android:padding="0dp"
+                    android:src="@drawable/ic_menu"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlSearchProgressPanel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/search_panel_background"
+            android:clickable="true"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/ivRadar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="30dp"
+                android:text="@string/search_driver_process_message"
+                android:textColor="@color/primaryColor"
+                android:textSize="20sp"/>
+
+            <ImageView
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/radar"/>
+
+            <ImageView
+                android:id="@+id/ivRadar"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/radar_ray"/>
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_orange"
+                android:text="@string/CancelledOrder"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nvView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:animateLayoutChanges="true"
+        android:background="@android:color/white"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/main_menu"/>
+</android.support.v4.widget.DrawerLayout>

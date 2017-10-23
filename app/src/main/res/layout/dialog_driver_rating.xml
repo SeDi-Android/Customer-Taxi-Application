@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/backgroundColor">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rating_"
+            android:id="@+id/ddr_tvRatingCaption"
+            android:textColor="@color/primaryColor"
+            android:textSize="18sp"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false"
+            android:layout_marginTop="0dp"/>
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ddr_rbRating"
+            android:layout_below="@+id/ddr_tvRatingCaption"
+            android:stepSize="1"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false"
+            android:layout_centerHorizontal="true"
+            android:numStars="5"
+            style="@style/Widget.AppCompat.RatingBar"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comment_"
+            android:id="@+id/ddr_tvMessageCaption"
+            android:textColor="@color/primaryColor"
+            android:textSize="18sp"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false"
+            android:layout_below="@+id/ddr_rbRating"/>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ddr_etMessage"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false"
+            android:textCursorDrawable="@drawable/cursor_line"
+            android:layout_below="@+id/ddr_tvMessageCaption"
+            android:hint="@string/input_comment"
+            android:gravity="left|top"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:id="@+id/ddr_btnSave"
+            android:background="@drawable/btn_orange"
+            android:textColor="@color/whiteColor"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false"
+            android:layout_below="@+id/ddr_etMessage"
+            android:drawableLeft="@drawable/ic_check"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ddr_ibtnVoice"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_orange"
+            android:src="@drawable/ic_microphone"
+            android:layout_alignParentBottom="false"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_below="@+id/ddr_etMessage"/>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!--Общая информация-->
+    <string name="rub">CHF</string>
+    <string name="version_caption">Anwendungsversion: </string>
+    <string name="version_caption_symbol">V: </string>
+    <string name="private_app_name">TAXILIVE</string>
+
+    <!--Платежные системы-->
+    <string name="qiwi">Qiwi-Geschäft</string>
+    <string name="qiwiwallet">Qiwi-Geldbeutel</string>
+    <string name="robokassa">ROBOKASSA</string>
+    <string name="rbkmoney">RBK Money</string>
+    <string name="walletone">Wallet One</string>
+    <string name="uniteller">Uniteller</string>
+    <string name="paypal">PayPal</string>
+
+    <!-- Кнопки (общее) -->
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="autorithation">Autorisierung</string>
+    <string name="exit">Schliessen</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="minimaize">Minimieren</string>
+    <string name="close">Schliessen</string>
+    <string name="save">Speichern</string>
+    <string name="take_order">Bestellen</string>
+    <string name="repeat">Wiederholen</string>
+    <string name="search">Suche</string>
+    <string name="i_am_ready">Abmelden...</string>
+    <string name="back">Zurück</string>
+    <string name="cash_payment">Barzahlung</string>
+    <string name="card_payment">Kartenzahlung</string>
+    <string name="delete">Löschen</string>
+    <string name="now_time">Sofort</string>
+
+    <!-- Общие диалоги -->
+    <string name="app_close_question_message">Möchten Sie wirklich die Anwendung beenden?</string>
+    <string name="close_or_minimize_question_message">Möchten Sie die Anwendung minimieren oder schließen?</string>
+    <string name="absent_info">Keine Informationen verfügbar</string>
+
+    <!-- Новые функции системы -->
+    <!--<string name="newFunMessage_0"></string>-->
+
+    <!--Активити: SplashScreenActivity-->
+    <string name="loadInfoMessage_0">Lädt...</string>
+    <string name="loadInfoMessage_1">Netzwerktest...</string>
+    <string name="loadInfoMessage_2">Internet wird geprüft...</string>
+    <string name="loadInfoMessage_3">Daten werden geladen...</string>
+    <string name="loadInfoMessage_4">Autorisierung...</string>
+    <string name="noInetOrSimCard">Auf dem Gerät ist kein Internet verfügbar.\nÜberprüfen Sie Ihre Verbindung und versuchen Sie es anschliessend erneut.</string>
+
+    <string name="phone">Telefon</string>
+    <string name="phone_">Telefon:</string>
+    <string name="input_phone_for_sms_message">Bitte geben Sie Ihre Telefonnummer an.\nSie erhalten in Kürze einen Autorisierungsschlüssel als SMS.</string>
+    <string name="input_email_for_send_message">Bitte geben Sie Ihre E-Mail Adresse an.\nSie erhalten in Kürze einen Autorisierungsschlüssel als E-Mail</string>
+    <string name="phone_number">Telefonnummer</string>
+    <string name="your_name">Ihr Name</string>
+    <string name="partner_code">Fahrer Code</string>
+    <string name="bad_phone_lenght_message">Füllen Sie bitte alle Felder aus, um sich anzumelden.\nBitte beachten Sie die Telefonnummer mit Ländervorwahl anzugeben: \n+41XXXXXXXXXX</string>
+    <string name="bad_phone_number">Bitte geben Sie die Nummer mit entsprechender Ländervorwahl an: \n+41XXXXXXXXX</string>
+    <string name="send_key">Autorisierungsschlüssel wird gesendet...</string>
+    <string name="max_count_key_error_message">Sie haben die maximale Anzahl an versandten Autorisierungsschlüsseln überschritten. Versuchen Sie es erneut in: </string>
+    <string name="send_sms">Autorisierungsschlüssel senden</string>
+
+    <string name="key">Schlüssel</string>
+    <string name="wait_key_for_check_message">Warte auf den Autorisierungsschlüssel</string>
+    <string name="personal_key">Autorisierungsschlüssel:</string>
+    <string name="bad_key_lenght_message">Der Autorisierungsschlüssel darf nicht kürzer als 4 Zeichen sein</string>
+    <string name="waiting_key">Warte auf den\nSchlüssel</string>
+    <string name="resend_sms">Schlüssel erneut versenden</string>
+    <string name="resend_key_message">Erneut den Schlüssel versenden...</string>
+    <string name="save_user_message">Benutzer speichern...</string>
+    <string name="resend_key_question_message">Soll der Schlüssel nochmals versendet werden?</string>
+
+    <string name="giving_address">Abholadresse</string>
+    <string name="movement_address">Zieladresse</string>
+    <string name="route">Route</string>
+    <string name="route_">Route:</string>
+    <string name="giving_time">Wann?</string>
+    <string name="service_or_option">Dienstleistungen</string>
+    <string name="additional_info">Nachricht an den Fahrer</string>
+    <string name="cost_calculation">Fahrtkostenberechnung</string>
+    <string name="driver_near_me">Nächstgelegene Fahrer</string>
+    <string name="call_to_dispatcher_message">Das Callcenter auf folgender Nummer anrufen:\n</string>
+    <string name="missing_services_message">Das genannte Unternehmen bietet keine weiteren Dienstleistungen an...</string>
+    <string name="service_unavailable_message">Die Aktion konnte nicht durchgeführt werden!\nFehler:%s</string>
+    <string name="my_orders">Fahrtenbuch</string>
+    <string name="get_taxi">Taxi bestellen</string>
+    <string name="need_first_address_error_message">Bitte geben Sie die Abholadresse an</string>
+    <string name="empty_dispatche_phone_message">Das Unternehmen hat keine Nummer eines Callcenters angegeben</string>
+    <string name="dial_unvailable_message">Ihr Gerät kann zurzeit keine Anrufe tätigen</string>
+    <string name="promocode">Promotion-Code</string>
+    <string name="input_address">Adresseingabe</string>
+    <string name="street_or_object">Strasse oder Objekt</string>
+    <string name="house_number">Hausnummer</string>
+    <string name="entrance">Auffahrt</string>
+    <string name="entrance_short">Auffahrt</string>
+    <string name="invalid_address_message">Bitte geben Sie die Hausnummer oder ein Objekt an, um die Abholadresse festzulegen</string>
+    <string name="add_city">Ort hinzufügen</string>
+    <string name="check_address">Adresse kontrollieren</string>
+    <string name="bad_location_message">Ihr Standort kann aufgrund von fehlenden Geodaten nicht bestimmt werden</string>
+    <string name="select_address">Wählen Sie eine Adresse</string>
+    <string name="incorrect_order_time_message">Die Zeit für eine Vorbestellung sollte mind. 20 Min. in der Zukunft liegen.</string>
+
+    <string name="input_city">Ort hinzufügen</string>
+    <string name="bad_geoservice_responce_format">Zu Ihrer Anfrage \"%s\" konnte der Geo-Service keine entsprechende Adresse finden. Bitte versuchen Sie es erneut.</string>
+    <string name="select_city">Ort auswählen</string>
+
+    <string name="select_tariff_">Tarif auswählen:</string>
+    <string name="registration_order">Auftrag registrieren...</string>
+    <string name="registration_order_success_message">Danke, Ihr Auftrag wurde registriert!</string>
+    <string name="pay_necessary_sum_message">Ihr Guthaben ist für einen bargeldlosen Auftrag unzureichend. Möchten Sie Ihr Guthaben um den fehlenden Betrag aufladen?</string>
+
+    <string name="input_additional_info">Tragen Sie weitere Informationen ein</string>
+    <string name="bad_text_lenght_message">Der Text sollte mehr als 3 Zeichen lang sein</string>
+
+
+    <string name="orders_history">Fahrtenbuch</string>
+    <string name="order_">Auftrag №:</string>
+    <string name="time_">Zeit:</string>
+    <string name="driver_">Fahrer:</string>
+    <string name="car_">Auto:</string>
+    <string name="cost_">Preis:</string>
+    <string name="order_status_">Status:</string>
+    <string name="load_history">Lädt Fahrtenbuch</string>
+    <string name="no_have_order_messsage">Mit diesen Filtern konnten keine Einträge gefunden werden.\nÄndern Sie die Filter und versuchen Sie es erneut</string>
+    <string name="set_rating">Fahrt bewerten</string>
+
+    <string name="rating_">Bewertung:</string>
+    <string name="comment_">Kommentar:</string>
+    <string name="input_comment">Kommentar hinzufügen</string>
+
+    <string name="about_application">Über die Anwendung</string>
+    <string name="app_description_format">Mit unserer Anwendung \"%s\" können Sie ein Taxi mit den wenigsten Handgriffen bestellen.\n Wir bieten Ihnen viele verschiedene Möglichkeiten Ihre Bestellung und somit Ihre Fahrt zu individualisieren. Außerdem zahlen Sie direkt beim Fahrer, was Ihnen die Entscheidung zwischen Bar- oder Kartenzahlung offen lässt.\n Wir befinden uns erst am Anfang, sind jedoch gewillt, gerne auch mit Ihrem Feedback, stetig an der Qualität unseres Produktes zu arbeiten!\n Ihr TAXILIVE-Team</string>
+    <string name="what_new_format">Was ist neu bei %s?</string>
+    <string name="search_period_">Zeitraum der Suche:</string>
+    <string name="search_type_">Suchkategorie:</string>
+    <string name="search_params">Suchparameter</string>
+    <string name="map">Karte</string>
+    <string name="render_account">Rechnungsstellung</string>
+    <string name="sum_">Summe:</string>
+    <string name="pay">Zahlen</string>
+    <string name="input_sum">Geben Sie den Betrag ein</string>
+    <string name="bad_payment_sum_message">Die Summe ist inkorrekt. Der Betrag sollte höher als 1 Euro sein.</string>
+    <string name="set_need_sum_message">Im Feld \"Summe\" wird der fehlende Geldbetrag angezeigt</string>
+    <string name="user_balance">Guthaben</string>
+    <string name="recharge_balance">Guthaben aufladen</string>
+    <string name="settings">Einstellungen</string>
+    <string name="call_to_driver_question_message">Möchten Sie wirklich den Fahrer anrufen?</string>
+
+    <string name="input_promo">Promotion-Code eingeben</string>
+    <string name="your_location">Ihr Standort</string>
+    <string name="use_as_first_point_question_message">Als Abholadresse verwenden?</string>
+    <string name="address_sequence_message">Sie können nicht 2 identische Adressen angeben</string>
+    <string name="address_history">Adressverlauf</string>
+    <string name="my_address">Meine Adresse</string>
+    <string name="DontFindMyLocation">Mein Standort soll nicht bestimmt werden</string>
+    <string name="msg_RemoveAddressFromHistoryQuestion">Die Adresse aus dem Verlauf nehmen?</string>
+    <string name="msg_RemoveAddressFromRouteQuestion">Diese Adresse löschen?</string>
+    <string name="RouteDistanceIs">Streckenlänge: ~%d Km</string>
+    <string name="RouteTimeIs" formatted="false">Fahrtdauer: ~%d %s</string>
+    <string name="msg_RemoveRouteQuestion">Möchten Sie die gesamte Route löschen?</string>
+    <string name="msg_YouAddressIs_RemoveQuestion">Ausgewählt: %s. Möchten Sie diesen Punkt der Route löschen?</string>
+    <string name="msg_AddPointAs_Question">Ausgewählt:%s. Möchten Sie diesen Punkt der Route hinzufügen?</string>
+    <string name="msg_IamHere">Ich bin hier!</string>
+    <string name="AsGiving">Karte</string>
+    <string name="AsRoute">Streckenpunkt</string>
+    <string name="DisconnectSound">Ton deaktivieren</string>
+    <string name="OnlyVibrationNotfy">Über Neuigkeiten nur per Vibrationsalarm benachrichtigen</string>
+    <string name="DefaultAddress">Standardadresse</string>
+    <string name="msg_DefaultAddressDesc">Beim Starten der Anwendung Ihren Standort als Abholadresse verwenden</string>
+    <string name="AppLanguage">Sprache</string>
+    <string name="Load">Lädt...</string>
+    <string name="CalcCostRouteTime" formatted="false">Streckenlänge: ≈%.1f Km. Fahrtdauer: ≈%d Min.</string>
+    <string name="DirectionsFor">auf Anweisung</string>
+    <string name="msg_CalcCost_1" formatted="false">
+        <![CDATA[<font color=\'%s\'>%s</font>: Der Wagen fährt über <font color=\'%s\'>%s</font> nach <font color=\'%s\'>%s</font>%s;<br/> Die Fahrtkosten werden ungefähr: <font color=\'%s\'>%s</font>]]> betragen.</string>
+    <string name="msg_CalcCost_2" formatted="false"><![CDATA[<br/>Ihr Rabatt: <font color=\'%s\'>%.2f%s</font>]]></string>
+    <string name="msg_CalcCost_3" formatted="false"><![CDATA[, inbegriffene Dienstleistungen: <font color=\'%s\'>%s</font>]]></string>
+    <string name="FactFor">unbekannt</string>
+    <string name="msg_YouCurrentBalanceIs_">Ihr aktueller Kontostand beträgt: \n\n</string>
+    <string name="msg_EnabledCost_" formatted="false">Vorhandenes Guthaben: %.2f %s; \n</string>
+    <string name="msg_CreditIs_" formatted="false">Kredit: %.2f %s; \n</string>
+    <string name="msg_LocedSummIs_" formatted="false">blockierter Betrag: %.2f %s; \n</string>
+    <string name="msg_OrderNWith_" formatted="false">Auftrag №: %s von %s</string>
+    <string name="msg_SetRatingQuestion">Möchten Sie die Bewertung so abgeben?</string>
+    <string name="msg_RatingSetSuccess">Die Bewertung wurde erfolgreich abgegeben. Vielen Dank!</string>
+    <string name="CheckedAddress">Überprüfung der Adresse</string>
+    <string name="msg_EmptyAnswerGeoCoder">Die Geodaten zu Ihrer Anfrage konnten nicht gefunden werden</string>
+    <string name="msg_LocationSettingsOff">Wir können Ihren Standort aufgrund von ausgeschalteten Einstellungen nicht finden. Möchten Sie diese jetzt einschalten?</string>
+    <string name="IamHere">Ich bin hier!</string>
+    <string name="Hour">Std.</string>
+    <string name="Minute">Min.</string>
+    <string name="ServerShuttdown">Die Aktion konnte nicht durchgeführt werden, da der Server zurzeit nicht erreichbar ist...</string>
+    <string name="IncorrectRoute">Die Route ist nicht korrekt angegeben</string>
+    <string name="Balance">Guthaben</string>
+    <string name="msg_mapTapForInfo">Um eine Information zu erhalten, drücken Sie auf das Symbol auf der Karte und halten Sie es gedrückt</string>
+    <string name="msg_OrderLoadError">Fehler beim Laden des Auftrags!</string>
+    <string name="msg_UnknowTime">unbekannte Zeit</string>
+    <string name="msg_DriverInYouPlaseOn">Bei Ihnen in: </string>
+    <string name="msg_DriverPhoneNumberIs_">Telefonnummer des Fahrers: %s</string>
+    <string name="msg_SelectYourLanguage">verwendete Sprache der Anwendung</string>
+    <string name="OnMonth">Letzter Monat</string>
+    <string name="OnWeek">Letzte Woche</string>
+    <string name="Yesterday">Gestern</string>
+    <string name="Today">Heute</string>
+    <string name="Everything">Alle</string>
+    <string name="Complete">Abgeschlossen</string>
+    <string name="Cancelled">Storniert</string>
+    <string name="WithoutRating">Ohne Bewertung</string>
+    <string name="msg_QiwiPaymentSumQuestion" formatted="false">Die Zahlungssumme beträgt %.2f %s unter Berücksichtigung von %.0f%%, die das Zahlungssystem %s für die Dienstleistung erhebt. Möchten Sie jetzt zahlen?
+    </string>
+    <string name="Error">Fehler</string>
+    <string name="NotSelected">nicht ausgewählt</string>
+    <string name="NoRoute">Die Route wurde nicht angegeben</string>
+    <string name="msg_CalcCostFail">Die Berechnung der Kosten ist fehlgeschlagen, möchten Sie es erneut versuchen?</string>
+    <string name="OrderCostIs_" formatted="false">Fahrtpreis: %.2f %s.</string>
+    <string name="msg_CancelThisOrderQuestion">Möchten Sie diesen Auftrag stornieren?</string>
+    <string name="CancelledOrder">Auftrag stornieren</string>
+    <string name="CancelOrderSuccess">Der Auftrag wurde erfolgreich storniert</string>
+    <string name="ServerConnectionFail">Fehler bei der Verbindung mit dem Server aufgetreten: Der Server antwortet nicht.</string>
+    <string name="GivingAddress_Route">Abholadresse/Route</string>
+    <string name="SaveRoute">Route speichern</string>
+    <string name="AsStart">Als Startadresse speichern</string>
+    <string name="AsEnd">Als Zieladresse speichern</string>
+    <string name="RushOrder">Sofortauftrag</string>
+    <string name="PrelimOrder">Vorbestellung</string>
+    <string name="msg_RushOrderDescription">Ihnen wird sofort ein Fahrzeug zugestellt.\nWenn Sie ein Fahrzeug zu einem anderen Zeitpunkt bestellen möchten, wählen Sie „Vorbestellung“</string>
+    <string name="msg_WaitingServerResponce">Warte auf die Antwort des Servers</string>
+    <string name="msg_PleaseWait">Bitte warten Sie...</string>
+    <string name="SilentMode">Anwendung stummschalten</string>
+    <string name="ActiveOrder">Offene Aufträge</string>
+    <string name="PartnerProgram">Freunde werben</string>
+    <string name="CustomerApplication">"TAXILIVE"-Anwendung</string>
+    <string name="DriverClient">"TAXILIVE Fahrer"-Anwendung</string>
+    <string name="GenerateQrCode">QR-Code generieren</string>
+    <string name="msg_PartnerProgramDesc">Что такое партнерка.... бла.... бла..... бла......</string>
+    <string name="msg_GeoServiceReturnNull">Auf Ihre Anfrage konnte der Geo-Service keine Daten finden</string>
+    <string name="SearchDriver">Fahrersuche</string>
+    <string name="DriverFound">Fahrer gefunden</string>
+    <string name="CarInWay">Auf dem Weg zum Kunden</string>
+    <string name="CarIsSent">Fahrer wartet auf den Kunden</string>
+    <string name="RecognitionSpeechLang">Sprache der Spracherkennung</string>
+    <string name="Geocoder">Geokodierung</string>
+    <string name="msg_IncorrectName">Der Name kann nicht weniger als 4 Zeichen lang sein</string>
+    <string name="msg_hasPartnerProgramm">Geben Sie einen Promotion-Code ein(optional)</string>
+    <string name="HasPartnerCode">Sie wurden geworben?</string>
+    <string name="GetSms">SMS versenden</string>
+    <string name="OpenQiwiSuit">Zur Kasse</string>
+    <string name="WriteUs">Schreiben Sie uns</string>
+    <string name="InputYourMessage">Verfassen Sie eine Nachricht</string>
+    <string name="Notifications">Benachrichtigungen</string>
+    <string name="On">An</string>
+    <string name="Off">Aus</string>
+    <string name="FirstInputAddressHint">Abholadresse</string>
+    <string name="NextInputAddressHint">Zieladresse</string>
+    <string name="RegistrationMessage">Um Zugang zu dieser Funktion zu bekommen, müssen Sie sich vorerst Autorisieren. Möchten Sie jetzt die Autorisierung durchführen?</string>
+    <string name="House">Hausnr.</string>
+    <string name="OpenApp">Anwendung starten</string>
+    <string name="Email">E-mail</string>
+    <string name="SendKeyOnMail">Den Schlüssel per E-Mail versenden</string>
+    <string name="GetEmail">E-Mail versenden</string>
+    <string name="msg_IncorrectEmail">Die E-mail-Adresse ist inkorrekt</string>
+    <string name="IncorrectSum">Der Betrag ist falsch angegeben</string>
+    <string name="Update">Aktualisieren</string>
+    <string name="msg_NewVersionNotification" formatted="false">Es gibt ein neues Update für %s. Sie können dieses ab sofort jederzeit im Google Play Store runterladen!
+    </string>
+    <string name="HasUpdate">Es gibt ein Update</string>
+    <string name="msg_NoTariffs">Die Berechnung des Fahrpreises ist nicht möglich, da das Taxi-Unternehmen keine Tarife angegeben hat.</string>
+    <string name="msg_LocationSettingError">Wir können Ihren aktuellen Standort nicht bestimmen, da Sie in den Einstellungen die Standortbestimmung deaktiviert haben. Möchten Sie die Standortbestimmung nun aktivieren?</string>
+    <string name="msg_SearchLocation">Standort wird bestimmt...</string>
+    <string name="EmptyServerResponce">Der Server hat nicht reagiert</string>
+    <string name="msg_IncorrectTariff">Sie haben keinen Tarif angegeben</string>
+    <string name="CopyOrder">Auftrag kopieren</string>
+    <string name="OrderAction">Auftrag bearbeiten</string>
+    <string name="Credit">Kredit</string>
+    <string name="Locked">Gesperrt</string>
+    <string name="select_tariff">Wählen Sie den gewünschten Tarif</string>
+    <string name="system_">System:</string>
+    <string name="ConfirmPhone_">Telefonnummer</string>
+    <string name="msg_incorrect_contact_phone">Telefonnummer ist inkorrekt</string>
+    <string name="secondname">Name</string>
+    <string name="name">Vorname</string>
+    <string name="patronymic">Vatersname</string>
+    <string name="birthday">Geburtsdatum</string>
+    <string name="profile">Profil</string>
+    <string name="msg_update_profife_progress">Nutzerprofil aktualisieren</string>
+    <string name="msg_update_profile_success">Profil wurde erfolgreich aktualisiert!</string>
+    <string name="msg_update_profile_error">Profil konnte nicht aktualisiert werden! Bitte versuchen Sie es später noch einmal.</string>
+    <string name="msg_empty_field_format">Das Feld %s darf nicht leer sein </string>
+    <string name="get_profile_process">erhalte Profil</string>
+    <string name="select_gender">Geschlecht wählen</string>
+    <string name="gender">Geschlecht</string>
+    <string name="male">Männlich</string>
+    <string name="female">Weiblich</string>
+    <string name="cancellation_not_possible">Stornierungen sind nicht möglich</string>
+    <string name="msg_driver_phone_not_found">Dieser Fahrer hat keine Telefonnummern angegeben</string>
+    <string name="exit_message">Drücken Sie erneut auf die Zurück-Taste, um die Anwendung zu schliessen</string>
+    <string name="add_card">Bankverbindung hinzufügen</string>
+    <string name="my_card">Meine Bankverbindungen</string>
+    <string name="remove">Entfernen</string>
+    <string name="remove_card_query">Möchten Sie diese Bankverbindung wirklich entfernen?</string>
+    <string name="deactivated_card_query">Wollen Sie wirklich die gegebene Bankverbindung deaktivieren?</string>
+    <string name="activated_card_query">Wollen Sie wirklich die gegebene Bankverbindung aktivieren?</string>
+    <string name="Continue">Weiter</string>
+    <string name="active_card">Aktive Bankverbindung</string>
+    <string name="save_as_my_route">Unter \"meine Strecken\" speichern</string>
+    <string name="input_title">Strecke speichern unter...</string>
+    <string name="history">Adressverlauf</string>
+    <string name="my_routes">Meine Strecken</string>
+    <string name="shared_app">Freunde werben</string>
+    <string name="select">Wählen Sie</string>
+    <string name="share_message" formatted="false">Hallo! Ich kann dir die Anwendung %s nur ans Herz legen. Mithilfe dieser App lässt sich schnell und einfach ein Taxi für dich oder deine Freunde finden. Lad es dir unter: %s runter!</string>
+    <string name="build_route_ona_map">Auf der Karte anzeigen</string>
+    <string name="call_to_dispatcher">Disponenten anrufen</string>
+    <string name="msg_exit_account">Möchten Sie sich wirklich abmelden? Um alle Funktionen nutzen zu können, müssen Sie sich sonst erneut anmelden</string>
+    <string name="need_air_conditioning">Es ist sehr heiss! Schalten Sie bitte die Klimaanlage an.</string>
+    <string name="need_more_message">Ich habs eilig! Seien Sie bitte so schnell wie möglich.</string>
+    <string name="call_when_filing">Rufen Sie mich bitte an, sobald Sie da sind!</string>
+    <string name="free_trunk_car">Wir haben Gepäck! Wir brauchen genügend freien Platz im Kofferraum.</string>
+    <string name="confirm">Bestätigen</string>
+    <string name="unsave_point_message">Die angegebene Adresse wurde nicht ausgewählt. Möchten Sie diese als Punkt der Route verwenden?</string>
+    <string name="set_order_datetime">Wählen Sie den Zeitpunkt Ihrer Vorbestellung</string>
+    <string name="remove_question">Wirklich entfernen?</string>
+    <string name="driver_application">"TAXILIVE Fahrer"-Anwendung</string>
+    <string name="customer_application">"TAXILIVE"-Anwendung</string>
+    <string name="select_app_to_invited_">Zu welcher Anwendung soll die Einladung verschickt werden?</string>
+    <string name="send">Senden</string>
+    <string name="easy_tariff_format" formatted="false">Preis: ≈%.2f%s; Fahrtdauer: ≈%d Min; Streckenlänge: ≈%.1f Km</string>
+    <string name="missing_tariff">Es fehlt ein Tarif</string>
+    <string name="one_minute">1 Min.</string>
+    <string name="days">Tage</string>
+    <string name="hours">Std.</string>
+    <string name="minutes">Min.</string>
+    <string name="fact_cost">Nach Taxameter</string>
+    <string name="bad_geo_response_message">Der Geodienst konnte die angegebenen Punkte nicht finden</string>
+    <string name="check_address_action">Überprüfe die Adressen...</string>
+    <string name="success_order_copy">Der Auftrag wurde erfolgreich übertragen</string>
+    <string name="update_active_order_message">Lädt...</string>
+    <string name="link_card">Karte hinzufügen</string>
+    <string name="gcm_disable_permission">Da Sie die Verwendung Ihrer Kontakte verweigert haben, können wir Sie leider nicht benachrichtigen!</string>
+    <string name="app_missing_setup_query_message">Sie haben die Anwendung noch nicht installiert, möchten Sie sie jetzt aus dem Google Play Store laden?</string>
+    <string name="voice_speech_activation_message">Um die Spracheingabe nutzen zu können, aktivieren Sie die \"Spracheingabe von Google\"</string>
+    <string name="setup">Einstellen</string>
+    <string name="attention">Achtung</string>
+    <string name="empty_card_system">Kein System vorhanden, um Ihre Karte hinzuzufügen!</string>
+    <string name="success_pay_message">Rechnung erfolgreich ausgestellt, um die Verknüpfung mit Ihrer Karte fortzuführen drücken Sie \'Weiter\'</string>
+    <string name="error_pay_message">Die Ausstellung der Rechnung für die Verknüpfung Ihrer Karte unterliegt folgendem Fehler: (%s). Versuchen Sie es später noch einmal!</string>
+    <string name="need_first_address_message">Sie müssen eine Abholadresse angeben!</string>
+    <string name="service">Service</string>
+    <string name="empty_route_name_error_message">Der Titel der Reiseroute kann leer nicht sein</string>
+    <string name="select_system">Wählen Sie das System</string>
+    <string name="select_period_and_update_message">Wählen Sie die Filter und betätigen dann die Lupe</string>
+    <string name="share_welcome_message">Bei uns können Sie sich, nachdem Sie sich registriert haben, über das Werben von Freunden attraktive Vorteile sichern.</string>
+    <string name="voice_input">Spracheingabe</string>
+    <string name="use_my_location">Standort verwenden</string>
+    <string name="set_route_name_message">Geben Sie einen Namen an, unter dem Sie die Strecke speichern wollen</string>
+    <string name="change_address_query_message" formatted="false">Was möchten Sie mit der Adresse: \"%s\" machen?</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="generate_invite">Создание приглашения</string>
+    <string name="extra">Zusätzlich</string>
+    <string name="empty_route_history_message">Sie verfügen über keine gespeicherten Strecken</string>
+    <string name="empty_address_history_message">Sie verfügen in Ihrem Fahrtenbuch über keine bereits angefahrenen Adressen</string>
+    <string name="approximate_location_format">Ermittelter Standort: \"%s\" Möchten Sie diese Adresse als Abholadresse verwenden?</string>
+    <string name="copy_number">Tel.Nr. kopieren</string>
+    <string name="call_to_driver">Fahrer anrufen</string>
+    <string name="only_one_order_message">Sie können nur EINE aktive Bestellung haben</string>
+    <string name="promo_text_format" formatted="false">Предлагаем Вам реальную возможность сделать поездки на такси бесплатными.
+        Разошлите смс с ссылкой на партнерскую программу и скидку в %d%% Вашим родным, друзьям или просто знакомым и получайте на свой счет бонусы в сумме %d%% от каждой их поездки на нашем такси!
+        Накопленными бонусами, Вы сможете оплачивать услуги такси! Срок действия партнерской программы и срок использования бонусов не ограничен!</string>
+    <string name="wait_calculation">Fahrpreisberechnung läuft</string>
+    <string name="search_driver_process_message">Bitte warten. Fahrer wird gesucht.</string>
+    <string name="order_is_null">Не возможно получить данные о заказе (null).</string>
+    <string name="driver_is_null">Не возможно получить данные о водителе (null).</string>
+    <string name="route_is_null">Невозможно получить данные о маршруте (null).</string>
+</resources>

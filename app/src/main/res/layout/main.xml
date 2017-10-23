@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+    >
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <EditText
+            android:id="@+id/calc_txt_Prise"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:singleLine="true"/>
+
+        <Button
+            android:id="@+id/calc_clear_txt_Prise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:background="@android:drawable/ic_delete"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp"/>
+
+    </FrameLayout>
+</LinearLayout>
+

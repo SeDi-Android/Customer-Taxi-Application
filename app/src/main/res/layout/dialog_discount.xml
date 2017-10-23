@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="10dp"
+              android:background="@color/backgroundColor">
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minHeight="51dp"
+        android:id="@+id/dd_etDiscountCode"
+        android:hint="@string/promocode"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:id="@+id/dd_btnSaveDiscountCode"
+        android:textColor="@color/whiteColor"
+        android:shadowColor="@color/shadowColor"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="0.5"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/btn_orange"
+        android:drawableLeft="@drawable/ic_check"
+        />
+</LinearLayout>

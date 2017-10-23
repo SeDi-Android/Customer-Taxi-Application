@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_from_history_item"
+        android:icon="@drawable/ic_routes_dark"
+        android:title="@string/address_history"/>
+    <item
+        android:id="@+id/menu_from_routes_item"
+        android:icon="@drawable/ic_map_dark"
+        android:title="@string/my_routes"/>
+    <item
+        android:id="@+id/menu_voice_input_item"
+        android:icon="@drawable/ic_microphone_dark"
+        android:title="@string/voice_input"/>
+    <item
+        android:id="@+id/menu_location_input_item"
+        android:icon="@drawable/ic_menu_mylocation"
+        android:title="@string/use_my_location"/>
+</menu>

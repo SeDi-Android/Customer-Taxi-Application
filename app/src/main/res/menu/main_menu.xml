@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_my_order"
+        android:icon="@drawable/ic_star"
+        android:title="@string/ActiveOrder"/>
+
+    <item
+        android:id="@+id/menu_order_history"
+        android:icon="@drawable/ic_history"
+        android:title="@string/orders_history"/>
+
+    <item
+        android:id="@+id/menu_customer_balance"
+        android:icon="@drawable/ic_cash_multiple"
+        android:title="@string/Balance"/>
+
+    <item
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/ic_account_card_details"
+        android:title="@string/profile"/>
+
+    <item
+        android:id="@+id/menu_about"
+        android:icon="@drawable/ic_information_outline"
+        android:title="@string/about_application"/>
+
+    <item
+        android:id="@+id/menu_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings"/>
+
+    <item
+        android:id="@+id/menu_writeUs"
+        android:visible="false"
+        android:icon="@drawable/ic_email_outline"
+        android:title="@string/WriteUs"/>
+
+    <item
+        android:id="@+id/menu_shared"
+        android:icon="@drawable/ic_share_variant"
+        android:title="@string/shared_app"/>
+
+    <item
+        android:id="@+id/menu_exit"
+        android:icon="@drawable/ic_logout"
+        android:title="@string/exit"/>
+</menu>

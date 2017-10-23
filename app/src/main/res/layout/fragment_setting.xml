@@ -1,0 +1,18 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="ru.sedi.customerclient.fragments.SettingFragment"
+             android:background="@color/backgroundColor">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentTop="false"
+        android:scrollingCache="false"
+        android:layout_above="@+id/l_1"/>
+</FrameLayout>

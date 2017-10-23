@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="IS_DEVELOPER_MODE"
+        android:defaultValue="false"
+        android:title="Вкл. админ."/>
+
+    <PreferenceCategory android:title="Разработка и отладка"/>
+
+    <CheckBoxPreference
+        android:key="SHOW_DEBUG_MESSAGE"
+        android:dependency="IS_DEVELOPER_MODE"
+        android:defaultValue="false"
+        android:title="Вкл. отладочные сообщения"/>
+
+</PreferenceScreen>

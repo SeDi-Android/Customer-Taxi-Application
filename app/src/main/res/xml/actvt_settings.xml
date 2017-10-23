@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="VIBRATION_NOTIFY"
+        android:title="@string/DisconnectSound"
+        android:summary="@string/OnlyVibrationNotfy"/>
+
+    <CheckBoxPreference
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:key="check_box_preference_1"
+        android:summary="@string/msg_DefaultAddressDesc"
+        android:title="@string/DefaultAddress"/>
+    <ListPreference
+        android:title="@string/AppLanguage"
+        android:summary="@string/msg_SelectYourLanguage"
+        android:key="LOCALE_CODE"
+        android:entries="@array/LocaleName"
+        android:entryValues="@array/LocaleCode"/>
+
+    <CheckBoxPreference
+        android:key="IS_OSM"
+        android:summary="Использовать геокодер OSM иначе Google"
+        android:title="Использовать геокодер OSM"/>
+</PreferenceScreen>

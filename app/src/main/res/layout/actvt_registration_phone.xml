@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/backgroundColor"
+                android:orientation="vertical"
+                android:animateLayoutChanges="true">
+
+    <ScrollView
+        android:id="@+id/scrollView4"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:id="@+id/arp_rlContent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/arp_rlTitle"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:animateLayoutChanges="true">
+
+            <TextView
+                android:id="@+id/tvRegistrationMessage"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/input_phone_for_sms_message"
+                android:textColor="@color/grayColor"
+                android:textSize="18sp"/>
+
+            <LinearLayout
+                android:id="@+id/llPhoneLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="18sp"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3
+                    ">
+
+                    <EditText
+                        android:id="@+id/etRegionCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="center_horizontal"
+                        android:inputType="phone"
+                        android:textColor="@color/primaryColor"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/etPhone"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView"
+                        android:ems="10"
+                        android:hint="@string/phone_number"
+                        android:inputType="numberSigned"
+                        android:singleLine="true"
+                        android:textColor="@color/primaryColor"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/etMail"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:hint="@string/Email"
+                    android:inputType="textEmailAddress"
+                    android:visibility="gone"
+                    android:textColor="@color/primaryColor"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etPhone">
+
+                <EditText
+                    android:id="@+id/etName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/your_name"
+                    android:singleLine="true"
+                    android:textColor="@color/primaryColor"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/cbGetKeyOnMail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:text="@string/SendKeyOnMail"
+                android:textColor="@color/grayColor"/>
+
+            <CheckBox
+                android:id="@+id/cbHasPartnerCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:text="@string/HasPartnerCode"
+                android:textColor="@color/grayColor"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true">
+
+                <EditText
+                    android:id="@+id/etPartnerCode"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/arp_etName"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:enabled="true"
+                    android:hint="@string/partner_code"
+                    android:singleLine="true"
+                    android:visibility="gone"
+                    android:textColor="@color/primaryColor"
+                    android:inputType="numberSigned"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/arp_etPartnerCode"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_orange"
+                android:drawableLeft="@drawable/ic_email_outline"
+                android:drawablePadding="5dp"
+                android:text="@string/GetSms"
+                android:textColor="@color/whiteColor"
+                android:visibility="visible"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

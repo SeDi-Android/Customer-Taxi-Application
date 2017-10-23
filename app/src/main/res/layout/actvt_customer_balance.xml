@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@color/backgroundColor">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/primaryColor"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/tvBalance"
+            android:textColor="@color/whiteColor"
+            android:textStyle="bold"
+            android:textSize="50sp"
+            android:layout_centerInParent="true"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:id="@+id/tvCredit"
+                    android:textColor="#ffffff"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="@dimen/FontSize_14"
+                    android:textAllCaps="true"/>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:id="@+id/tvLocked"
+                    android:textColor="#ffffff"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="@dimen/FontSize_14"
+                    android:textAllCaps="true"/>
+
+            </TableRow>
+        </TableLayout>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:id="@+id/llPayLayout">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone_"
+                    android:textColor="@color/primaryColor"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/FontSize_15"
+                    android:layout_weight="3"/>
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:ems="10"
+                    android:id="@+id/etPhone"
+                    android:layout_weight="1"
+                    android:hint="@string/phone_number"
+                    android:textColor="@color/primaryColor"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sum_"
+                    android:textColor="@color/primaryColor"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/FontSize_15"
+                    android:layout_weight="3"/>
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:ems="10"
+                    android:id="@+id/etSum"
+                    android:layout_weight="1"
+                    android:hint="@string/input_sum"
+                    android:textColor="@color/primaryColor"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/system_"
+                    android:textColor="@color/primaryColor"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/FontSize_15"
+                    android:layout_weight="3"/>
+
+                <Spinner
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spnrPaymentSystem"
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recharge_balance"
+                android:id="@+id/btnRechargeBalance"
+                android:background="@drawable/btn_orange"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/whiteColor"
+                android:visibility="visible"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

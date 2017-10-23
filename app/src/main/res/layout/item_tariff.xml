@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:minHeight="50dp"
+              android:padding="5dp"
+              android:descendantFocusability="blocksDescendants">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="New Text"
+        android:id="@+id/tvTariff"
+        android:textColor="@color/primaryColor"
+        android:textSize="@dimen/FontSize_19"
+        android:layout_weight="1"
+        android:gravity="center_vertical"/>
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ibtnDetail"
+        android:src="@drawable/ic_information_outline_dark"
+        android:background="@android:color/transparent"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+</LinearLayout>

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Общая информация-->
+    <string name="rub">₱</string>
+    <string name="version_caption">Версия приложения: </string>
+    <string name="version_caption_symbol">V: </string>
+    <string name="private_app_name">Sedi_TaxiClient</string>
+
+    <!--Платежные системы-->
+    <string name="qiwi">Qiwi-магазин</string>
+    <string name="qiwiwallet">Qiwi-кошелек</string>
+    <string name="robokassa">ROBOKASSA</string>
+    <string name="rbkmoney">RBK Money</string>
+    <string name="walletone">Wallet One</string>
+    <string name="uniteller">Uniteller</string>
+    <string name="paypal">PayPal</string>
+
+    <!-- Кнопки (общее) -->
+    <string name="ok">OK</string>
+    <string name="cancel">Отмена</string>
+    <string name="autorithation">Авторизация</string>
+    <string name="exit">Выход</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="minimaize">Свернуть</string>
+    <string name="close">Закрыть</string>
+    <string name="save">Сохранить</string>
+    <string name="take_order">Заказать</string>
+    <string name="repeat">Повторить</string>
+    <string name="search">Поиск</string>
+    <string name="i_am_ready">Выхожу...</string>
+    <string name="back">Назад</string>
+    <string name="cash_payment">Наличный</string>
+    <string name="card_payment">Безнал.</string>
+    <string name="delete">Удалить</string>
+    <string name="now_time">Немедленно</string>
+
+    <!-- Общие диалоги -->
+    <string name="app_close_question_message">Действительно хотите завершить работу приложения?</string>
+    <string name="close_or_minimize_question_message">Свернуть или закрыть приложение?</string>
+    <string name="absent_info">Информация отсутствует</string>
+
+    <!-- Новые функции системы -->
+    <!--<string name="newFunMessage_0"></string>-->
+
+    <!--Активити: SplashScreenActivity-->
+    <string name="loadInfoMessage_0">Загрузка...</string>
+    <string name="loadInfoMessage_1">Проверка сети...</string>
+    <string name="loadInfoMessage_2">Проверка интернета...</string>
+    <string name="loadInfoMessage_3">Загрузка данных...</string>
+    <string name="loadInfoMessage_4">Авторизация...</string>
+    <string name="noInetOrSimCard">На устройстве недоступен интернет.\nПроверьте Ваше устройство и повторите попытку.</string>
+
+    <string name="phone">Телефон</string>
+    <string name="phone_">Телефон:</string>
+    <string name="input_phone_for_sms_message">Введите номер Вашего телефона.\nНа этот номер мы отправим Вам код для подтверждения.</string>
+    <string name="input_email_for_send_message">Введите Ваш E-mail.\nНа этот E-mail мы отправим Вам код для подтверждения.</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="your_name">Ваше имя</string>
+    <string name="partner_code">Партнерский код</string>
+    <string name="bad_phone_lenght_message">Для регистрации нужно заполнить все поля.\nНомер должен быть в международном формате.\n+7XXXXXXXXXX</string>
+    <string name="bad_phone_number">Номер должен быть уазан в международном формате:\n+7XXXXXXXXX</string>
+    <string name="send_key">Оправляем ключ...</string>
+    <string name="max_count_key_error_message">Вы превысили допустимое колличество отправки SMS ключей, повторную отправку можно сделать после: </string>
+    <string name="send_sms">Отправить SMS</string>
+
+    <string name="key">Ключ</string>
+    <string name="wait_key_for_check_message">Ожидаем ключ для подтверждения </string>
+    <string name="personal_key">Персональный ключ</string>
+    <string name="bad_key_lenght_message">Ключ не должен быть короче 4 символов</string>
+    <string name="waiting_key">Ожидаем\nключ</string>
+    <string name="resend_sms">Переотправить SMS</string>
+    <string name="resend_key_message">Повторная отправка ключа...</string>
+    <string name="save_user_message">Сохраняем пользователя...</string>
+    <string name="resend_key_question_message">Отправить ключ еще раз?</string>
+
+    <string name="giving_address">Адрес подачи</string>
+    <string name="movement_address">Адрес следования</string>
+    <string name="route">Маршрут</string>
+    <string name="route_">Маршрут:</string>
+    <string name="giving_time">Когда</string>
+    <string name="service_or_option">Сервисы и услуги</string>
+    <string name="additional_info">Доп. информация</string>
+    <string name="cost_calculation">Расчет стоимости</string>
+    <string name="driver_near_me">Ближайшие водители</string>
+    <string name="call_to_dispatcher_message">Позвонить в диспетчерскую по номеру:\n</string>
+    <string name="missing_services_message">Данная компания не предоставляет дополнительных сервисов.</string>
+    <string name="service_unavailable_message">Невозможно сделать действие!\nОшибка: %s</string>
+    <string name="my_orders">Мои заказы</string>
+    <string name="get_taxi">Заказать такси</string>
+    <string name="need_first_address_error_message">Сначала укажите адрес подачи</string>
+    <string name="empty_dispatche_phone_message">Группа не указала телефоны диспечерской.</string>
+    <string name="dial_unvailable_message">Ваше устройство не может совершать звонки.</string>
+    <string name="promocode">Промокод</string>
+    <string name="input_address">Ввести адрес</string>
+    <string name="street_or_object">Улица, объект</string>
+    <string name="house_number">Номер дома</string>
+    <string name="entrance">Подъезд</string>
+    <string name="entrance_short">под.</string>
+    <string name="invalid_address_message">Для адреса подачи нужно указать дом или объект</string>
+    <string name="add_city">Добавить населенный пункт</string>
+    <string name="check_address">Проверить адрес</string>
+    <string name="bad_location_message">Не удалось определить местоположение из-за отсутствия гео-данных</string>
+    <string name="select_address">Выберите адрес</string>
+    <string name="incorrect_order_time_message">Время предварительного заказа должно быть больше текущего времени на 20 или более минут</string>
+
+    <string name="input_city">Введите населенный пункт</string>
+    <string name="bad_geoservice_responce_format">На Ваш запрос \"%s\", гео-сервис не нашел адрес, повторите ввод.</string>
+    <string name="select_city">Выберите нас. пункт</string>
+
+    <string name="select_tariff_">Выбрать тариф:</string>
+    <string name="registration_order">Регистрирую заказ...</string>
+    <string name="registration_order_success_message">Спасибо, Ваш заказ успешно зарегистрирован!</string>
+    <string name="pay_necessary_sum_message">На счету недостаточно средств для безналичного заказа. Пополнить баланс на недостающую сумму?</string>
+
+    <string name="input_additional_info">Введите дополнительную информацию</string>
+    <string name="bad_text_lenght_message">Длина текста должна быть более 3 символов</string>
+
+
+    <string name="orders_history">История заказов</string>
+    <string name="order_">Заказ:</string>
+    <string name="time_">Время:</string>
+    <string name="driver_">Водитель:</string>
+    <string name="car_">Авто:</string>
+    <string name="cost_">Стоимость:</string>
+    <string name="order_status_">Статус заказа:</string>
+    <string name="load_history">Загрузка истории</string>
+    <string name="no_have_order_messsage">По Вашему запросу не найдено ни одной записи.\nИзмените параметры и повторите поиск</string>
+    <string name="set_rating">Оценить поездку</string>
+
+    <string name="rating_">Рейтинг:</string>
+    <string name="comment_">Комментарий:</string>
+    <string name="input_comment">Введите комментарий</string>
+
+    <string name="about_application">О приложении</string>
+    <string name="app_description_format">С приложением \'%s\' Вы сможете заказать такси всего в несколько касаний. Тысячи абсолютно легальных таксистов с различными классами авто и ценовой категорией теперь находятся в Вашем кармане.</string>
+    <string name="what_new_format">Что нового в %s?</string>
+    <string name="search_period_">Период поиска:</string>
+    <string name="search_type_">Тип поиска:</string>
+    <string name="search_params">Параметры поиска</string>
+    <string name="map">Карта</string>
+    <string name="render_account">Выставление счета</string>
+    <string name="sum_">Сумма:</string>
+    <string name="pay">Оплатить</string>
+    <string name="input_sum">Введите сумму</string>
+    <string name="bad_payment_sum_message">Сумма указана неверно. Сумма должна быть более 1 рубля.</string>
+    <string name="set_need_sum_message">В поле \"Сумма\" указано недостающее колличество средств для заказа.</string>
+    <string name="user_balance">Баланс пользователя</string>
+    <string name="recharge_balance">Пополнить баланс</string>
+    <string name="settings">Настройки</string>
+    <string name="call_to_driver_question_message">Вы действительно хотите совершить звонок водителю?</string>
+
+    <string name="input_promo">Введите промокод</string>
+    <string name="your_location">Ваше местоположение</string>
+    <string name="use_as_first_point_question_message">Использовать его как начальную точку?</string>
+    <string name="address_sequence_message">Невозможно указать 2 одинаковых адреса последовательно.</string>
+    <string name="address_history">История адресов</string>
+    <string name="my_address">Мои адреса</string>
+    <string name="DontFindMyLocation">Не определять мое местоположение</string>
+    <string name="msg_RemoveAddressFromHistoryQuestion">Удалить адрес из истории?</string>
+    <string name="msg_RemoveAddressFromRouteQuestion">Удалить адрес из маршрута?</string>
+    <string name="RouteDistanceIs">Длина маршрута: ~%d км.</string>
+    <string name="RouteTimeIs" formatted="false">Время в пути: ~%d %s</string>
+    <string name="msg_RemoveRouteQuestion">Удалить весь маршрут?</string>
+    <string name="msg_YouAddressIs_RemoveQuestion">Выбрано: %s. Удалить эту точку из маршрута?</string>
+    <string name="msg_AddPointAs_Question">Выбрано: %s. Добавить точку в маршрут?</string>
+    <string name="msg_IamHere">Я здесь!</string>
+    <string name="AsGiving">Адрес подачи</string>
+    <string name="AsRoute">Точка маршрута</string>
+    <string name="DisconnectSound">Отключить звук</string>
+    <string name="OnlyVibrationNotfy">Оповещать о событиях только вибрацией</string>
+    <string name="DefaultAddress">Адрес по умолчанию</string>
+    <string name="msg_DefaultAddressDesc">При запуске приложения ставит Ваше текущее местоположение как адрес подачи
+    </string>
+    <string name="AppLanguage">Язык приложения</string>
+    <string name="Load">Загрузка</string>
+    <string name="CalcCostRouteTime" formatted="false">Путь: ≈%.1f км. Время в пути: ≈%d мин.</string>
+    <string name="DirectionsFor">по указанию</string>
+    <string name="msg_CalcCost_1" formatted="false">
+        <![CDATA[<font color=\'%s\'>%s</font>, подать машину по адресу <font color=\'%s\'>%s</font>, поедем <font color=\'%s\'>%s</font>%s;<br/>Стоимость поездки <font color=\'%s\'>%s</font>]]></string>
+    <string name="msg_CalcCost_2" formatted="false"><![CDATA[<br/>Ваша скидка: <font color=\'%s\'>%.2f%s</font>]]></string>
+    <string name="msg_CalcCost_3" formatted="false"><![CDATA[, включены сервисы: <font color=\'%s\'>%s</font>]]></string>
+    <string name="FactFor">По факту</string>
+    <string name="msg_YouCurrentBalanceIs_">Ваш текущий баланс составляет: \n\n</string>
+    <string name="msg_EnabledCost_" formatted="false">Доступные средства: %.2f %s; \n</string>
+    <string name="msg_CreditIs_" formatted="false">Кредит: %.2f %s; \n</string>
+    <string name="msg_LocedSummIs_" formatted="false">Заблокированная сумма: %.2f %s; \n</string>
+    <string name="msg_OrderNWith_" formatted="false">Заказ №: %s от %s</string>
+    <string name="msg_SetRatingQuestion">Выставить текущий рейтинг?</string>
+    <string name="msg_RatingSetSuccess">Рейтинг успешно выставлен! Спасибо!</string>
+    <string name="CheckedAddress">Проверка адреса</string>
+    <string name="msg_EmptyAnswerGeoCoder">Гео-данных по Вашему запросу не найдено</string>
+    <string name="msg_LocationSettingsOff">Мы не можем определить Ваш город из-за отключенных настроек, включить
+        сейчас?
+    </string>
+    <string name="IamHere">Я здесь!</string>
+    <string name="Hour">час.</string>
+    <string name="Minute">мин.</string>
+    <string name="ServerShuttdown">Невозможно выполнить действие, сервер временно недоступен...</string>
+    <string name="IncorrectRoute">Некорректно указан маршрут</string>
+    <string name="Balance">Баланс</string>
+    <string name="msg_mapTapForInfo">Что бы получить информацию, нажмите и удерживайте иконку на карте.</string>
+    <string name="msg_OrderLoadError">Ошибка при загрузке заказа!</string>
+    <string name="msg_UnknowTime">Время неизвестно</string>
+    <string name="msg_DriverInYouPlaseOn">Будет у Вас через: </string>
+    <string name="msg_DriverPhoneNumberIs_">Номер телефона водителя: %s</string>
+    <string name="msg_SelectYourLanguage">Язык интерфейса приложения</string>
+    <string name="OnMonth">За месяц</string>
+    <string name="OnWeek">За неделю</string>
+    <string name="Yesterday">Вчера</string>
+    <string name="Today">Сегодня</string>
+    <string name="Everything">Все</string>
+    <string name="Complete">Завершенные</string>
+    <string name="Cancelled">Отмененные</string>
+    <string name="WithoutRating">Без рейтинга</string>
+    <string name="msg_QiwiPaymentSumQuestion" formatted="false">Сумма к оплате составит %.2f %s с учетом %.0f%% взымаемыми системой %s за
+        услугу. Оплатить сейчас?
+    </string>
+    <string name="Error">Ошибка</string>
+    <string name="NotSelected">Не выбрано</string>
+    <string name="NoRoute">Маршрут не задан</string>
+    <string name="msg_CalcCostFail">Неудалось расчитать стоимость, повторить попытку еще раз?</string>
+    <string name="OrderCostIs_" formatted="false">Стоимость заказа: %.2f %s</string>
+    <string name="msg_CancelThisOrderQuestion">Отменить данный заказ?</string>
+    <string name="CancelledOrder">Отмена заказа</string>
+    <string name="CancelOrderSuccess">Заказ успешно отменен!</string>
+    <string name="ServerConnectionFail">Ошибка подключения к серверу. Сервер не вернул ответа</string>
+    <string name="GivingAddress_Route">Адрес подачи/Маршрут</string>
+    <string name="SaveRoute">Сохранить маршрут</string>
+    <string name="AsStart">В начало</string>
+    <string name="AsEnd">В конец</string>
+    <string name="RushOrder">Срочный заказ</string>
+    <string name="PrelimOrder">Предварительный заказ</string>
+    <string name="msg_RushOrderDescription">Машина будет подана сразу после того как будет найдена.\nДля подачи машины
+        к определенному времени, выберите \'Предварительный заказ\'
+    </string>
+    <string name="msg_WaitingServerResponce">Ожидание ответа от сервера</string>
+    <string name="msg_PleaseWait">Пожалуйста, подождите...</string>
+    <string name="SilentMode">Оповещать без звука</string>
+    <string name="ActiveOrder">Активные заказы</string>
+    <string name="PartnerProgram">Партнер. программа</string>
+    <string name="CustomerApplication">Приложение заказчика</string>
+    <string name="DriverClient">Приложение водителя</string>
+    <string name="GenerateQrCode">Генерировать QR</string>
+    <string name="msg_PartnerProgramDesc">Что такое партнерка.... бла.... бла..... бла......</string>
+    <string name="msg_GeoServiceReturnNull">На Ваш запрос гео-сервис данных не нашел</string>
+    <string name="SearchDriver">Поиск водителя</string>
+    <string name="DriverFound">Водитель найден</string>
+    <string name="CarInWay">Машина в пути</string>
+    <string name="CarIsSent">Машина подана</string>
+    <string name="RecognitionSpeechLang">Язык распознования речи</string>
+    <string name="Geocoder">Геокодирование</string>
+    <string name="msg_IncorrectName">Имя не может быть менее 4 символов</string>
+    <string name="msg_hasPartnerProgramm">Если есть ключ партнерской программы укажите его (не обязательно)</string>
+    <string name="HasPartnerCode">У меня есть партнерский код</string>
+    <string name="GetSms">Получить SMS</string>
+    <string name="OpenQiwiSuit">К оплате</string>
+    <string name="WriteUs">Написать нам</string>
+    <string name="InputYourMessage">Введите Ваше сообщение</string>
+    <string name="Notifications">уведомления</string>
+    <string name="On">вкл.</string>
+    <string name="Off">выкл.</string>
+    <string name="FirstInputAddressHint">Адрес подачи (Город, улица/объект, дом)</string>
+    <string name="NextInputAddressHint">Адрес следования (Город, улица/объект)</string>
+    <string name="RegistrationMessage">Для получения доступа к данной функции Вам необходимо пройти авторизацию.
+        Авторизоваться сейчас?
+    </string>
+    <string name="House">Дом</string>
+    <string name="OpenApp">Открыть приложение</string>
+    <string name="Email">E-mail</string>
+    <string name="SendKeyOnMail">Отправить ключ на E-mail</string>
+    <string name="GetEmail">Получить письмо</string>
+    <string name="msg_IncorrectEmail">Некорректно указан Email.</string>
+    <string name="IncorrectSum">Сумма указана некорректно</string>
+    <string name="Update">Обновить</string>
+    <string name="msg_NewVersionNotification" formatted="false">Есть обновление для \"%s\", Вы можете перейти сейчас на
+        GooglePlay и скачать его!
+    </string>
+    <string name="HasUpdate">Есть обновление</string>
+    <string name="msg_NoTariffs">Расчет не возможен, у группы отсутствуют тарифы.</string>
+    <string name="msg_LocationSettingError">Мы не можем определить Ваше текущее местоположение из-за выключенных настроек определения геоданных. Хотите включить определение геоданных сейчас?</string>
+    <string name="msg_SearchLocation">Ищем местоположение...</string>
+    <string name="EmptyServerResponce">Сервер не вернул ответа.</string>
+    <string name="msg_IncorrectTariff">Не указан желаемый тариф</string>
+    <string name="CopyOrder">Копировать заказ</string>
+    <string name="OrderAction">Работа с заказом</string>
+    <string name="Credit">Кредит</string>
+    <string name="Locked">Заблокировано</string>
+    <string name="select_tariff">Выберите желаемый тариф</string>
+    <string name="system_">Система:</string>
+    <string name="ConfirmPhone_">Контактный номер:</string>
+    <string name="msg_incorrect_contact_phone">Контактный номер указан неверно</string>
+    <string name="secondname">Фамилия</string>
+    <string name="name">Имя</string>
+    <string name="patronymic">Отчество</string>
+    <string name="birthday">Дата рождения</string>
+    <string name="profile">Профиль</string>
+    <string name="msg_update_profife_progress">Обновляем профиль пользователя</string>
+    <string name="msg_update_profile_success">Профиль успешно обновлен!</string>
+    <string name="msg_update_profile_error">Не удалось обновить профиль! Повторите попытку позже.</string>
+    <string name="msg_empty_field_format" formatted="false">Поле %s не может быть пустым</string>
+    <string name="get_profile_process">Получение профиля</string>
+    <string name="select_gender">Выберите пол</string>
+    <string name="gender">Пол</string>
+    <string name="male">Мужской</string>
+    <string name="female">Женский</string>
+    <string name="cancellation_not_possible">Отмена невозможна</string>
+    <string name="add_card">Добавить карту</string>
+    <string name="my_card">Мои карты</string>
+    <string name="msg_driver_phone_not_found">У данного водителя отсутсвуют номера телефонов</string>
+    <string name="remove">Удалить</string>
+    <string name="active_card">Активная карта</string>
+    <string name="exit_message">Для выхода нажмите Назад еще раз.</string>
+    <string name="remove_card_query">Вы действительно хотите удалить данную карту?</string>
+    <string name="deactivated_card_query">Вы действительно хотите деактивировать данную карту?</string>
+    <string name="activated_card_query">Вы действительно хотите активировать данную карту?</string>
+    <string name="Continue">Продолжить</string>
+    <string name="save_as_my_route">Сохранить как маршрут</string>
+    <string name="input_title">Введите название</string>
+    <string name="history">История</string>
+    <string name="my_routes">Мои маршруты</string>
+    <string name="shared_app">Рассказать друзьям</string>
+    <string name="select">Выберите</string>
+    <string name="share_message" formatted="false">Привет! Рекомендую поставить это приложение %s. С его помощью ты можешь заказать лучшее такси себе или другу. Качай по ссылке: %s</string>
+    <string name="build_route_ona_map">Указать на карте</string>
+    <string name="call_to_dispatcher">Звонок диспетчеру</string>
+    <string name="msg_exit_account">Вы действительно хотите выйти из аккаунта? Что бы делать заказы, Вам нужно будет авторизоваться заново.</string>
+    <string name="need_air_conditioning">Очень жарко! Пожалуйста, включите кондиционер.</string>
+    <string name="need_more_message">Очень спешу! Прошу как можно скорее!</string>
+    <string name="call_when_filing">Позвоните мне, как только подадите автомобиль.</string>
+    <string name="free_trunk_car">Есть груз. Нужно наличие свободного багажника.</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="unsave_point_message">Указанный адрес не выбран. Хотите его использовать в маршруте?</string>
+    <string name="set_order_datetime">Укажите дату и время подачи такси</string>
+    <string name="remove_question">Хотите удалить?</string>
+    <string name="driver_application">Приложение водителя</string>
+    <string name="customer_application">Приложение заказчика</string>
+    <string name="select_app_to_invited_">В какое приложение пригласить:</string>
+    <string name="send">Отправить</string>
+    <string name="easy_tariff_format" formatted="false">Цена: ≈%.0f%s; Время в пути: ≈%d мин; Путь: ≈%.1f км</string>
+    <string name="missing_tariff">Отсутствует тариф</string>
+    <string name="one_minute">1 мин</string>
+    <string name="days">дней</string>
+    <string name="hours">часов</string>
+    <string name="minutes">минут</string>
+    <string name="fact_cost">Стоимость по факту</string>
+    <string name="bad_geo_response_message">На Ваш запрос гео-сервис данных не нашел!</string>
+    <string name="check_address_action">Проверка адреса...</string>
+    <string name="success_order_copy">Заказа успешно скопирован в новый</string>
+    <string name="update_active_order_message">Загрузка активных заказов...</string>
+    <string name="link_card">Привязать карту</string>
+    <string name="gcm_disable_permission">Из-за отключенных разрешений мы не сможем уведомлять Вас!</string>
+    <string name="app_missing_setup_query_message">У Вас не установленно данное приложение, хотите скачать его сейчас с Google Play?</string>
+    <string name="voice_speech_activation_message">Чтобы активировать голосовой поиск необходимо установить \"Голосовой поиск Google\"</string>
+    <string name="setup">Установить</string>
+    <string name="attention">Внимание</string>
+    <string name="empty_card_system">Системы для привязки карты отсутсвуют.</string>
+    <string name="success_pay_message">Счет успешно выствален, для продолжения привязки карты нажмите \'Продолжить\'</string>
+    <string name="error_pay_message">Выставление счета для привязки закончилось с ошибкой (%s). Попробуйте повторить позже</string>
+    <string name="need_first_address_message">Вам обязательно нужно указать адрес подачи</string>
+    <string name="service">Сервис</string>
+    <string name="empty_route_name_error_message">Название маршрута не может быть пустым</string>
+    <string name="select_system">Выберите систему</string>
+    <string name="select_period_and_update_message">Выберите период и нажмите \'лупу\'</string>
+    <string name="share_welcome_message">Наша компания использует партнерскую программу с поощрениями. Если Вы поделитесь приложением после авторизации - получите приятный бонус!</string>
+    <string name="voice_input">Ввести голосом</string>
+    <string name="use_my_location">Мое местоположение</string>
+    <string name="set_route_name_message">Укажите название маршрута</string>
+    <string name="change_address_query_message" formatted="false">Что Вы хотите сделать с адресом "%s"?</string>
+    <string name="edit">Редактировать</string>
+    <string name="generate_invite">Создание приглашения</string>
+    <string name="extra">Дополнительно</string>
+    <string name="empty_route_history_message">У Вас еще нет собственных маршрутов</string>
+    <string name="empty_address_history_message">У Вас еще нет адресов в истории</string>
+    <string name="approximate_location_format">Вы находитесь тут \"%s\". Использовать этот адрес как адрес подачи?</string>
+    <string name="copy_number">Копир. номер</string>
+    <string name="call_to_driver">Звонок водителю</string>
+    <string name="only_one_order_message">Вы можете иметь только 1 активный заказ</string>
+    <string name="promo_text_format" formatted="false">Предлагаем Вам реальную возможность сделать поездки на такси бесплатными.
+        Разошлите смс с ссылкой на партнерскую программу и скидку в %d%% Вашим родным, друзьям или просто знакомым и получайте на свой счет бонусы в сумме %d%% от каждой их поездки на нашем такси!
+        Накопленными бонусами, Вы сможете оплачивать услуги такси! Срок действия партнерской программы и срок использования бонусов не ограничен!</string>
+    <string name="wait_calculation">Дождитесь расчета стоимости</string>
+    <string name="search_driver_process_message">Подождите, идет поиск водителя</string>
+    <string name="order_is_null">Невозможно получить данные о заказе (null).</string>
+    <string name="driver_is_null">Невозможно получить данные о водителе (null).</string>
+    <string name="route_is_null">Невозможно получить данные о маршруте (null).</string>
+</resources>

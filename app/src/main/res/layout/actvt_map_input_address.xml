@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/backgroundColor">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="org.osmdroid.views.MapView"
+            android:id="@+id/mapView"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="#95ececec"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvTime"
+                android:textStyle="bold"
+                android:textColor="@color/primaryColor"
+                android:textSize="@dimen/FontSize_15"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvDistance"
+                android:textStyle="bold"
+                android:textColor="@color/primaryColor"
+                android:textSize="@dimen/FontSize_15"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:background="@color/backgroundColor"
+            android:gravity="center_vertical"
+            android:id="@+id/llSearchPanel"
+            android:visibility="gone">
+
+            <AutoCompleteTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/acAddress"
+                android:textCursorDrawable="@drawable/cursor_line"
+                android:textColor="@color/primaryColor"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:hint="@string/input_address"
+                android:singleLine="true"
+                android:imeOptions="actionSend"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fabVoiceInput"
+                android:background="@drawable/btn_oval"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_microphone"
+                android:padding="7dp"
+                app:fabSize="mini"
+                android:layout_marginRight="5dp"/>
+        </LinearLayout>
+
+        <ZoomControls
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/zoomControls"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+
+    <android.support.design.widget.FloatingActionButton
+        app:elevation="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fabRemoveRoute"
+        android:src="@drawable/ic_delete"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="5dp"/>
+
+    <android.support.design.widget.FloatingActionButton
+        app:elevation="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fabFindMe"
+        android:src="@drawable/ic_crosshairs_gps"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_above="@+id/fabSuccess"
+        android:layout_alignParentRight="true"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        app:elevation="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fabSuccess"
+        android:src="@drawable/ic_check"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="5dp"/>
+
+    <android.support.design.widget.FloatingActionButton
+        app:elevation="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fabShowSearchPanel"
+        android:src="@drawable/ic_magnify"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@+id/fabRemoveRoute"
+        android:layout_marginLeft="10dp"
+        />
+
+</RelativeLayout>

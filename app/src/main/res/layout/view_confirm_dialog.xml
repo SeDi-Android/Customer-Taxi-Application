@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="fill_parent"
+        android:textSize="@dimen/FontSize_18"
+        android:layout_height="wrap_content"
+        android:isScrollContainer="true"
+        android:scrollbars="vertical"
+        android:nestedScrollingEnabled="true"
+        android:maxHeight="250dp"/>
+
+    <CheckBox
+        android:text="Безналичная оплата"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cbCashless"
+        android:textColor="@color/primaryColor"
+        android:textStyle="normal|bold"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/primaryColor"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ConfirmPhone_"/>
+
+    <EditText
+        android:id="@+id/etPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"/>
+
+    <CheckBox
+        android:id="@+id/cbSaveRoute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_as_my_route"/>
+
+    <EditText
+        android:id="@+id/etRouteTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/input_title"
+        android:visibility="gone"/>
+</LinearLayout>

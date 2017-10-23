@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/backgroundColor">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search_period_"
+            android:textColor="@color/primaryColor"
+            android:textSize="19sp"
+            android:id="@+id/textView"/>
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:id="@+id/dohd_spnrPeriod"
+            android:layout_gravity="right"
+            />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search_type_"
+            android:id="@+id/textView2"
+            android:textColor="@color/primaryColor"
+            android:textSize="19sp"/>
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:id="@+id/dohd_spnrType"
+            android:layout_gravity="right"
+            />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/relativeLayout">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search"
+                android:id="@+id/dohd_btnSearch"
+                android:layout_centerHorizontal="true"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="0.5"
+                android:shadowColor="@color/shadowColor"
+                android:drawableLeft="@drawable/ic_magnify"
+                android:drawablePadding="5dp"
+                android:background="@drawable/btn_orange"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/FontSize_15"
+                android:textStyle="bold"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

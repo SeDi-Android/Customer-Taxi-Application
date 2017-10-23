@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/backgroundColor">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/l_1"
+        android:minHeight="50dp"
+        android:background="@color/primaryColor"
+        android:gravity="center"
+        android:measureWithLargestChild="false">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_tariff"
+            android:textColor="@color/whiteColor"
+            android:layout_marginTop="10dp"
+            android:textAllCaps="true"
+            android:textSize="@dimen/FontSize_15"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cca_lvTariffs"
+        android:choiceMode="singleChoice"
+        android:drawSelectorOnTop="false"
+        android:fadingEdge="none"
+        android:scrollingCache="false"
+        android:divider="@color/toolbarColor"
+        android:dividerHeight="1px"
+        android:layout_below="@+id/l_1"
+        android:visibility="visible"
+        android:layout_above="@+id/l_2"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/l_2"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentBottom="true"
+        android:background="@color/primaryColor">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Duration: 0 mins on 0 km"
+            android:id="@+id/cca_tvDurationAndDistance"
+            android:textSize="20sp"
+            android:textColor="@color/whiteColor"
+            android:gravity="center"
+            android:minHeight="50dp"/>
+    </LinearLayout>
+
+</RelativeLayout>

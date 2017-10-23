@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/backgroundColor"
+                android:id="@+id/relativeLayout">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/mva_rlContent">
+
+        <view
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            class="org.osmdroid.views.MapView"
+            android:id="@+id/mva_mapView"
+            android:layout_alignBottom="@+id/mva_rlDriverInfo"
+            android:layout_alignParentLeft="true"/>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:background="#909e9e9e"
+            android:layout_alignParentBottom="false">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mva_ibtnShowStartPoint"
+                android:src="@drawable/ic_home"
+                android:background="@drawable/btn_none_background"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentTop="false"
+                android:layout_marginLeft="2dp"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mva_ibtnShowDriverCar"
+                android:src="@drawable/ic_map_taxi_car"
+                android:background="@drawable/btn_none_background"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentTop="false"
+                android:layout_toRightOf="@+id/mva_ibtnShowStartPoint"
+                android:layout_marginLeft="5dp"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mva_ibtnZoomIn"
+                android:background="@drawable/btn_orange"
+                android:src="@drawable/ic_plus"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentRight="false"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/mva_ibtnZoomOut"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mva_ibtnZoomOut"
+                android:background="@drawable/btn_orange"
+                android:src="@drawable/ic_minus"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:background="#99313131"
+            android:id="@+id/mva_rlDriverInfo"
+            android:padding="5dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/imageView3"
+                            android:src="@drawable/ic_account"/>
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="New Text"
+                            android:id="@+id/mva_tvDriverName"
+                            android:textSize="@dimen/FontSize_18"
+                            android:layout_marginTop="5dp"
+                            android:singleLine="true"
+                            android:textColor="@color/whiteColor"
+                            android:layout_marginLeft="5dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/imageView2"
+                            android:src="@drawable/ic_taxi"/>
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="New Text"
+                            android:id="@+id/mva_tvDriverCar"
+                            android:textSize="@dimen/FontSize_18"
+                            android:layout_marginTop="5dp"
+                            android:singleLine="true"
+                            android:textColor="@color/whiteColor"
+                            android:layout_marginLeft="5dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/mva_llDuration"
+                        android:visibility="visible"
+                        android:gravity="center_horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/imageView4"
+                            android:src="@drawable/ic_map_marker"/>
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="New Text"
+                            android:id="@+id/mva_tvDuration"
+                            android:textSize="@dimen/FontSize_18"
+                            android:layout_marginTop="5dp"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:focusable="true"
+                            android:scrollHorizontally="true"
+                            android:focusableInTouchMode="true"
+                            android:singleLine="true"
+                            android:textColor="@color/whiteColor"
+                            android:layout_marginLeft="5dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/mva_ibtnCall"
+                    android:layout_weight="1.5"
+                    android:background="@drawable/btn_orange"
+                    android:src="@drawable/ic_phone_in_talk"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

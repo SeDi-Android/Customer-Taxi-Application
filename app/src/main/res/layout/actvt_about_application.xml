@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/backgroundColor"
+                android:id="@+id/relativeLayout">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/cra_rlContent"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:id="@+id/ivLogo"
+            android:src="@drawable/small_logo"/>
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryColor"
+            android:textSize="18sp"
+            android:id="@+id/tvShortText"
+            android:layout_below="@+id/ivLogo"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvBuildInfo"
+            android:layout_below="@+id/tvShortText"
+            android:gravity="center"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/what_new_format"
+            android:id="@+id/btnWhatNew"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:drawableLeft="@drawable/ic_new_box_dark"
+            android:drawablePadding="10dp"
+            android:background="@drawable/btn_none_background"
+            android:textColor="@color/primaryColor"
+            />
+    </RelativeLayout>
+</RelativeLayout>

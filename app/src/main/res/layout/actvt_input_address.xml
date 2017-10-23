@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/backgroundColor"/>
+    <!--
+
+
+        <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollView2">
+            <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:id="@+id/iaa_rlContent" android:layout_below="@+id/iaa_rlTitle" android:padding="10dp">
+                <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                                android:gravity="center" android:id="@+id/rlDevider">
+                    <FrameLayout android:layout_width="fill_parent" android:layout_height="1dp"
+                                 android:background="@color/toolbarColor" android:layout_marginTop="5dp"
+                                 android:layout_centerInParent="true"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                              android:text="@string/GivingAddress" android:layout_centerInParent="true"
+                              android:background="@color/backgroundColor" android:textColor="@color/grayColor"
+                              android:textSize="@dimen/FontSize_15" android:paddingLeft="5dp"
+                              android:paddingRight="5dp" android:id="@+id/tvRouteDivider"/>
+                </RelativeLayout>
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" android:id="@+id/iaa_llRouteList"
+                        android:layout_below="@+id/rlDevider">
+                </LinearLayout>
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" android:id="@+id/llInputAddressLayout"
+                        android:gravity="center_vertical" android:layout_below="@+id/iaa_llRouteList"
+                        android:layout_marginTop="3dp">
+
+                    <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:minHeight="51dp"
+                            android:id="@+id/acInputAddress"
+                            android:hint="@string/FirstInputAddressHint"
+
+                            app:met_baseColor="@color/primaryColor"
+                            app:met_primaryColor="@color/liteGrayColor2"
+                            app:met_floatingLabel="highlight"
+                            />
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:inputType="numberDecimal"
+                            android:ems="3"
+                            android:id="@+id/etEntrance"
+                            android:hint="@string/EntranceShort"
+                            android:minHeight="50dp"
+                            android:gravity="center"
+
+                            app:met_baseColor="@color/primaryColor"
+                            app:met_primaryColor="@color/liteGrayColor2"
+                            app:met_floatingLabel="highlight"
+                            />
+                    <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/ibtnAdd" android:background="@drawable/btn_orange"
+                            android:src="@drawable/ic_white_plus" android:layout_marginLeft="1dp"/>
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/iaa_llBestRoute"
+                              android:layout_below="@+id/llInputAddressLayout" android:layout_marginTop="5dp">
+                    <Button android:layout_width="fill_parent" android:layout_height="wrap_content" android:drawableLeft="@drawable/ic_white_checkmark" android:drawablePadding="5dp"
+                            android:text="@string/SaveRoute" android:id="@+id/btnSaveAddress" android:background="@drawable/btn_orange"
+                            android:textColor="@color/whiteColor" android:visibility="visible" android:layout_toLeftOf="@+id/ibtnVoiceInput" android:layout_marginRight="1dp"
+                            android:layout_weight="1"/>
+                    <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/ibtnVoiceInput" android:layout_alignParentLeft="false" android:layout_alignParentTop="false" android:layout_alignParentRight="false"
+                            android:background="@drawable/btn_orange" android:src="@drawable/ic_white_mic"
+                            />
+                    <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/ibtnSearchMeByGps" android:background="@drawable/btn_orange"
+                            android:src="@drawable/ic_white_street_view" android:layout_marginLeft="1dp"
+                            />
+                    <ImageButton android:layout_width="wrap_content" android:layout_height="fill_parent"
+                                 android:id="@+id/ibtnShowMap" android:background="@drawable/btn_orange"
+                                 android:src="@drawable/ic_white_map_marke" android:layout_marginLeft="1dp"/>
+                </LinearLayout>
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" android:layout_below="@+id/iaa_llBestRoute"
+                        android:id="@+id/iaa_llAddressHistory">
+                    <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                                    android:gravity="center" android:layout_marginTop="5dp">
+                        <FrameLayout android:layout_width="fill_parent" android:layout_height="1dp"
+                                     android:background="@color/toolbarColor"
+                                     android:layout_marginTop="5dp" android:layout_centerInParent="true"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                  android:text="@string/MyAddress"
+                                  android:layout_centerInParent="true" android:background="@color/backgroundColor"
+                                  android:textColor="@color/grayColor" android:textSize="@dimen/FontSize_15"
+                                  android:paddingLeft="5dp" android:paddingRight="5dp"/>
+                    </RelativeLayout>
+                    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
+                                  android:layout_height="wrap_content" android:id="@+id/iaa_llHistoryAddress"
+                                  android:layout_below="@+id/iaa_flDivider">
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>-->
