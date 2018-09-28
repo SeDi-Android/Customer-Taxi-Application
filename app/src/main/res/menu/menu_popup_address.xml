@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_move_up_point" android:title="@string/move_up"/>
+    <item android:id="@+id/menu_edit_route_point" android:title="@string/edit"/>
+    <item android:id="@+id/menu_remove_route_point" android:title="@string/remove"/>
+    <item android:id="@+id/menu_add_route_point" android:title="@string/add_route_point"/>
+</menu>

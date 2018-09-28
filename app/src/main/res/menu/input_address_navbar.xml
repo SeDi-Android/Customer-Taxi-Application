@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="" android:icon="@drawable/ic_magnify_dark" android:id="@+id/menu_item_input_layer"/>
+    <item android:title="" android:icon="@drawable/ic_home_map_marker_dark" android:id="@+id/menu_item_history_layer"/>
+    <item android:title="" android:icon="@drawable/ic_routes_dark" android:id="@+id/menu_item_route_layer"/>
+</menu>

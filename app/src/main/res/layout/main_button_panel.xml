@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/liteGrayColor2"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/ibtn_call_dispatcher"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="2"
+            android:background="@drawable/btn_orange"
+            android:padding="0dp"
+            android:scaleType="centerInside"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_phone_in_talk" />
+
+        <Button
+            android:id="@+id/btn_get_taxi"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/btn_none_background"
+            android:drawableLeft="@drawable/ic_taxi_dark"
+            android:drawablePadding="5dp"
+            android:text="@string/get_taxi"
+            android:textColor="@color/primaryColor"
+            android:textSize="15sp"/>
+
+        <ImageButton
+            android:id="@+id/ibtn_menu"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="2"
+            android:background="@drawable/btn_orange"
+            android:src="@drawable/ic_menu"/>
+    </LinearLayout>
+</LinearLayout>

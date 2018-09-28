@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/rl_map_container"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ImageView
+        android:id="@+id/map_pin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="false"
+        android:layout_centerInParent="true"
+        app:srcCompat="@drawable/map_pin_"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_alignParentBottom="true"
+        android:id="@+id/fab_find_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:src="@drawable/ic_crosshairs_gps"
+        app:fabSize="normal"/>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:src="@drawable/ic_account_multiple"
+        app:fabSize="normal" />
+
+    <LinearLayout
+        android:id="@+id/ll_road_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/route_info_bg"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_road_distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_small_distance"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_road_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_small_clock"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical" />
+    </LinearLayout>
+
+</RelativeLayout>
