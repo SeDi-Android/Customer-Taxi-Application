@@ -1,15 +1,15 @@
 package ru.sedi.customerclient.NewDataSharing.Collections;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 
 import java.util.Arrays;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-import ru.sedi.customerclient.adapters.CardAdapter;
 import ru.sedi.customerclient.NewDataSharing.BankCard;
 import ru.sedi.customerclient.ServerManager.Server;
 import ru.sedi.customerclient.ServerManager.ServerManager;
+import ru.sedi.customerclient.adapters.CardAdapter;
 import ru.sedi.customerclient.common.AsyncAction.AsyncAction;
 import ru.sedi.customerclient.common.AsyncAction.IActionFeedback;
 import ru.sedi.customerclient.common.AsyncAction.IFunc;
@@ -50,10 +50,10 @@ public class PaymentCardCollection {
     }
 
     public void update(final Context context, final boolean needProgress) {
-        SweetAlertDialog pd = null;
+        ProgressDialog pd = null;
         if (needProgress)
             pd = ProgressDialogHelper.show(context);
-        final SweetAlertDialog finalPd = pd;
+        final ProgressDialog finalPd = pd;
         AsyncAction.run(new IFunc<BankCard[]>() {
             @Override
             public BankCard[] Func() throws Exception {
@@ -96,7 +96,7 @@ public class PaymentCardCollection {
         if (bankCard == null || bankCard.getID().isEmpty())
             return;
 
-        final SweetAlertDialog pd = ProgressDialogHelper.show(context);
+        final ProgressDialog pd = ProgressDialogHelper.show(context);
         AsyncAction.run(new IFunc<Server>() {
             @Override
             public Server Func() throws Exception {

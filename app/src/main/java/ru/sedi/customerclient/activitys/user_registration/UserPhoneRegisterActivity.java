@@ -1,5 +1,6 @@
 package ru.sedi.customerclient.activitys.user_registration;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,16 +18,15 @@ import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ru.sedi.customer.R;
-import ru.sedi.customerclient.classes.Const;
-import ru.sedi.customerclient.classes.Validator;
 import ru.sedi.customerclient.ServerManager.Server;
 import ru.sedi.customerclient.ServerManager.ServerManager;
+import ru.sedi.customerclient.activitys.main_2.MainActivity2;
 import ru.sedi.customerclient.base.BaseActivity;
+import ru.sedi.customerclient.classes.Const;
+import ru.sedi.customerclient.classes.Validator;
 import ru.sedi.customerclient.common.AsyncAction.AsyncAction;
 import ru.sedi.customerclient.common.AsyncAction.IActionFeedback;
-import ru.sedi.customerclient.common.AsyncAction.IFunc;
 import ru.sedi.customerclient.common.AsyncAction.ProgressDialogHelper;
 import ru.sedi.customerclient.common.CountryCodes;
 import ru.sedi.customerclient.common.LogUtil;
@@ -36,16 +36,28 @@ import ru.sedi.customerclient.enums.PrefsName;
 
 public class UserPhoneRegisterActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
-    @BindView(R.id.etRegionCode) EditText etRegionCode;
-    @BindView(R.id.etMail) EditText etMail;
-    @BindView(R.id.etPhone) EditText etPhone;
-    @BindView(R.id.etName) EditText etName;
-    @BindView(R.id.etPartnerCode) EditText etPartnerCode;
-    @BindView(R.id.btnSend) Button btnSend;
-    @BindView(R.id.cbGetKeyOnMail) CheckBox cbGetKeyOnMail;
-    @BindView(R.id.cbHasPartnerCode) CheckBox cbHasPartnerCode;
+    @BindView(R.id.etRegionCode)
+    EditText etRegionCode;
+    @BindView(R.id.etMail)
+    EditText etMail;
+    @BindView(R.id.etPhone)
+    EditText etPhone;
+    @BindView(R.id.etName)
+    EditText etName;
+    @BindView(R.id.etPartnerCode)
+    EditText etPartnerCode;
+    @BindView(R.id.btnSend)
+    Button btnSend;
+    @BindView(R.id.cbGetKeyOnMail)
+    CheckBox cbGetKeyOnMail;
+    @BindView(R.id.cbHasPartnerCode)
+    CheckBox cbHasPartnerCode;
 
     public static UserPhoneRegisterActivity Instance;
+
+    public static Intent getIntent(Context context) {
+        return new Intent(context, UserPhoneRegisterActivity.class);
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +70,8 @@ public class UserPhoneRegisterActivity extends BaseActivity implements CompoundB
     }
 
     private void InitUiElements() {
-        final String code = CountryCodes.getCode(UserPhoneRegisterActivity.this);
+        final String code = CountryCodes.getCode(UserPhoneRegisterActivity.this,
+                getPackageName());
         etRegionCode.setText(code);
 
         etPhone.setText(getDevicePhoneNumber(code));
@@ -68,41 +81,38 @@ public class UserPhoneRegisterActivity extends BaseActivity implements CompoundB
         cbHasPartnerCode.setOnCheckedChangeListener(this);
         cbGetKeyOnMail.setOnCheckedChangeListener(this);
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean isMailRegistration = cbGetKeyOnMail.isChecked();
-                String data = "";
+        btnSend.setOnClickListener(view -> {
+            boolean isMailRegistration = cbGetKeyOnMail.isChecked();
+            String data;
 
-                if (isMailRegistration) {
-                    data = etMail.getText().toString();
-                    if (!Validator.Valid(Validator.EMAIL_PATTERN, data)) {
-                        MessageBox.show(UserPhoneRegisterActivity.this, getString(R.string.msg_IncorrectEmail), null);
-                        etMail.requestFocus();
-                        return;
-                    }
-                } else {
-                    String phoneNumber = etPhone.getText().toString();
-                    String regionaleCode = "+" + etRegionCode.getText().toString();
-                    phoneNumber = phoneNumber.replace(regionaleCode, "");
-                    data = regionaleCode + phoneNumber;
-                    if (!Validator.Valid(Validator.PHONE_PATTERN, data)) {
-                        MessageBox.show(UserPhoneRegisterActivity.this, getString(R.string.bad_phone_number), null);
-                        etPhone.requestFocus();
-                        return;
-                    }
-                }
-
-                String name = etName.getText().toString();
-                if (name.length() < 3) {
-                    MessageBox.show(UserPhoneRegisterActivity.this, getString(R.string.msg_IncorrectName));
-                    etName.requestFocus();
+            if (isMailRegistration) {
+                data = etMail.getText().toString();
+                if (!Validator.valid(Validator.EMAIL_PATTERN, data)) {
+                    MessageBox.show(UserPhoneRegisterActivity.this, getString(R.string.msg_IncorrectEmail), null);
+                    etMail.requestFocus();
                     return;
                 }
-
-                Prefs.setValue(PrefsName.PARTNER_KEY, etPartnerCode.getText().toString());
-                showAuthActivity(data, name, isMailRegistration);
+            } else {
+                String phoneNumber = etPhone.getText().toString();
+                String regionaleCode = "+" + etRegionCode.getText().toString();
+                phoneNumber = phoneNumber.replace(regionaleCode, "");
+                data = regionaleCode + phoneNumber;
+                if (!Validator.valid(Validator.PHONE_PATTERN, data)) {
+                    MessageBox.show(UserPhoneRegisterActivity.this, getString(R.string.bad_phone_number), null);
+                    etPhone.requestFocus();
+                    return;
+                }
             }
+
+            String name = etName.getText().toString();
+            if (TextUtils.isEmpty(name)) {
+                MessageBox.show(UserPhoneRegisterActivity.this, getString(R.string.msg_IncorrectName));
+                etName.requestFocus();
+                return;
+            }
+
+            Prefs.setValue(PrefsName.PARTNER_KEY, etPartnerCode.getText().toString());
+            showAuthActivity(data, name, isMailRegistration);
         });
     }
 
@@ -126,16 +136,14 @@ public class UserPhoneRegisterActivity extends BaseActivity implements CompoundB
     }
 
     private void showAuthActivity(final String data, final String name, final boolean byMail) {
-        final SweetAlertDialog pd = ProgressDialogHelper.show(this, getString(R.string.send_key));
-        AsyncAction.run(new IFunc<Server>() {
-            @Override
-            public Server Func() throws Exception {
-                if (byMail)
-                    Prefs.setValue(PrefsName.REGISTER_USER_EMAIL, data);
-                else
-                    Prefs.setValue(PrefsName.REGISTER_USER_PHONE, data);
-                return ServerManager.GetInstance().getSmsKey(data, byMail);
-            }
+        final ProgressDialog pd = ProgressDialogHelper.show(this, getString(R.string.send_key));
+        AsyncAction.run(() -> {
+            if (byMail)
+                Prefs.setValue(PrefsName.REGISTER_USER_EMAIL, data);
+            else
+                Prefs.setValue(PrefsName.REGISTER_USER_PHONE, data);
+            String userType = "Customer";
+            return ServerManager.GetInstance().getSmsKey(data, byMail, userType);
         }, new IActionFeedback<Server>() {
             @Override
             public void onResponse(Server server) {
@@ -198,4 +206,5 @@ public class UserPhoneRegisterActivity extends BaseActivity implements CompoundB
         else
             etPhone.requestFocus();
     }
+
 }

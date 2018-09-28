@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ru.sedi.customer.R;
 import ru.sedi.customerclient.NewDataSharing.Collections.Collections;
-import ru.sedi.customerclient.NewDataSharing.RouteHistory;
+import ru.sedi.customerclient.db.DBHistoryRoute;
 import ru.sedi.customerclient.NewDataSharing._Point;
 import ru.sedi.customerclient.NewDataSharing._Route;
 import ru.sedi.customerclient.common.MessageBox.MessageBox;
@@ -70,7 +70,7 @@ public class SaveNewRouteDialog extends AppCompatDialog {
             return;
         }
 
-        RouteHistory history = new RouteHistory(name.trim(), mRoute.getPoints());
+        DBHistoryRoute history = new DBHistoryRoute(name.trim(), mRoute.getPoints());
         try {
             boolean success = Collections.me().getRoutesHistory().add(history);
             if(success)

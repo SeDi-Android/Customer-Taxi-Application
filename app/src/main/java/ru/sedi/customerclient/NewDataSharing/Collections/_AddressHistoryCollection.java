@@ -2,55 +2,66 @@ package ru.sedi.customerclient.NewDataSharing.Collections;
 
 import android.support.annotation.UiThread;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import ru.sedi.customerclient.NewDataSharing._Point;
 import ru.sedi.customerclient.adapters.AddressHistoryAdapter;
 import ru.sedi.customerclient.common.AsyncAction.IAction;
 import ru.sedi.customerclient.common.LINQ.QueryList;
+import ru.sedi.customerclient.db.DbHistoryPoint;
 
 public class _AddressHistoryCollection {
 
-    private QueryList<_Point> mPoints = new QueryList<>();
-    private AddressHistoryAdapter mAdapter = null;
+    private final Realm mRealm;
+    private RealmResults<DbHistoryPoint> historyPoints;
+    private AddressHistoryAdapter mAdapter;
 
     public _AddressHistoryCollection() {
+        mRealm = Realm.getDefaultInstance();
+        historyPoints = mRealm.where(DbHistoryPoint.class).distinct("Description").findAll();
     }
 
-    public void add(final _Point p) {
-        if (p.isCoordinatesonly())
-            return;
+    public void add(final QueryList<_Point> points) {
+        mRealm.executeTransactionAsync(realm -> {
+            for (_Point p : points) {
+                if (p.isCoordinatesonly()) continue;
 
-        boolean contains = mPoints.Contains(item -> item.getCityName().equalsIgnoreCase(p.getCityName())
-                && item.getStreetName().equalsIgnoreCase(p.getStreetName())
-                && item.getHouseNumber().equalsIgnoreCase(p.getHouseNumber()));
-
-        if (contains)
-            return;
-
-        mPoints.add(p.copy());
-        updateAdapter();
+                boolean empty = realm.where(DbHistoryPoint.class)
+                        .equalTo("CityName", p.getCityName())
+                        .and().equalTo("StreetName", p.getStreetName())
+                        .and().equalTo("HouseNumber", p.getHouseNumber())
+                        .findAll().isEmpty();
+                if (!empty) continue;
+                realm.copyToRealm(new DbHistoryPoint(p));
+            }
+        }, () -> updateAdapter());
     }
 
     public void remove(final _Point p) {
-        QueryList<_Point> list = mPoints.Where(item -> item.equals(p));
-        mPoints.removeAll(list);
-        updateAdapter();
+        mRealm.executeTransactionAsync(realm -> {
+            RealmResults<DbHistoryPoint> all = realm.where(DbHistoryPoint.class)
+                    .equalTo("CityName", p.getCityName())
+                    .and().equalTo("StreetName", p.getStreetName())
+                    .and().equalTo("HouseNumber", p.getHouseNumber())
+                    .findAll();
+            all.deleteAllFromRealm();
+        }, () -> updateAdapter());
     }
 
-    public _Point[] getAsArray() {
+    /*public _Point[] getAsArray() {
         return mPoints.toArray(new _Point[mPoints.size()]);
+    }*/
+
+    public RealmResults<DbHistoryPoint> getAll() {
+        return historyPoints;
     }
 
-    public QueryList<_Point> getAll() {
-        mPoints = mPoints.OrderBy(item -> item.getCityName());
-        return mPoints;
-    }
-
-    public void set(_Point[] p) {
+    /*public void set(_Point[] p) {
         mPoints = new QueryList<>(p);
-    }
+    }*/
 
     public AddressHistoryAdapter getAdapter(IAction<_Point> action) {
-        mAdapter = new AddressHistoryAdapter(mPoints, action);
+        mAdapter = new AddressHistoryAdapter(null, action);
         return mAdapter;
     }
 
@@ -60,18 +71,7 @@ public class _AddressHistoryCollection {
             mAdapter.notifyDataSetChanged();
     }
 
-    public void recreateWith(QueryList<_Point> addresses) {
-        if(addresses == null || addresses.isEmpty())
-            return;
-
-        mPoints.clear();
-        for (_Point address : addresses) {
-            mPoints.add(address.copy());
-        }
-        updateAdapter();
-    }
-
     public boolean isEmpty() {
-        return mPoints.isEmpty();
+        return historyPoints.isEmpty();
     }
 }

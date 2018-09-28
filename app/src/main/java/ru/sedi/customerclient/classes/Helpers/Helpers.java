@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import java.text.DecimalFormat;
 
@@ -41,7 +42,14 @@ public class Helpers {
         systemService.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public static String decimalFormat(float v) {
+    public static void showKeyboard(View view) {
+        if (view == null) return;
+        InputMethodManager systemService = (InputMethodManager) view.getContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        systemService.showSoftInput(view, 0);
+    }
+
+    public static String decimalFormat(double v) {
         if (mDecimalFormat == null) {
             mDecimalFormat = new DecimalFormat("0.##");
         }
@@ -118,4 +126,6 @@ public class Helpers {
             Prefs.setValue(packName, true);
         }
     }
+
+
 }

@@ -2,7 +2,6 @@ package ru.sedi.customerclient.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,10 +64,8 @@ public class OrderHistoryAdapter extends ArrayAdapter<_Order> {
             holder.tvRoute.setText(strAddress);
             holder.tvStatus.setText(order.getStatus().getName());
             holder.btnSetRating.setOnClickListener(view -> {
-                Intent intent = new Intent(mActivity, DriverRatingActivity.class);
-                intent.putExtra("date", order.getDate());
-                intent.putExtra("orderId", String.valueOf(order.getID()));
-                mActivity.startActivityForResult(intent, DriverRatingActivity.SUCCESS_RESPONSE);
+                mActivity.startActivityForResult(DriverRatingActivity.getIntentForResult(getContext(), String.valueOf(order.getID())),
+                        DriverRatingActivity.SUCCESS_RESPONSE);
             });
 
             boolean isRate = order.getRating() != null;

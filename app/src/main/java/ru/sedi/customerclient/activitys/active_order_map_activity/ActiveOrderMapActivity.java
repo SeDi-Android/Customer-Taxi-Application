@@ -2,24 +2,33 @@ package ru.sedi.customerclient.activitys.active_order_map_activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ceylonlabs.imageviewpopup.ImagePopup;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
 import org.osmdroid.views.MapView;
 
+import java.lang.ref.WeakReference;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import kg.ram.asyncjob.AsyncJob;
 import ru.sedi.customer.R;
 import ru.sedi.customerclient.NewDataSharing.Collections.Collections;
@@ -28,6 +37,7 @@ import ru.sedi.customerclient.NewDataSharing._Driver;
 import ru.sedi.customerclient.NewDataSharing._Order;
 import ru.sedi.customerclient.NewDataSharing._Phone;
 import ru.sedi.customerclient.NewDataSharing._Point;
+import ru.sedi.customerclient.ServerManager.Server;
 import ru.sedi.customerclient.ServerManager.ServerManager;
 import ru.sedi.customerclient.base.BaseActivity;
 import ru.sedi.customerclient.classes.OsmMapController;
@@ -42,7 +52,6 @@ import ru.sedi.customerclient.common.MessageBox.MessageBox;
 import ru.sedi.customerclient.common.MessageBox.UserChoiseListener;
 import ru.sedi.customerclient.common.SystemManagers.Device;
 import ru.sedi.customerclient.enums.OrderStatuses;
-import ru.sedi.customerclient.interfaces.IAction;
 
 import static ru.sedi.customerclient.enums.OrderStatuses.execute;
 
@@ -56,16 +65,29 @@ public class ActiveOrderMapActivity extends BaseActivity implements View.OnClick
     final int ICON_START_POINT = R.drawable.ic_map_1,
             ICON_DRIVER_POINT = R.drawable.ic_map_taxi_car;
 
-    @BindView(R.id.mva_tvDriverName) TextView tvDriverName;
-    @BindView(R.id.mva_tvDriverCar) TextView tvDriverCar;
-    @BindView(R.id.mva_tvDuration) TextView tvDuration;
-    @BindView(R.id.mva_llDuration) LinearLayout llDuration;
+    @BindView(R.id.tv_driver_name)
+    TextView tvDriverName;
+    @BindView(R.id.tv_car_info)
+    TextView tvDriverCar;
+    @BindView(R.id.tv_time)
+    TextView tvDuration;
 
-    @BindView(R.id.mva_ibtnCall) ImageButton ibtnCall;
-    @BindView(R.id.mva_ibtnShowStartPoint) ImageButton ibtnShowStartPoint;
-    @BindView(R.id.mva_ibtnShowDriverCar) ImageButton ibtnShowDriverCar;
-    @BindView(R.id.mva_ibtnZoomIn) ImageButton ibtnZoomIn;
-    @BindView(R.id.mva_ibtnZoomOut) ImageButton ibtnZoomOut;
+    @BindView(R.id.iv_photo)
+    CircleImageView iv_photo;
+
+    @BindView(R.id.ll_bottom_sheet)
+    LinearLayout ll_bottom_sheet;
+
+    @BindView(R.id.btn_call)
+    Button ibtnCall;
+    @BindView(R.id.mva_ibtnShowStartPoint)
+    ImageButton ibtnShowStartPoint;
+    @BindView(R.id.mva_ibtnShowDriverCar)
+    ImageButton ibtnShowDriverCar;
+    @BindView(R.id.mva_ibtnZoomIn)
+    ImageButton ibtnZoomIn;
+    @BindView(R.id.mva_ibtnZoomOut)
+    ImageButton ibtnZoomOut;
     private int mOrderId;
     private AsyncJob<_Order> mOrderUpdateTask;
 
@@ -96,6 +118,7 @@ public class ActiveOrderMapActivity extends BaseActivity implements View.OnClick
         mDriver = mOrder.getDriver();
 
         init();
+        prepareBottomSheet();
 
         if (enabledDriverOnMap())
             goToDriver();
@@ -103,8 +126,18 @@ public class ActiveOrderMapActivity extends BaseActivity implements View.OnClick
             goToFirstPoint();
     }
 
+    private void prepareBottomSheet() {
+        BottomSheetBehavior<LinearLayout> bottomSheetBehavior = BottomSheetBehavior.from(ll_bottom_sheet);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+        ll_bottom_sheet.postDelayed(() -> {
+            if (bottomSheetBehavior != null)
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }, 2000);
+    }
+
     private void init() {
-        MapView map = (MapView) this.findViewById(R.id.mva_mapView);
+        MapView map = findViewById(R.id.mva_mapView);
         mController = new OsmMapController(this, map);
         mController.clearAllOverlays();
 
@@ -114,8 +147,7 @@ public class ActiveOrderMapActivity extends BaseActivity implements View.OnClick
         ibtnZoomIn.setOnClickListener(this);
         ibtnZoomOut.setOnClickListener(this);
 
-        tvDuration.setMovementMethod(new ScrollingMovementMethod());
-        tvDuration.requestFocus();
+        updateDriverInfoLayout();
 
         mUpdateTimer.schedule(new TimerTask() {
             @Override
@@ -144,7 +176,7 @@ public class ActiveOrderMapActivity extends BaseActivity implements View.OnClick
                 mController.zoomOut();
                 break;
             }
-            case R.id.mva_ibtnCall: {
+            case R.id.btn_call: {
                 callToDriver();
                 break;
             }
@@ -235,17 +267,13 @@ public class ActiveOrderMapActivity extends BaseActivity implements View.OnClick
                 //Первая точка маршрута
                 final _Point firstPoint = mOrder.getRoute().getByIndex(0);
                 if (firstPoint != null) {
-                    mController.addPoint(firstPoint.getLatLong(), ICON_START_POINT, new IAction() {
-                        @Override
-                        public void action() {
-                            mController.zoomTo(firstPoint.getLatLong(), MAXIMUM_ZOOMLEVEL);
-                        }
-                    });
+                    mController.addPoint(firstPoint.getLatLong(), ICON_START_POINT,
+                            () -> mController.zoomTo(firstPoint.getLatLong(), MAXIMUM_ZOOMLEVEL));
                 }
 
                 //Водитель
                 if (mDriver != null) {
-                    updateDriverInfoLayout();
+                    updateTimeToCustomer();
                     if (enabledDriverOnMap()) {
                         mController.addPoint(
                                 mDriver.getGeo().toLatLong(),
@@ -267,39 +295,89 @@ public class ActiveOrderMapActivity extends BaseActivity implements View.OnClick
     private void updateDriverInfoLayout() {
         if (mDriver == null) return;
 
-        runOnUiThread(() -> {
-            //Имя
-            if (!TextUtils.isEmpty(mDriver.getName())) {
-                tvDriverName.setText(mDriver.getName());
-                tvDriverName.setVisibility(View.VISIBLE);
-            } else {
-                tvDriverName.setVisibility(View.INVISIBLE);
-            }
 
-            //Авто
-            if (!TextUtils.isEmpty(mDriver.getCar().getCarInfo())) {
-                tvDriverCar.setText(mDriver.getCar().getCarInfo());
-                tvDriverCar.setVisibility(View.VISIBLE);
-            } else {
-                tvDriverCar.setVisibility(View.INVISIBLE);
-            }
+        //Имя
+        if (!TextUtils.isEmpty(mDriver.getName())) {
+            tvDriverName.setText(mDriver.getName());
+            tvDriverName.setVisibility(View.VISIBLE);
+        } else {
+            tvDriverName.setVisibility(View.INVISIBLE);
+        }
 
-            OrderStatuses status = OrderStatuses.getShortStatus(mOrder.getStatus().getID());
-            if (!status.equals(OrderStatuses.execute) && !status.equals(OrderStatuses.cancelled)) {
-                int minsToCustomer = getTimeToCustomer();
-                String msg = getString(R.string.msg_UnknowTime);
-                if (minsToCustomer > 0) {
-                    msg = getString(R.string.msg_DriverInYouPlaseOn)
-                            + DateTime.dateStringFromMins(ActiveOrderMapActivity.this, minsToCustomer);
-                }
-                tvDuration.setText(msg);
-            } else {
-                llDuration.setVisibility(View.GONE);
-            }
+        //Авто
+        if (!TextUtils.isEmpty(mDriver.getCar().getCarInfo())) {
+            tvDriverCar.setText(mDriver.getCar().getCarInfo());
+            tvDriverCar.setVisibility(View.VISIBLE);
+        } else {
+            tvDriverCar.setVisibility(View.INVISIBLE);
+        }
 
-            //Позвонить
-            ibtnCall.setOnClickListener(v -> callToDriver());
-        });
+        loadDriverPhoto(mDriver.getID());
+
+        updateTimeToCustomer();
+
+        //Позвонить
+        ibtnCall.setOnClickListener(v -> callToDriver());
+    }
+
+    private void loadDriverPhoto(int driverId) {
+        Picasso
+                .with(this)
+                .load(Uri.parse(getDriverPhotoUrl(driverId)))
+                .into(iv_photo, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        LogUtil.log(LogUtil.INFO, "Success");
+                        handleSuccessLoadDriverPhoto();
+                    }
+
+                    @Override
+                    public void onError() {
+                        LogUtil.log(LogUtil.ERROR, "Error");
+                        handleErrorLoadDriverPhoto();
+                    }
+                });
+    }
+
+    private void handleSuccessLoadDriverPhoto() {
+        ImagePopup popup = new ImagePopup(this);
+        popup.setBackgroundColor(Color.parseColor("#BB000000"));
+        popup.setHideCloseIcon(true);
+        popup.setFullScreen(true);
+        popup.setImageOnClickClose(true);
+        popup.initiatePopup(iv_photo.getDrawable());
+        iv_photo.setOnClickListener(view -> popup.viewPopup());
+    }
+
+    private void handleErrorLoadDriverPhoto() {
+        iv_photo.setImageDrawable(
+                ContextCompat.getDrawable(ActiveOrderMapActivity.this,
+                        R.drawable.default_user_icon));
+    }
+
+    private String getDriverPhotoUrl(int driverId) {
+        String url = getString(R.string.groupChanel);
+        String protocol = Server.isHttp(url) ? "http://" : "https://";
+        return protocol +
+                url +
+                "/handlers/sedi/image.ashx?type=employee" +
+                "&id=" +
+                driverId;
+    }
+
+    private void updateTimeToCustomer() {
+        OrderStatuses status = OrderStatuses.getShortStatus(mOrder.getStatus().getID());
+        if (!status.equals(OrderStatuses.execute) && !status.equals(OrderStatuses.cancelled)) {
+            int minsToCustomer = getTimeToCustomer();
+            String msg = getString(R.string.msg_UnknowTime);
+            if (minsToCustomer > 0) {
+                msg = getString(R.string.msg_DriverInYouPlaseOn)
+                        + DateTime.dateStringFromMins(ActiveOrderMapActivity.this, minsToCustomer);
+            }
+            tvDuration.setText(msg);
+        } else {
+            tvDuration.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -309,7 +387,7 @@ public class ActiveOrderMapActivity extends BaseActivity implements View.OnClick
         if (mDriver == null) return;
 
         QueryList<_Phone> phones = mDriver.getPhones();
-        if (phones == null || phones.isEmpty()){
+        if (phones == null || phones.isEmpty()) {
             MessageBox.show(this, R.string.msg_driver_phone_not_found);
             return;
         }
@@ -323,7 +401,7 @@ public class ActiveOrderMapActivity extends BaseActivity implements View.OnClick
         if (p != null)
             phoneItems.add(new PhoneWrapper(p, getString(R.string.call_to_dispatcher)));
 
-        if (phoneItems.isEmpty()){
+        if (phoneItems.isEmpty()) {
             MessageBox.show(this, R.string.msg_driver_phone_not_found);
             return;
         }
@@ -368,11 +446,11 @@ public class ActiveOrderMapActivity extends BaseActivity implements View.OnClick
         if (mOrder == null) {
             ibtnShowStartPoint.setVisibility(View.INVISIBLE);
             ibtnShowDriverCar.setVisibility(View.INVISIBLE);
-            findViewById(R.id.mva_rlDriverInfo).setVisibility(View.INVISIBLE);
+            ll_bottom_sheet.setVisibility(View.INVISIBLE);
         } else {
             ibtnShowStartPoint.setVisibility(View.VISIBLE);
             ibtnShowDriverCar.setVisibility(enabledDriverOnMap() ? View.VISIBLE : View.INVISIBLE);
-            findViewById(R.id.mva_rlDriverInfo).setVisibility((mDriver != null && mDriver.getID() > 0) ? View.VISIBLE : View.INVISIBLE);
+            ll_bottom_sheet.setVisibility((mDriver != null && mDriver.getID() > 0) ? View.VISIBLE : View.INVISIBLE);
         }
     }
 

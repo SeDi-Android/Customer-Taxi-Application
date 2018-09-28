@@ -1,5 +1,6 @@
 package ru.sedi.customerclient.activitys.user_registration;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,16 +16,16 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import kg.ram.asyncjob.AsyncJob;
 import ru.sedi.customer.R;
-import ru.sedi.customerclient.classes.App;
-import ru.sedi.customerclient.classes.Const;
-import ru.sedi.customerclient.classes.Customer._LoginInfo;
 import ru.sedi.customerclient.NewDataSharing.Collections.Collections;
 import ru.sedi.customerclient.ServerManager.Server;
 import ru.sedi.customerclient.ServerManager.ServerManager;
 import ru.sedi.customerclient.base.BaseActivity;
+import ru.sedi.customerclient.classes.App;
+import ru.sedi.customerclient.classes.Const;
+import ru.sedi.customerclient.classes.Customer._LoginInfo;
+import ru.sedi.customerclient.classes.Helpers.Helpers;
 import ru.sedi.customerclient.common.AsyncAction.AsyncAction;
 import ru.sedi.customerclient.common.AsyncAction.IActionFeedback;
 import ru.sedi.customerclient.common.AsyncAction.ProgressDialogHelper;
@@ -41,9 +42,12 @@ public class UserKeyInputActivity extends BaseActivity {
     public static final String BY_MAIL = "byMail";
     public static final String NAME = "name";
 
-    @BindView(R.id.etSmsKey) EditText etSmsKey;
-    @BindView(R.id.tvMessage) TextView tvMessage;
-    @BindView(R.id.btnSend) Button btnSend;
+    @BindView(R.id.etSmsKey)
+    EditText etSmsKey;
+    @BindView(R.id.tvMessage)
+    TextView tvMessage;
+    @BindView(R.id.btnSend)
+    Button btnSend;
 
     private String mData, mUserName = "User";
     private boolean byMail;
@@ -95,8 +99,10 @@ public class UserKeyInputActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 4)
+                if (s.length() == 4) {
+                    Helpers.hideKeyboard(etSmsKey);
                     btnSend.performClick();
+                }
             }
         });
         tvMessage.setText(String.format("%s: %s", tvMessage.getText(), mData));
@@ -115,9 +121,10 @@ public class UserKeyInputActivity extends BaseActivity {
                 .withProgress(mContext, R.string.save_user_message)
                 .doWork(() -> {
                     _LoginInfo user = ServerManager.GetInstance().getUser(smsKey, mUserName);
-                    if(user == null)
+                    if (user == null)
                         throw new Exception("Данные о пользователе недоступны. Попробуйте позднее.");
 
+                    Prefs.setValue(PrefsName.USER_KEY, user.getUserKey());
                     //Партнерский ключ
                     String partnerCode = Prefs.getString(PrefsName.PARTNER_KEY);
                     if (!TextUtils.isEmpty(partnerCode))
@@ -130,7 +137,6 @@ public class UserKeyInputActivity extends BaseActivity {
                     return user;
                 })
                 .onSuccess(loginInfo -> {
-                    Prefs.setValue(PrefsName.USER_KEY, loginInfo.getUserKey());
                     App.isAuth = true;
                     Collections.me().setUser(loginInfo);
 
@@ -143,23 +149,25 @@ public class UserKeyInputActivity extends BaseActivity {
 
 
     private void resendSmsKey() {
-        final SweetAlertDialog pd = ProgressDialogHelper.show(this, getString(R.string.resend_key_message));
-        AsyncAction.run(() -> ServerManager.GetInstance().getSmsKey(mData, byMail), new IActionFeedback<Server>() {
-            @Override
-            public void onResponse(Server server) {
-                if (pd != null)
-                    pd.dismiss();
+        final ProgressDialog pd = ProgressDialogHelper.show(this, getString(R.string.resend_key_message));
+        String userType = "Customer";
+        AsyncAction.run(() -> ServerManager.GetInstance().getSmsKey(mData, byMail, userType),
+                new IActionFeedback<Server>() {
+                    @Override
+                    public void onResponse(Server server) {
+                        if (pd != null)
+                            pd.dismiss();
 
-                MessageBox.show(UserKeyInputActivity.this, server.getResponceMessage(), null);
-                etSmsKey.setText(Const.EmptyStr);
-            }
+                        MessageBox.show(UserKeyInputActivity.this, server.getResponceMessage(), null);
+                        etSmsKey.setText(Const.EmptyStr);
+                    }
 
-            @Override
-            public void onFailure(Exception e) {
-                if (pd != null)
-                    pd.dismiss();
-            }
-        });
+                    @Override
+                    public void onFailure(Exception e) {
+                        if (pd != null)
+                            pd.dismiss();
+                    }
+                });
     }
 
     @Override

@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-     <string name="appName" translatable="false">SeDi: Заказчик</string>
+
+    <string name="appName" translatable="false">Заказчик</string>
     <string name="groupChanel" translatable="false">test2.sedi.ru</string>
-    <string name="sediApiKey" translatable="false">94C2B362-8D67-4E67-A5B4-2C63BAADC6C8</string>
-    <string name="googleApiKey" translatable="false">AIzaSyAEtcrlgDKpTuos3T9dUX55_B915J3r0Gg</string>
-    <color name="primaryColor">#ff8c00</color>
+    <string name="sediApiKey" translatable="false">ЗАПРОСИТЕ_КЛЮЧ_У_МЕНЕДЖЕРА</string>
+    <string name="googleApiKey" translatable="false">ЗАПРОСИТЕ_КЛЮЧ_У_МЕНЕДЖЕРА</string>
+    <color name="primaryColor">#FF8C00</color>
     <color name="primaryDarkColor">#FFA500</color>
     <color name="splashBackgroundColor">#ececec</color>
+    <string name="schema"></string>
+    <string name="appmetrica_key"></string>
+
+
 </resources>

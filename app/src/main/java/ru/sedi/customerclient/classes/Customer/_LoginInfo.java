@@ -1,18 +1,17 @@
 package ru.sedi.customerclient.classes.Customer;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.text.TextUtils;
 
 import java.util.List;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-import ru.sedi.customerclient.classes.Const;
-import ru.sedi.customerclient.enums.PrefsName;
 import ru.sedi.customerclient.NewDataSharing._Owner;
 import ru.sedi.customerclient.NewDataSharing._Phone;
 import ru.sedi.customerclient.NewDataSharing._Point;
 import ru.sedi.customerclient.Otto.SediBus;
 import ru.sedi.customerclient.ServerManager.ServerManager;
+import ru.sedi.customerclient.classes.Const;
 import ru.sedi.customerclient.common.AsyncAction.AsyncAction;
 import ru.sedi.customerclient.common.AsyncAction.IActionFeedback;
 import ru.sedi.customerclient.common.AsyncAction.IFunc;
@@ -21,6 +20,7 @@ import ru.sedi.customerclient.common.DateTime;
 import ru.sedi.customerclient.common.LINQ.QueryList;
 import ru.sedi.customerclient.common.MessageBox.MessageBox;
 import ru.sedi.customerclient.common.SystemManagers.Prefs;
+import ru.sedi.customerclient.enums.PrefsName;
 
 public class _LoginInfo {
     private int ID; // ID пользователя
@@ -102,11 +102,11 @@ public class _LoginInfo {
         if (getID() <= 0)
             return;
 
-        SweetAlertDialog pd = null;
+        ProgressDialog pd = null;
         if (b && (context != null)) {
             pd = ProgressDialogHelper.show(context);
         }
-        final SweetAlertDialog finalPd = pd;
+        final ProgressDialog finalPd = pd;
         AsyncAction.run(new IFunc<_Balance>() {
             @Override
             public _Balance Func() throws Exception {

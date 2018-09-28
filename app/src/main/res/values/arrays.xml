@@ -3,13 +3,13 @@
     <array name="LocaleName">
         <item>Русский</item>
         <item>Deutsch</item>
-        <item>English</item>
+        <!--<item>English</item>-->
     </array>
 
     <array name="LocaleCode">
         <item>ru</item>
         <item>de</item>
-        <item>en</item>
+        <!--<item>en</item>-->
     </array>
 
     <array name="TimePeriods">

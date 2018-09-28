@@ -17,15 +17,18 @@ import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
 
+import ru.sedi.customerclient.classes.App;
+
 public class SediOsmrManager extends OSRMRoadManager {
 
     private boolean mUseShortInfo;
-    private final String LINK = "http://osrm.sedi.ru:5005/route/v1/driving/";
+    private final String BASE_URL = "http://osrm.sedi.ru:5005/route/v1/driving/";
+    private final String TAXILIVE_URL = "http://taxilive.ch:5000/route/v1/driving/";
 
 
     public SediOsmrManager(Context context, boolean useShortInfo) {
         super(context);
-        super.setService(LINK);
+        super.setService(App.isExcludedApp ? TAXILIVE_URL : BASE_URL);
         mUseShortInfo = useShortInfo;
     }
 

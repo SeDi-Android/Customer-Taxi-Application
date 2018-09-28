@@ -1,46 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:padding="4dp">
 
     <TextView
+        android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="route_name"
-        android:id="@+id/tvName"/>
+        android:textColor="@color/primaryColor"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/tvRoute"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="route_addresses"
-        android:id="@+id/tvRoute"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/primaryColor"
         android:layout_below="@+id/tvName"
-        android:layout_toLeftOf="@+id/ibtnRemove"/>
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@+id/ivRemove"
+        android:text="route_addresses"
+        android:textSize="18sp" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/liteGrayColor2"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/tvRoute">
-    </FrameLayout>
-
-    <ImageButton
+    <ImageView
+        android:id="@+id/ivRemove"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ibtnRemove"
-        android:background="@drawable/btn_gray"
-        android:src="@drawable/ic_delete"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:background="@drawable/btn_gray"
+        android:src="@drawable/ic_delete" />
 </RelativeLayout>

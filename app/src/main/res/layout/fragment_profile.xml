@@ -14,19 +14,43 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/partner_code"
+                android:textColor="@color/primaryColor"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvAccountId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="@string/secondname"
             android:textColor="@color/primaryColor"
-            android:textSize="@dimen/FontSize_15"/>
+            android:textSize="@dimen/FontSize_15" />
 
         <EditText
             android:id="@+id/etSecondname"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/secondname"
-            android:inputType="textPersonName"/>
+            android:inputType="textPersonName" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -98,8 +122,9 @@
             android:id="@+id/etPhone"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:hint="@string/phone_number"
-            android:inputType="phone"/>
+            android:inputType="phone" />
 
         <Button
             android:id="@+id/btnSave"

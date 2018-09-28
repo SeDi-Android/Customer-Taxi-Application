@@ -17,6 +17,7 @@ import kg.ram.asyncjob.IOnSuccessListener;
 import ru.sedi.customer.R;
 import ru.sedi.customerclient.NewDataSharing._Point;
 import ru.sedi.customerclient.classes.GeoLocation.Nominatium.NominatimGeocoder;
+import ru.sedi.customerclient.classes.Helpers.AppPermissionHelper;
 import ru.sedi.customerclient.common.LINQ.QueryList;
 import ru.sedi.customerclient.common.LatLong;
 import ru.sedi.customerclient.common.SystemManagers.Prefs;
@@ -30,7 +31,6 @@ public class LocationService implements LocationListener {
 
     private static LocationService instance;
     private final LocationManager mLocationManager;
-    //private final Geocoder mGeoCoder = new Geocoder();
     private final Context mContext;
     private List<ILocationChangeListener> mListeners = new ArrayList<>();
     private LocationServiceListener mLocationServiceListener;
@@ -47,9 +47,9 @@ public class LocationService implements LocationListener {
     }
 
     private void createApiLocation() {
-        if (GoogleApiLocation.isEnabled(mContext) && !mGoogleConnectionFailed)
+        /*if (GoogleApiLocation.isEnabled(mContext) && !mGoogleConnectionFailed)
             mLocationServiceListener = new GoogleApiLocation(mContext, this, getFailedListener());
-        else
+        else*/
             mLocationServiceListener = new DefaultApiLocation(mContext, mLocationManager, this);
     }
 
@@ -67,14 +67,22 @@ public class LocationService implements LocationListener {
         return new NominatimGeocoder(context, Prefs.getString(PrefsName.LOCALE_CODE)).syncSearch(query);
     }
 
+
     public void getAsyncPointByLocation(Context context, LatLong latLong, IOnSuccessListener<_Point> successListener) {
-        AsyncJob<_Point> build = new AsyncJob.Builder<_Point>()
-                .withProgress(context, R.string.msg_PleaseWait)
-                .doWork(() -> getAddressByLocationPoint(context, latLong.toString()))
+        getAsyncPointByLocation(context, true, latLong, successListener);
+    }
+
+
+    public void getAsyncPointByLocation(Context context, boolean withProgress, LatLong latLong, IOnSuccessListener<_Point> successListener) {
+        AsyncJob.Builder<_Point> build = new AsyncJob.Builder<_Point>();
+
+        if (withProgress)
+            build.withProgress(context, R.string.msg_PleaseWait);
+
+        build.doWork(() -> getAddressByLocationPoint(context, latLong.toString()))
                 .onSuccess(successListener)
-                .onFailure(throwable -> ToastHelper.ShowLongToast(throwable.getMessage()))
-                .build();
-        build.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                .onFailure(throwable -> ToastHelper.ShowLongToast(throwable.getMessage()));
+        build.build().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public boolean onceProviderEnabled() {
@@ -133,5 +141,26 @@ public class LocationService implements LocationListener {
             mGoogleConnectionFailed = true;
             createApiLocation();
         };
+    }
+
+    public LatLong getLastLocation() {
+        if (mLocationManager == null
+                || !AppPermissionHelper.isLocationPermissionGranted(mContext)) {
+            return null;
+        }
+
+        Location gpsLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location networkLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+        long gpsTime = 0, networkTime = 0;
+
+        if (gpsLocation != null) gpsTime = gpsLocation.getTime();
+        if (networkLocation != null) networkTime = networkLocation.getTime();
+
+        Location location = gpsTime > networkTime ? gpsLocation : networkLocation;
+
+        if (location == null) return null;
+
+        return new LatLong(location.getLatitude(), location.getLongitude());
     }
 }

@@ -22,20 +22,25 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ru.sedi.customerclient.widget.ClearableEditText
+                <EditText
                     android:id="@+id/etOtherInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/additional_info"/>
+                    android:hint="@string/additional_info"
+                    android:imeOptions="actionDone"
+                    android:lines="1"
+                    android:linksClickable="false"
+                    android:singleLine="true" />
 
                 <ImageButton
-                    android:id="@+id/ibtnSpeechRec"
+                    android:id="@+id/ibtnAction"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:src="@drawable/ic_microphone_dark"/>
+                    android:src="@drawable/ic_pencil"
+                    android:tint="@color/shadowColor" />
             </LinearLayout>
 
             <ListView

@@ -8,6 +8,7 @@ import com.loopj.android.http.RequestParams;
 import java.net.URLEncoder;
 
 import ru.sedi.customerclient.NewDataSharing.BankCard;
+import ru.sedi.customerclient.NewDataSharing.CostCalculationResult;
 import ru.sedi.customerclient.NewDataSharing.PaymentSystems;
 import ru.sedi.customerclient.NewDataSharing._Bill;
 import ru.sedi.customerclient.NewDataSharing._Driver;
@@ -25,9 +26,11 @@ import ru.sedi.customerclient.common.LINQ.QueryList;
 import ru.sedi.customerclient.common.LatLong;
 import ru.sedi.customerclient.common.LogUtil;
 import ru.sedi.customerclient.common.SystemManagers.Prefs;
+import ru.sedi.customerclient.enums.InvitationTypes;
 import ru.sedi.customerclient.enums.OrderStatuses;
 import ru.sedi.customerclient.enums.PrefsName;
 import ru.sedi.customerclient.enums.ServerCommands;
+import ru.sedi.customerclient.enums.UserTypes;
 
 public class ServerManager {
     public static final String LOGININCORRECT = "loginincorrect";
@@ -85,7 +88,7 @@ public class ServerManager {
     /**
      * Request sms code.
      */
-    public Server getSmsKey(String phoneOrMail, boolean byMail) {
+    public Server getSmsKey(String phoneOrMail, boolean byMail, String userType) {
         LogUtil.log(LogUtil.INFO, "Получить смс ключ");
         RequestParams params = new RequestParams();
         if (byMail) {
@@ -93,6 +96,7 @@ public class ServerManager {
             params.add("email", phoneOrMail);
         } else
             params.add("phone", phoneOrMail);
+        params.add("usertype", userType);
         return serverQuery(ServerCommands.GET_SMS_KEY, params);
     }
 
@@ -336,18 +340,38 @@ public class ServerManager {
         return point;
     }
 
-    public String getShortUrl(String fromUrl) {
+    public String getHash(String partnerUrl) throws Exception {
         RequestParams params = new RequestParams();
-        params.put("longurl", fromUrl);
-        Server server = serverQuery(ServerCommands.GET_SHORTURL, params);
-        if (server.isSuccess()) {
-            try {
-                return ParserManager.parseShortUrl(server);
-            } catch (Exception e) {
-                LogUtil.log(e);
-                return fromUrl;
-            }
-        } else
-            return fromUrl;
+        params.add("sourcestring", partnerUrl);
+
+        Server server = serverQuery(ServerCommands.GET_HASHBYSTRING, params);
+
+        return ParserManager.parseHash(server);
+    }
+
+    public String getInvitationText(String hash) throws Exception {
+        RequestParams params = new RequestParams();
+        params.add("hash", hash);
+
+        Server server = serverQuery(ServerCommands.GET_INVITATION_TEXT, params);
+        return ParserManager.parseInvitation(server);
+    }
+
+    public String getInvitationText(int distributorAccountID, UserTypes userTypes, InvitationTypes invitationTypes) throws Exception {
+        RequestParams params = new RequestParams();
+        params.add("distributorAccountID", String.valueOf(distributorAccountID));
+        params.add("userType", userTypes.name());
+        params.add("invitationType", invitationTypes.name());
+
+        Server server = serverQuery(ServerCommands.GET_INVITATION_TEXT, params);
+        return ParserManager.parseInvitation(server);
+    }
+
+    public CostCalculationResult getCostCalculationResult(int costCalculationId) throws Exception {
+        RequestParams params = new RequestParams();
+        params.add("costcalculationid", String.valueOf(costCalculationId));
+
+        Server server = serverQuery(ServerCommands.GET_COSTCALCULATION_RESULT, params);
+        return ParserManager.parseCostCalculationResult(server);
     }
 }

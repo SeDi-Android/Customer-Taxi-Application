@@ -64,7 +64,7 @@ public class AboutAppActivity extends BaseActivity implements View.OnClickListen
             Button btnWhatNew = (Button) this.findViewById(R.id.btnWhatNew);
             btnWhatNew.setText(String.format(getString(R.string.what_new_format), getAppVersion()));
             btnWhatNew.setOnClickListener(this);
-            btnWhatNew.setVisibility(App.isTaxiLive ? View.GONE : View.VISIBLE);
+            btnWhatNew.setVisibility(App.isExcludedApp ? View.GONE : View.VISIBLE);
 
 
         } catch (Exception e) {

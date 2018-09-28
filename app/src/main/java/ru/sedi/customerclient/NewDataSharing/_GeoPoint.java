@@ -41,4 +41,8 @@ public class _GeoPoint {
                 ", Lon=" + Lon +
                 '}';
     }
+
+    public boolean isValid() {
+        return getLat() != 0 && getLon() != 0;
+    }
 }

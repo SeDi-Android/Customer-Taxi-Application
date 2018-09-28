@@ -1,140 +1,189 @@
 package ru.sedi.customerclient.activitys.driver_rating;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RatingBar;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import ru.sedi.customer.R;
-import ru.sedi.customerclient.base.BaseActivity;
-import ru.sedi.customerclient.classes.SpeechRecognitionHelper;
 import ru.sedi.customerclient.ServerManager.Server;
-import ru.sedi.customerclient.ServerManager.ServerManager;
-import ru.sedi.customerclient.common.AsyncAction.AsyncAction;
-import ru.sedi.customerclient.common.AsyncAction.IActionFeedback;
+import ru.sedi.customerclient.base.BaseActivity;
+import ru.sedi.customerclient.classes.Const;
+import ru.sedi.customerclient.classes.SpeechRecognitionHelper;
 import ru.sedi.customerclient.common.AsyncAction.ProgressDialogHelper;
 import ru.sedi.customerclient.common.LogUtil;
 import ru.sedi.customerclient.common.MessageBox.MessageBox;
-import ru.sedi.customerclient.common.MessageBox.UserChoiseListener;
+import ru.sedi.customerclient.common.SystemManagers.Prefs;
+import ru.sedi.customerclient.enums.PrefsName;
 
 public class DriverRatingActivity extends AppCompatActivity {
 
     public static final int SUCCESS_RESPONSE = 321;
-    public static final String COMMENT = "comment";
-    public static final String RATING = "rating";
-    public static final String ID = "id";
+    private static final String ORDER_ID = "orderId";
 
-    //<editor-fold desc="Vars">
-    private String date = "";
-    private String orderId = "";
-    private RatingBar rbRating;
-    private EditText etMessage;
-    private Button btnSave;
-    private ImageButton ibtnVoiceInput;
-    //</editor-fold>
+    private OkHttpClient mOkHttpClient = new OkHttpClient.Builder().build();
+    private String mOrderId = "-1";
+
+    @BindView(R.id.ddr_rbRating)
+    RatingBar rbRating;
+    @BindView(R.id.ddr_etMessage)
+    EditText etMessage;
+
+    public static Intent getIntent(Context context, String orderId) {
+        Intent intent = new Intent(context, DriverRatingActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        intent.putExtra(ORDER_ID, orderId);
+        return intent;
+    }
+
+    public static Intent getIntentForResult(Context context, String orderId) {
+        Intent intent = new Intent(context, DriverRatingActivity.class);
+        intent.putExtra(ORDER_ID, orderId);
+        return intent;
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_driver_rating);
-        InitOrderIdAndDate();
-        SetWindowParameters();
-        InitUiElements();
+        ButterKnife.bind(this);
+        readIntentExtras();
+        updateWindowParameters();
+
+        rbRating.setRating(0f);
     }
 
-    private void InitOrderIdAndDate() {
+    private void readIntentExtras() {
         if (getIntent().getExtras() != null) {
-            date = getIntent().getExtras().getString("date");
-            orderId = getIntent().getExtras().getString("orderId");
-            LogUtil.log(LogUtil.INFO, "ID заказа: %s", orderId);
+            mOrderId = getIntent().getExtras().getString(ORDER_ID);
+            LogUtil.log(LogUtil.INFO, "ID заказа: %s", mOrderId);
         }
-        if (date.length() > 0 && orderId.length() > 0)
-            setTitle(String.format(getString(R.string.msg_OrderNWith_), orderId, date));
+        if (mOrderId.length() > 0)
+            setTitle(String.format(getString(R.string.msg_OrderNWith_), mOrderId));
         else {
-            LogUtil.log(LogUtil.ERROR, "Нет id или даты");
             finish();
         }
     }
 
-    private void InitUiElements() {
-        etMessage = (EditText) this.findViewById(R.id.ddr_etMessage);
-        ibtnVoiceInput = (ImageButton) this.findViewById(R.id.ddr_ibtnVoice);
-        ibtnVoiceInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SpeechRecognitionHelper.run(DriverRatingActivity.this);
-            }
-        });
-        btnSave = (Button) this.findViewById(R.id.ddr_btnSave);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MessageBox.show(DriverRatingActivity.this, getString(R.string.msg_SetRatingQuestion), null, new UserChoiseListener() {
-                    @Override
-                    public void OnOkClick() {
-                        super.OnOkClick();
-                        SetRating();
-                    }
-
-                    @Override
-                    public void onCancelClick() {
-                        super.onCancelClick();
-                    }
-                }, true, new int[]{R.string.yes, R.string.no});
-            }
-        });
-        rbRating = (RatingBar) this.findViewById(R.id.ddr_rbRating);
+    @OnClick(R.id.ddr_btnSave)
+    @SuppressWarnings(Const.UNUSED)
+    public void onSaveBtnClick() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.msg_SetRatingQuestion)
+                .setPositiveButton(R.string.ok, (dialogInterface, i) -> setRating())
+                .setNegativeButton(R.string.cancel, null)
+                .create().show();
     }
 
-    private void SetRating() {
+    @OnClick(R.id.ddr_ibtnVoice)
+    @SuppressWarnings(Const.UNUSED)
+    public void onVoiceInputBtnClick() {
+        SpeechRecognitionHelper.run(DriverRatingActivity.this);
+    }
+
+    private void setRating() {
         final String comment = etMessage.getText().toString();
-        int i = (int) rbRating.getRating();
-        final int rating = (i <= 0) ? 0 : i;
+        int rating = (int) rbRating.getRating();
 
-        final SweetAlertDialog pd = ProgressDialogHelper.show(this);
-        AsyncAction.run(() -> ServerManager.GetInstance().setRating(orderId, rating, comment),
-                new IActionFeedback<Server>() {
-                    @Override
-                    public void onResponse(Server server) {
-                        if (pd != null)
-                            pd.dismiss();
+        Call call = mOkHttpClient.newCall(getRequest(rating, comment));
 
-                        if (!server.isSuccess()) {
-                            MessageBox.show(DriverRatingActivity.this, String.format(getString(R.string.service_unavailable_message), server.getResponceMessage()), null);
-                            return;
-                        }
-                        MessageBox.show(DriverRatingActivity.this, getString(R.string.msg_RatingSetSuccess), null, new UserChoiseListener() {
-                            @Override
-                            public void OnOkClick() {
-                                Intent resultIntent = new Intent();
-                                resultIntent
-                                        .putExtra(ID, Integer.parseInt(orderId))
-                                        .putExtra(COMMENT, comment)
-                                        .putExtra(RATING, rating);
-                                setResult(RESULT_OK, resultIntent);
-                                finish();
-                            }
-                        }, false);
-                    }
+        final ProgressDialog pd = ProgressDialogHelper.show(this);
+        pd.setOnCancelListener(dialogInterface -> call.cancel());
 
-                    @Override
-                    public void onFailure(Exception e) {
-                        if (pd != null)
-                            pd.dismiss();
-                        MessageBox.show(DriverRatingActivity.this, String.format(getString(R.string.service_unavailable_message), e.getMessage()), null);
-                    }
-                });
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                pd.dismiss();
+                if (!call.isCanceled()) showAlertMessage(e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                pd.dismiss();
+                handleResponse(response);
+            }
+        });
     }
 
-    private void SetWindowParameters() {
+    private Request getRequest(int rating, String comment) {
+        String urlChanel = getString(R.string.groupChanel);
+        String httpProtocol = Server.isHttp(urlChanel) ? "http" : "https";
+        String url = String.format("%s://%s/webapi?q=set_rating", httpProtocol, urlChanel);
+
+        new Prefs(this);
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("orderid", mOrderId)
+                .add("rating", String.valueOf(rating))
+                .add("apikey", getString(R.string.sediApiKey))
+                .add("userkey", Prefs.getString(PrefsName.USER_KEY))
+                .addEncoded("comment", comment)
+                .build();
+
+        return new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+    }
+
+    private void handleResponse(Response response) {
+        if (!response.isSuccessful()) {
+            MessageBox.show(DriverRatingActivity.this, R.string.Error);
+            return;
+        }
+
+        try {
+            String string = response.body().string();
+            JSONObject o = new JSONObject(string);
+            if (o.has("Success") && o.getBoolean("Success")) {
+                runOnUiThread(() -> new AlertDialog.Builder(this)
+                        .setMessage(R.string.msg_RatingSetSuccess)
+                        .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+                            setResult(RESULT_OK);
+                            finish();
+                        })
+                        .create().show());
+            } else {
+                String msg = getString(R.string.Error);
+                if (o.has("Message")) {
+                    msg = o.getString("Message");
+                }
+                showAlertMessage(msg);
+            }
+        } catch (IOException e) {
+            showAlertMessage(e.getMessage());
+        } catch (JSONException e) {
+            showAlertMessage(e.getMessage());
+        }
+    }
+
+    private void showAlertMessage(String msg) {
+        MessageBox.show(DriverRatingActivity.this, msg);
+    }
+
+    private void updateWindowParameters() {
         WindowManager.LayoutParams attributes = getWindow().getAttributes();
         attributes.width = WindowManager.LayoutParams.MATCH_PARENT;
         attributes.height = WindowManager.LayoutParams.WRAP_CONTENT;

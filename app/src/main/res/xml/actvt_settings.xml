@@ -9,7 +9,7 @@
     <CheckBoxPreference
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:key="check_box_preference_1"
+        android:key="ENABLED_SET_DEFAULT_ADDRESS"
         android:summary="@string/msg_DefaultAddressDesc"
         android:title="@string/DefaultAddress"/>
     <ListPreference
@@ -19,8 +19,4 @@
         android:entries="@array/LocaleName"
         android:entryValues="@array/LocaleCode"/>
 
-    <CheckBoxPreference
-        android:key="IS_OSM"
-        android:summary="Использовать геокодер OSM иначе Google"
-        android:title="Использовать геокодер OSM"/>
 </PreferenceScreen>

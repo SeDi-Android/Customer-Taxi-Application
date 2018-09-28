@@ -11,7 +11,6 @@ import ru.sedi.customerclient.Otto.LocaleChangeEvent;
 import ru.sedi.customerclient.Otto.SediBus;
 import ru.sedi.customerclient.activitys.settings.SettingsActivity;
 import ru.sedi.customerclient.classes.App;
-import ru.sedi.customerclient.common.SystemManagers.Prefs;
 import ru.sedi.customerclient.enums.PrefsName;
 
 public class SettingFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -38,30 +37,15 @@ public class SettingFragment extends PreferenceFragmentCompat implements SharedP
         if (key.equals(PrefsName.VIBRATION_NOTIFY)) {
             SediBus.getInstance().post(new HeaderUpdateEvent());
         }
-
-        //TODO Убрать эту фигню перед коммитом
-        if (key.equals("IS_OSM")) {
-            String s = "Как геокодер используется ";
-            if (Prefs.getBool(key))
-                s += "OSM";
-            else
-                s += "GOOGLE";
-            getPreferenceScreen().findPreference("IS_OSM").setSummary(s);
-        }
     }
 
 
     @Override
     public void onStart() {
         super.onStart();
-        getPreferenceScreen().findPreference("LOCALE_CODE").setVisible(!App.isTaxiLive);
+        getPreferenceScreen().findPreference("LOCALE_CODE").setVisible(!App.isExcludedApp);
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
-
-        String s = "Как геокодер используется ";
-        if (Prefs.getBool("IS_OSM")) s += "OSM";
-        else s += "GOOGLE";
-        getPreferenceScreen().findPreference("IS_OSM").setSummary(s);
     }
 
     @Override

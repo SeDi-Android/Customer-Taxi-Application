@@ -36,7 +36,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Medium Text"
                     android:id="@+id/tvUserName"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/primaryColor"
                     android:drawableLeft="@drawable/ic_account_dark"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
@@ -64,18 +64,7 @@
             android:gravity="center_vertical|right"
             android:textSize="@dimen/FontSize_15"
             android:layout_marginTop="10dp"
-            android:textColor="@color/text_color"/>
+            android:textColor="@color/primaryColor"/>
     </LinearLayout>
-
-    <ImageButton
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:id="@+id/ibtnExit"
-        android:src="@drawable/ic_account_remove_dark"
-        android:background="@drawable/btn_transparent"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_alignParentTop="true"/>
 
 </RelativeLayout>

@@ -5,7 +5,6 @@ public class ServerCommands
     public static final String GET_PAYMENTSYSTEMS = "get_paymentsystems";
     public static final String GET_PROFILE = "get_profile";
     public static final String SET_PROFILE = "set_profile";
-    //public static final String SET_PROFILE = "users.profile.set";
     public static final String PROMOCODE = "promocode";
     public static final String BALANCE = "balance";
     public static final String BILL = "bill";
@@ -26,4 +25,7 @@ public class ServerCommands
     public static final String CHECK_ADDRESS = "check_address";
     public static final String FIND_ADDRESS = "find_address";
     public static final String GET_SHORTURL = "get_shorturl";
+    public static final String GET_HASHBYSTRING = "get_hashbystring";
+    public static final String GET_INVITATION_TEXT = "get_invitation_text";
+    public static final String GET_COSTCALCULATION_RESULT = "get_costcalculationresult";
 }

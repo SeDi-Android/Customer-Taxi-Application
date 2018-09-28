@@ -13,6 +13,7 @@ import java.util.Locale;
 import ru.sedi.customer.R;
 import ru.sedi.customerclient.base.BaseActivity;
 import ru.sedi.customerclient.NewDataSharing._Service;
+import ru.sedi.customerclient.classes.Orders._OrderRegistrator;
 import ru.sedi.customerclient.common.LINQ.QueryList;
 
 public class ServicesAdapter extends ArrayAdapter<_Service> {
@@ -48,7 +49,10 @@ public class ServicesAdapter extends ArrayAdapter<_Service> {
             holder.tvServiceName.setText(getServiceInfo(service));
 
             holder.cbChecked.setChecked(service.isChecked());
-            holder.cbChecked.setOnClickListener(v -> service.setChecked(holder.cbChecked.isChecked()));
+            holder.cbChecked.setOnClickListener(v -> {
+                service.setChecked(holder.cbChecked.isChecked());
+                _OrderRegistrator.me().getOrder().resetCostCalculationInfo();
+            });
 
             view.setOnClickListener(v -> holder.cbChecked.performClick());
 
@@ -61,6 +65,7 @@ public class ServicesAdapter extends ArrayAdapter<_Service> {
 
     /**
      * Return formatted string with service name, cost and unit.
+     *
      * @param service - service.
      * @return formatted string.
      */

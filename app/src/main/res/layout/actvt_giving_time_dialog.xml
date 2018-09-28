@@ -1,45 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/linearLayout"
-              android:padding="8dp"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/backgroundColor"
-              android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical"
+    android:padding="8dp">
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+            <Switch
+                android:id="@+id/sw_rush_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/RushOrder"
+                android:textAllCaps="true"
+                android:textColor="@color/primaryColor"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-        <Switch
-            android:id="@+id/sw_rush_order"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/RushOrder"
-            android:textStyle="bold"
-            android:textColor="@color/primaryColor"
-            android:textAllCaps="true"/>
 
         <FrameLayout
             android:id="@+id/frg_preorder"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
+            android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btn_save"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:padding="0dp"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:padding="0dp"
         android:text="@string/save"
-        android:textColor="@color/primaryDarkColor"/>
+        android:textColor="@color/primaryDarkColor" />
+
 
 </LinearLayout>

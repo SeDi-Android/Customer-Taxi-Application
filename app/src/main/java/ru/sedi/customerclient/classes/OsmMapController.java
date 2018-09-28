@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
+
+import com.google.gson.Gson;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
@@ -20,6 +23,8 @@ import java.util.List;
 
 import ru.sedi.customerclient.common.LINQ.QueryList;
 import ru.sedi.customerclient.common.LatLong;
+import ru.sedi.customerclient.common.SystemManagers.Prefs;
+import ru.sedi.customerclient.enums.PrefsName;
 import ru.sedi.customerclient.interfaces.IAction;
 
 
@@ -37,16 +42,20 @@ public class OsmMapController {
     public OsmMapController(Context context, MapView map) {
         mContext = context;
         mMap = map;
-        mDefaultPoint = App.isTaxiLive
-                ? new GeoPoint(47.378390, 8.541411) // Цюрих
-                : new GeoPoint(55.749046, 37.617999); //Москва
+
+        mDefaultPoint = getUserLastLocation();
+        if(mDefaultPoint == null) {
+            mDefaultPoint = App.isExcludedApp
+                    ? new GeoPoint(47.378390, 8.541411) // Цюрих
+                    : new GeoPoint(55.749046, 37.617999); //Москва
+        }
 
         mMap.setTileSource(TileSourceFactory.MAPNIK);
         mMap.setMultiTouchControls(true);
         mController = mMap.getController();
         mOverlayManager = mMap.getOverlayManager();
         mController.setCenter(mDefaultPoint);
-        mController.setZoom(DEFAULT_ZOOM);
+        mController.setZoom(MapView.MAXIMUM_ZOOMLEVEL);
     }
 
     public ItemizedIconOverlay addPoint(final LatLong loc, int icon, final IAction singleTapAction) {
@@ -135,5 +144,15 @@ public class OsmMapController {
 
     public void zoomToBoundingBox(BoundingBox boundingBox) {
         mMap.zoomToBoundingBox(boundingBox, true);
+    }
+
+    /**
+     * Возвращает последнее известное местоположение пользователя.
+     * @return объект {@link GeoPoint} с координатами.
+     */
+    public GeoPoint getUserLastLocation() {
+        String string = Prefs.getString(PrefsName.USER_LAST_GEOPOINT);
+        if(TextUtils.isEmpty(string)) return null;
+        return new Gson().fromJson(string, GeoPoint.class);
     }
 }

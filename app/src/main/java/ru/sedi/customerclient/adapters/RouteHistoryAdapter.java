@@ -11,16 +11,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ru.sedi.customer.R;
-import ru.sedi.customerclient.NewDataSharing.RouteHistory;
+import ru.sedi.customerclient.db.DBHistoryRoute;
 import ru.sedi.customerclient.common.AsyncAction.IAction;
 import ru.sedi.customerclient.common.LINQ.QueryList;
 
 public class RouteHistoryAdapter extends RecyclerView.Adapter<RouteHistoryAdapter.RouteHistoryHolder> {
 
-    private QueryList<RouteHistory> mRouteHistories;
-    private IAction<RouteHistory> mAction;
+    private QueryList<DBHistoryRoute> mRouteHistories;
+    private IAction<DBHistoryRoute> mAction;
 
-    public RouteHistoryAdapter(QueryList<RouteHistory> histories, IAction<RouteHistory> action) {
+    public RouteHistoryAdapter(QueryList<DBHistoryRoute> histories, IAction<DBHistoryRoute> action) {
         mRouteHistories = histories;
         mAction = action;
     }
@@ -46,7 +46,7 @@ public class RouteHistoryAdapter extends RecyclerView.Adapter<RouteHistoryAdapte
         @BindView(R.id.tvName) TextView tvName;
         @BindView(R.id.tvRoute) TextView tvRoute;
 
-        private RouteHistory mRouteHistory;
+        private DBHistoryRoute mDBHistoryRoute;
         private View mView;
 
         public RouteHistoryHolder(View itemView) {
@@ -54,29 +54,29 @@ public class RouteHistoryAdapter extends RecyclerView.Adapter<RouteHistoryAdapte
             mView = itemView;
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> {
-                if (mAction != null && mRouteHistory != null)
-                    mAction.Action(mRouteHistory);
+                if (mAction != null && mDBHistoryRoute != null)
+                    mAction.Action(mDBHistoryRoute);
             });
         }
 
-        public void update(RouteHistory routeHistory) {
-            if (routeHistory == null)
+        public void update(DBHistoryRoute DBHistoryRoute) {
+            if (DBHistoryRoute == null)
                 return;
 
-            mRouteHistory = routeHistory;
+            mDBHistoryRoute = DBHistoryRoute;
 
-            tvName.setText(routeHistory.getName());
-            tvRoute.setText(routeHistory.getRouteString());
+            tvName.setText(DBHistoryRoute.getName());
+            tvRoute.setText(DBHistoryRoute.getRouteString());
         }
 
-        @OnClick(R.id.ibtnRemove)
+        //@OnClick(R.id.ibtnRemove)
         @SuppressWarnings("unused")
         public void onRemoveClick() {
-            if (mRouteHistory == null) return;
+            if (mDBHistoryRoute == null) return;
 
             new AlertDialog.Builder(mView.getContext())
                     .setMessage(R.string.remove_question)
-                    .setPositiveButton(R.string.yes, (dialog, which) -> mRouteHistories.remove(mRouteHistory))
+                    .setPositiveButton(R.string.yes, (dialog, which) -> mRouteHistories.remove(mDBHistoryRoute))
                     .setNegativeButton(R.string.no, null)
                     .create().show();
         }

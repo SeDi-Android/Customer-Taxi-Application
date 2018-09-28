@@ -19,10 +19,6 @@ public class _TariffsCollection {
         return mTariffs;
     }
 
-    public _Tariff[] getAsArray() {
-        return getAll().toArray(new _Tariff[getAll().size()]);
-    }
-
     public void set(_Tariff[] tariffs) {
         mTariffs = new QueryList<>(tariffs);
     }
@@ -40,34 +36,12 @@ public class _TariffsCollection {
     }
 
     public ListAdapter getAdapter(final Context context, QueryList<_Tariff> tariffs) {
-        /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
-                android.R.layout.simple_list_item_single_choice,
-                getNameList(tariffs)) {
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View v = super.getView(position, convertView, parent);
-
-                ((TextView) v).setTextSize(18);
-                ((TextView) v).setTextColor(ContextCompat.getColor(context, R.color.firstColor));
-                return v;
-            }
-        };*/
         TariffAdapter adapter = new TariffAdapter(context, tariffs);
         return adapter;
-    }
-
-    public ListAdapter getAdapter(Context context) {
-        return getAdapter(context, getAll());
     }
 
     public int size() {
         return mTariffs.size();
     }
 
-    /*public QueryList<String> getNameList(QueryList<_Tariff> tariffs) {
-        QueryList<String> list = new QueryList<>();
-        for (_Tariff tariff : tariffs) {
-            list.add(tariff.toString());
-        }
-        return list;
-    }*/
 }

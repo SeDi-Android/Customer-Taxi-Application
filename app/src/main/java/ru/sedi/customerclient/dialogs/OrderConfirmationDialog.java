@@ -17,10 +17,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.sedi.customer.R;
 import ru.sedi.customerclient.classes.App;
+import ru.sedi.customerclient.classes.Helpers.Helpers;
 import ru.sedi.customerclient.classes.Orders._OrderRegistrator;
 import ru.sedi.customerclient.classes.Validator;
 import ru.sedi.customerclient.NewDataSharing.Collections.Collections;
-import ru.sedi.customerclient.NewDataSharing.RouteHistory;
+import ru.sedi.customerclient.db.DBHistoryRoute;
 import ru.sedi.customerclient.NewDataSharing._Order;
 import ru.sedi.customerclient.activitys.customer_balance.CustomerBalanceActivity;
 import ru.sedi.customerclient.common.DateTime;
@@ -56,6 +57,8 @@ public class OrderConfirmationDialog extends AlertDialog.Builder {
     }
 
     private void onPositiveButtonClick(DialogInterface dialog) {
+        Helpers.hideKeyboard(etPhone);
+
         String contactNumber = etPhone.getText().toString();
         if (!checkValidPhone(contactNumber)) {
             new OrderConfirmationDialog(mContext, mOrder, mPostRegisterAction).show();
@@ -88,7 +91,7 @@ public class OrderConfirmationDialog extends AlertDialog.Builder {
         tvMessage.setText(Html.fromHtml(getFullOrderData()));
         tvMessage.setMovementMethod(new ScrollingMovementMethod());
 
-        cbCashless.setVisibility(App.isTaxiLive ? View.GONE : View.VISIBLE);
+        cbCashless.setVisibility(App.isExcludedApp ? View.GONE : View.VISIBLE);
         cbSaveRoute.setOnCheckedChangeListener((buttonView, isChecked) ->
                 etRouteTitle.setVisibility(cbSaveRoute.isChecked() ? View.VISIBLE : View.GONE));
 
@@ -107,7 +110,7 @@ public class OrderConfirmationDialog extends AlertDialog.Builder {
                 MessageBox.show(mContext, mContext.getString(R.string.set_route_name_message));
                 return false;
             } else {
-                RouteHistory history = new RouteHistory(title, new QueryList<>(mOrder.getRoute().getPoints()));
+                DBHistoryRoute history = new DBHistoryRoute(title, new QueryList<>(mOrder.getRoute().getPoints()));
                 try {
                     Collections.me().getRoutesHistory().add(history);
                     return true;
@@ -122,7 +125,7 @@ public class OrderConfirmationDialog extends AlertDialog.Builder {
     }
 
     private boolean checkValidPhone(String s) {
-        if (!Validator.Valid(Validator.PHONE_PATTERN, s)) {
+        if (!Validator.valid(Validator.PHONE_PATTERN, s)) {
             ToastHelper.showShortToast(mContext.getString(R.string.msg_incorrect_contact_phone));
             return false;
         }

@@ -46,8 +46,8 @@ public class AddressElement {
 
         //Предполагаем что в suburb стоит район города (так чаще всего и есть)
         //доклеиваем его к городу в скобочках.
-        if (!TextUtils.isEmpty(suburb))
-            return String.format("%s (%s)", s, suburb);
+        //if (!TextUtils.isEmpty(suburb))
+        //    return String.format("%s (%s)", s, suburb);
         return s;
     }
 

@@ -9,9 +9,9 @@ import ru.sedi.customerclient.ServerManager.ServerManager;
 
 public class AddressDetailTask extends AsyncTask<_Point, Void, _Point> {
 
-    private final OnAddressDetailSuccess mAddressDetailSuccess;
+    private final OnAddressDetailCallback mAddressDetailSuccess;
 
-    public AddressDetailTask(OnAddressDetailSuccess addressDetailSuccess) {
+    public AddressDetailTask(OnAddressDetailCallback addressDetailSuccess) {
         mAddressDetailSuccess = addressDetailSuccess;
     }
 
@@ -24,17 +24,14 @@ public class AddressDetailTask extends AsyncTask<_Point, Void, _Point> {
 
         String placeId = point.getPlaceId();
         if (TextUtils.isEmpty(placeId))
-            return null;
+            return point;
 
         _Point p;
         try {
             p = new GoogleDetailAPI().detail(placeId);
-            _Point address = ServerManager.GetInstance().findAddress(p);
-            if (address != null)
-                p = address;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return point;
         }
         return p;
     }
@@ -43,8 +40,7 @@ public class AddressDetailTask extends AsyncTask<_Point, Void, _Point> {
     @Override
     protected void onPostExecute(_Point point) {
         super.onPostExecute(point);
-        if (point == null || mAddressDetailSuccess == null) return;
+        if (mAddressDetailSuccess == null) return;
         mAddressDetailSuccess.onSuccessResponse(point);
-
     }
 }

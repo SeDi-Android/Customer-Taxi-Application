@@ -3,7 +3,6 @@ package ru.sedi.customerclient.fragments;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
 
@@ -37,6 +37,7 @@ public class ProfileFragment extends Fragment {
 
     public static final int LAYOUT = R.layout.fragment_profile;
 
+    @BindView(R.id.tvAccountId) TextView tvAccountId;
     @BindView(R.id.etSecondname) EditText etSecondname;
     @BindView(R.id.etName) EditText etName;
     @BindView(R.id.etBirthday) EditText etBirthday;
@@ -56,7 +57,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(LAYOUT, container, false);
         ButterKnife.bind(this, view);
-        llBirthday.setVisibility(App.isTaxiLive ? GONE : VISIBLE);
+        llBirthday.setVisibility(App.isExcludedApp ? GONE : VISIBLE);
         mInfo = Collections.me().getUser();
         return view;
     }
@@ -81,41 +82,23 @@ public class ProfileFragment extends Fragment {
         etName.setText(profile.getName());
         if (!profile.getPhones().isEmpty())
             etPhone.setText(profile.getPhones().get(0).getNumber());
-        etPhone.setEnabled(!App.isTaxiLive);
+        tvAccountId.setText(String.valueOf(profile.getAccountID()));
 
         etGender.setText(getString(profile.getGender() ? R.string.male : R.string.female));
-        etGender.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showGenderPicker();
-            }
-        });
+        etGender.setOnClickListener(v -> showGenderPicker());
         etBirthday.setText(profile.getBirthday().toString(DateTime.DATE));
-        etBirthday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePicker(etBirthday.getText().toString());
-            }
-        });
+        etBirthday.setOnClickListener(v -> showDatePicker(etBirthday.getText().toString()));
     }
 
     private void showGenderPicker() {
         final String s[] = {getString(R.string.male), getString(R.string.female)};
         boolean isMale = etGender.getText().toString().equalsIgnoreCase(getString(R.string.male));
         new AlertDialog.Builder(getActivity())
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
 
-                    }
                 })
                 .setNegativeButton(R.string.cancel, null)
-                .setSingleChoiceItems(s, isMale ? 0 : 1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        etGender.setText(s[which]);
-                    }
-                })
+                .setSingleChoiceItems(s, isMale ? 0 : 1, (dialog, which) -> etGender.setText(s[which]))
                 .create().show();
     }
 

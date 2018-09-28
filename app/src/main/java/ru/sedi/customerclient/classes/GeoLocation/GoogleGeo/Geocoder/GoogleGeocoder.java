@@ -18,6 +18,7 @@ import okhttp3.Response;
 import ru.sedi.customer.R;
 import ru.sedi.customerclient.NewDataSharing._Point;
 import ru.sedi.customerclient.common.LatLong;
+import ru.sedi.customerclient.common.LogUtil;
 import ru.sedi.customerclient.common.MessageBox.MessageBox;
 
 /**
@@ -71,6 +72,20 @@ public class GoogleGeocoder {
         }
         AsyncJob<_Point> build = builder.build();
         build.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    public _Point syncGeocode(double latitude, double longitude) {
+        try {
+            GoogleGeocoderResponse response = requestGeocode(latitude, longitude);
+            if (!response.isSuccess() || response.getResults().length < 1) {
+                return null;
+            }
+            GoogleGeocoderResponse.GoogleGeocoderResults results = response.getResults()[0];
+            return results.convertToPoint();
+        } catch (IOException e) {
+            LogUtil.log(e);
+            return null;
+        }
     }
 
     private GoogleGeocoderResponse requestGeocode(double latitude, double longitude) throws IOException {

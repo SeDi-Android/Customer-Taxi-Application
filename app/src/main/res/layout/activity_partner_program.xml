@@ -20,10 +20,11 @@
             android:layout_weight="1">
 
             <EditText
+                android:id="@+id/etPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/phone_number"
-                android:id="@+id/etPhone"/>
+                android:inputType="phone" />
         </android.support.design.widget.TextInputLayout>
 
         <ImageButton
@@ -61,14 +62,12 @@
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/select_app_to_invited_"
-        android:visibility="gone"/>
+        android:text="@string/select_app_to_invited_"/>
 
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rgAppType"
-        android:visibility="gone">
+        android:id="@+id/rgAppType">
 
         <RadioButton
             android:id="@+id/rbCustomerApp"

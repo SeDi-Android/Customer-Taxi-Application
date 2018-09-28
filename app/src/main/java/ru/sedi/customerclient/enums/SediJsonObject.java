@@ -17,4 +17,5 @@ public class SediJsonObject {
     public static String Drivers = "Drivers";
     public static String Addresses = "Addresses";
     public static String ShortUrl = "ShortUrl";
+    public static String Result = "Result";
 }

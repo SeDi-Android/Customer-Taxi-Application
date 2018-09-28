@@ -57,6 +57,8 @@ public class GoogleGeocoderResponse {
                 point.setStreetName(component.getName());
             if ((component = getByType("street_number")) != null)
                 point.setHouseNumber(component.getName());
+            if ((component = getByType("postal_code")) != null)
+                point.setPostalCode(component.getName());
             if (getGeometry() != null && getGeometry().getLocation() != null) {
                 GoogleGeocoderGeometry.GoogleGeocoderLocation location = getGeometry().getLocation();
                 point.setGeoPoint(new LatLong(location.getLat(), location.getLng()));

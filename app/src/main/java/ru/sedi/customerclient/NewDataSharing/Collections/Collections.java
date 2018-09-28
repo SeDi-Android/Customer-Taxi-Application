@@ -33,9 +33,6 @@ public class Collections {
 
     public Collections() {
         SaveDataHelper.load(this);
-        //updateAuth();
-        //updateTariffsServices();
-        //updatePaymentSystems();
     }
 
     public static Collections me() {
@@ -76,15 +73,6 @@ public class Collections {
                     if (tariffs == null)
                         return;
 
-                    if (tariffs.hasOnceTariff())
-                        mTariffs.clear();
-
-                    if (tariffs.getTariffs() != null)
-                        mTariffs.add(tariffs.getTariffs());
-
-                    if (tariffs.getTariffs2() != null)
-                        mTariffs.add(tariffs.getTariffs2());
-
                     if (tariffs.getSpecs() != null)
                         mServiceManager.set(tariffs.getSpecs());
 
@@ -122,9 +110,6 @@ public class Collections {
         return mActiveOrdersCollection;
     }
 
-    public void updateActiveOrders(Context context, boolean needProgress) {
-        mActiveOrdersCollection.update(context, needProgress);
-    }
 
     public void updateAuth() {
         try {
@@ -135,11 +120,13 @@ public class Collections {
             }
         } catch (Exception e) {
             LogUtil.log(LogUtil.ERROR, e.getMessage());
-            if (e.getMessage().equalsIgnoreCase("loginincorrect")) {
-                App.isAuth = false;
-                setUser(new _LoginInfo());
-                Collections.me().save();
-                Prefs.setValue(PrefsName.USER_KEY, "");
+            if (e.getMessage() != null) {
+                if (e.getMessage().equalsIgnoreCase("loginincorrect")) {
+                    App.isAuth = false;
+                    setUser(new _LoginInfo());
+                    Collections.me().save();
+                    Prefs.setValue(PrefsName.USER_KEY, "");
+                }
             }
         }
     }
@@ -161,7 +148,7 @@ public class Collections {
     }
 
     public boolean enableEasyCostCalculate() {
-        return App.isTaxiLive;
+        return App.isExcludedApp;
         /*return getTariffs().getAll().size() == 1
                 && getOwner().getPhones().isEmpty();*/
     }
@@ -169,7 +156,6 @@ public class Collections {
     public void updateAllInfo() {
         new Thread(() -> {
             updateAuth();
-            //updateTariffsServices();
             updatePaymentSystems();
         }).start();
     }

@@ -55,11 +55,11 @@ public class DefaultApiLocation implements LocationServiceListener, LocationList
         }
 
         if (mLocationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER)) {
-            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 2, this);
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 1, this);
         }
 
         if (mLocationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER)) {
-            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 2, this);
+            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 1, this);
         }
     }
 

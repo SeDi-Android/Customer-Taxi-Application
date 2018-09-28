@@ -7,12 +7,11 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.apache.http.protocol.HTTP;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -21,7 +20,6 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import kg.ram.asyncjob.AsyncJob;
 import ru.sedi.customer.R;
 import ru.sedi.customerclient.NewDataSharing.Collections.Collections;
@@ -30,8 +28,13 @@ import ru.sedi.customerclient.base.BaseActivity;
 import ru.sedi.customerclient.classes.Const;
 import ru.sedi.customerclient.classes.Helpers.AppPermissionHelper;
 import ru.sedi.customerclient.classes.Helpers.Helpers;
+import ru.sedi.customerclient.classes.PartnerMessageHolder;
+import ru.sedi.customerclient.classes.Validator;
 import ru.sedi.customerclient.common.CountryCodes;
 import ru.sedi.customerclient.common.MessageBox.MessageBox;
+import ru.sedi.customerclient.common.Toast.ToastHelper;
+import ru.sedi.customerclient.enums.InvitationTypes;
+import ru.sedi.customerclient.enums.UserTypes;
 
 
 public class PartnerProgramActivity extends BaseActivity {
@@ -39,18 +42,22 @@ public class PartnerProgramActivity extends BaseActivity {
     public static final int LAYOUT = R.layout.activity_partner_program;
     private static final int REQUEST_CODE_CONTACT_PICK = 0;
 
-    private final String CUSTOMER = "customer";
-    private final String EMPLOYEE = "employee";
-    private final String URL = "http://%s/m/apps/invite/index.htm?apikey=%s&usertype=%s&userphone=%s&username=%s&promocode=%d";
+    private PartnerMessageHolder mMessageHolder = new PartnerMessageHolder();
 
-    @BindView(R.id.etPhone) EditText etPhone;
-    @BindView(R.id.etName) EditText etName;
-    @BindView(R.id.etMessage) EditText etMessage;
-    @BindView(R.id.rgAppType) RadioGroup rgAppType;
-    @BindView(R.id.tvInfo) TextView tvInfo;
-    private Unbinder mUnbinder;
+    @BindView(R.id.etPhone)
+    EditText etPhone;
+    @BindView(R.id.etName)
+    EditText etName;
+    @BindView(R.id.etMessage)
+    EditText etMessage;
+    @BindView(R.id.rgAppType)
+    RadioGroup rgAppType;
+    @BindView(R.id.tvInfo)
+    TextView tvInfo;
+    private int mAccountId;
 
-    public static Intent getIntent(Context context){
+
+    public static Intent getIntent(Context context) {
         return new Intent(context, PartnerProgramActivity.class);
     }
 
@@ -59,9 +66,134 @@ public class PartnerProgramActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
         updateTitle(R.string.PartnerProgram, R.drawable.ic_share_variant);
-        mUnbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
 
+        mAccountId = Collections.me().getUser().getAccountID();
+        updateInvitationMessage();
         showSupportInfo();
+
+        rgAppType.setOnCheckedChangeListener((radioGroup, i) -> {
+            updateInvitationMessage();
+            showChangeMessageToast();
+        });
+        etPhone.setOnFocusChangeListener((view, b) -> {
+            if (!b) updateInvitationMessage();
+        });
+    }
+
+    private void showChangeMessageToast() {
+        Toast.makeText(this, R.string.change_text_message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateInvitationMessage() {
+        UserTypes userType = getSelectedUserType();
+        InvitationTypes invitationType = InvitationTypes.ByDistributorAccountId;
+        String phone = etPhone.getText().toString().replaceAll("[^0-9+]", "");
+
+        if (!TextUtils.isEmpty(phone))
+            invitationType = InvitationTypes.ByPhoneNumber;
+
+
+        requestInvitationMessage(userType, invitationType);
+    }
+
+
+    //region Requests
+    private void requestInvitationMessage(UserTypes userType, InvitationTypes invitationType) {
+        String restoredMessage = getSavedInvitationMessage(userType, invitationType);
+
+        if (!TextUtils.isEmpty(restoredMessage)) {
+            setMessageText(restoredMessage);
+            return;
+        }
+
+        new AsyncJob.Builder<String>()
+                .withProgress(this, null)
+                .doWork(() ->
+                        ServerManager.GetInstance().getInvitationText(mAccountId, userType,
+                                invitationType)
+                )
+                .onSuccess(message -> {
+                    saveMessageText(message, userType, invitationType);
+                    setMessageText(message);
+                })
+                .onFailure(exception -> MessageBox.show(this, exception.getMessage()))
+                .buildAndExecute();
+    }
+
+    //endregion
+
+    //region Work with MessageHolder
+
+    private String getSavedInvitationMessage(UserTypes userTypes, InvitationTypes invitationType) {
+        String message = "";
+        switch (userTypes) {
+            case customer: {
+                switch (invitationType) {
+                    case ByPhoneNumber: {
+                        message = mMessageHolder.getCutomerIndividualMessage();
+                        break;
+                    }
+                    case ByDistributorAccountId: {
+                        message = mMessageHolder.getCustomerSimpleMessage();
+                        break;
+                    }
+                }
+                break;
+            }
+
+            case employee:
+                switch (invitationType) {
+                    case ByPhoneNumber: {
+                        message = mMessageHolder.getDriverIndividualMessage();
+                        break;
+                    }
+                    case ByDistributorAccountId: {
+                        message = mMessageHolder.getDriverSimpleMessage();
+                        break;
+                    }
+                }
+                break;
+        }
+        return message;
+    }
+
+    private void saveMessageText(String message, UserTypes userType, InvitationTypes invitationType) {
+        switch (invitationType) {
+            case ByDistributorAccountId:
+                saveSimpleMessageText(message, userType);
+                break;
+            case ByPhoneNumber:
+                saveIndividualMessageText(message, userType);
+                break;
+        }
+    }
+
+    private void saveIndividualMessageText(String messageText, UserTypes userType) {
+        switch (userType) {
+            case customer:
+                mMessageHolder.setCutomerIndividualMessage(messageText);
+                break;
+            case employee:
+                mMessageHolder.setDriverIndividualMessage(messageText);
+                break;
+        }
+    }
+
+    private void saveSimpleMessageText(String message, UserTypes userType) {
+        switch (userType) {
+            case customer:
+                mMessageHolder.setCustomerSimpleMessage(message);
+                break;
+            case employee:
+                mMessageHolder.setDriverSimpleMessage(message);
+                break;
+        }
+    }
+    //endregion
+
+    private void setMessageText(String messageText) {
+        etMessage.setText(messageText);
     }
 
     private void showSupportInfo() {
@@ -75,49 +207,26 @@ public class PartnerProgramActivity extends BaseActivity {
         tvInfo.setText(textInfo);
     }
 
-    @OnClick(R.id.btnSend)
-    @SuppressWarnings("unused")
-    public void onSendClick() {
-        String phone = etPhone.getText().toString();
-        if (TextUtils.isEmpty(phone)) {
-            MessageBox.show(PartnerProgramActivity.this, String.format(
-                    getString(R.string.msg_empty_field_format), getString(R.string.phone_number)));
-            etPhone.requestFocus();
-            return;
-        }
-        String name = etName.getText().toString();
-        String userMessage = etMessage.getText().toString();
-
-        new AsyncJob.Builder<String>()
-                .withProgress(this, R.string.generate_invite)
-                .doWork(() ->
-                        ServerManager.GetInstance().getShortUrl(getPartnerUrl(phone, name, CUSTOMER)))
-                .onSuccess(s -> {
-                    String msg = generateMessage(s, userMessage);
-                    Helpers.showShareChooserDialog(this, phone, msg);
-                })
-                .buildAndExecute();
-    }
-
-    private String generateMessage(String url, String userMessage) {
-        return String.format("%s %s", userMessage, url).trim();
-    }
-
-    private String getPartnerUrl(String phone, String name, String type){
-        int accountID = Collections.me().getUser().getAccountID();
-        String partnerUrl = String.format(Locale.getDefault(), URL, getString(R.string.groupChanel),
-                getString(R.string.sediApiKey), encode(type), encode(phone), encode(name), accountID);
+    private String getPartnerUrl(String phone, String name, UserTypes type) {
+        String partnerUrl = "";
+        partnerUrl += "cmd=invite";
+        partnerUrl += "&username=" + name;
+        partnerUrl += "&promocode=" + mAccountId;
+        partnerUrl += "&userphone=" + encode(phone);
+        partnerUrl += "&usertype=" + type.name();
+        partnerUrl += "&apikey=" + getString(R.string.sediApiKey);
         return partnerUrl;
     }
 
     private String encode(String s) {
         try {
-            return URLEncoder.encode(s, HTTP.UTF_8);
+            return URLEncoder.encode(s, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             return s;
         }
     }
 
+    //region OnClicks
     @OnClick(R.id.ibtnContactList)
     @SuppressWarnings("unused")
     public void onContactListClick() {
@@ -130,12 +239,51 @@ public class PartnerProgramActivity extends BaseActivity {
         startActivityForResult(intent, REQUEST_CODE_CONTACT_PICK);
     }
 
+    @OnClick(R.id.btnSend)
+    @SuppressWarnings("unused")
+    public void onSendClick() {
+        createCustomerInvitation();
+    }
+    //endregion
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CONTACT_PICK && resultCode == RESULT_OK) {
             updateContactData(data);
+            updateInvitationMessage();
         }
+    }
+
+    private void createCustomerInvitation() {
+        String phone = etPhone.getText().toString().replaceAll("[^0-9+]", "");
+
+        if (TextUtils.isEmpty(phone)) {
+            Helpers.showShareChooserDialog(this, etMessage.getText().toString());
+            return;
+        }
+
+        if (!Validator.valid(Validator.PHONE_PATTERN, phone)) {
+            MessageBox.show(this, R.string.invalid_phone_number);
+            return;
+        }
+
+        String name = etName.getText().toString();
+
+        new AsyncJob.Builder<Boolean>()
+                .withProgress(this, R.string.generate_invite)
+                .doWork(() -> {
+                    String hash = ServerManager.GetInstance().getHash(getPartnerUrl(phone, name,
+                            getSelectedUserType()));
+                    if (TextUtils.isEmpty(hash))
+                        throw new NoSuchFieldException(getString(R.string.invitation_isnt_kept_message));
+                    return true;
+                })
+                .onFailure(throwable -> MessageBox.show(this, throwable.getMessage()))
+                .onSuccess(suscess -> {
+                    Helpers.showShareChooserDialog(this, phone, etMessage.getText().toString());
+                })
+                .buildAndExecute();
     }
 
     private void updateContactData(Intent data) {
@@ -170,32 +318,22 @@ public class PartnerProgramActivity extends BaseActivity {
     }
 
     private String correctPhoneNumber(String phone) {
-        if (phone.contains("+")) return phone;
-
-        if (phone.startsWith("0") || phone.startsWith("8")) {
-            String newCountyCode = "+" + CountryCodes.getCode(this);
-            phone = phone.replaceFirst(String.valueOf(phone.charAt(0)), newCountyCode);
+        if (!phone.contains("+")) {
+            if (phone.startsWith("0") || phone.startsWith("8")) {
+                String newCountyCode = "+" + CountryCodes.getCode(this, getPackageName());
+                phone = phone.replaceFirst(String.valueOf(phone.charAt(0)), newCountyCode);
+            }
         }
-        return phone.replace("-", "");
+        return phone.replace("-", "").replace(" ", "");
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
-        }
-    }
-
-    public String getSelectedAppType() {
-        int id = rgAppType.getCheckedRadioButtonId();
-        switch (id) {
-            case R.id.rbCustomerApp:
-                return CUSTOMER;
+    public UserTypes getSelectedUserType() {
+        int checkedId = rgAppType.getCheckedRadioButtonId();
+        switch (checkedId) {
             case R.id.rbDriverApp:
-                return EMPLOYEE;
+                return UserTypes.employee;
             default:
-                return CUSTOMER;
+                return UserTypes.customer;
         }
     }
 }

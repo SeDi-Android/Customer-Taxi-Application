@@ -1,8 +1,11 @@
 package ru.sedi.customerclient.NewDataSharing.Collections;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
+import java.util.Arrays;
+import java.util.List;
+
 import ru.sedi.customer.R;
 import ru.sedi.customerclient.NewDataSharing._Order;
 import ru.sedi.customerclient.ServerManager.ParserManager;
@@ -50,45 +53,12 @@ public class ActiveOrdersCollection {
     }
 
     public void set(_Order[] orders) {
-        mOrders = new QueryList<>(orders);
+        set(Arrays.asList(orders));
     }
 
-    public void update(final Context context, final boolean needProgress) {
-        SweetAlertDialog pd = null;
-        if (needProgress) {
-            pd = ProgressDialogHelper.show(context, context.getString(R.string.update_active_order_message));
-        }
-
-        final SweetAlertDialog finalPd = pd;
-        AsyncAction.run(() -> ServerManager.GetInstance().getOrders(null, null), new IActionFeedback<Server>() {
-                            @Override
-                            public void onResponse(Server server) {
-                                if (finalPd != null)
-                                    finalPd.dismiss();
-                                if (server.isSuccess()) {
-                                    QueryList<_Order> sendOrderList = new QueryList<>();
-                                    try {
-                                        sendOrderList = ParserManager.parseOrders(server);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                    mOrders.clear();
-                                    for (_Order order : sendOrderList) {
-                                        add(order);
-                                    }
-                                    notifyAdapter();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Exception e) {
-                                if (finalPd != null)
-                                    finalPd.dismiss();
-                                if (needProgress)
-                                    MessageBox.show(context, e.getMessage());
-                            }
-                        }
-        );
+    public void set(List<_Order> orders) {
+        mOrders.clear();
+        mOrders.addAll(orders);
     }
 
     public SendOrderAdapter getAdapter(Context context) {

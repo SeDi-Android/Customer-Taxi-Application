@@ -20,4 +20,6 @@ public class PrefsName {
     public static final String LAST_CITY = "LAST_CITY"; //Последний определенный город
     public static final String NEXT_UPDATE_TIME = "NEXT_UPDATE_TIME"; //Время следующей проверки обновления
     public static final String FIREBASE_TOKEN = "FIREBASE_TOKEN"; //Ключ Firebase
+    public static final String CURRENT_CITY = "CURRENT_CITY"; //Текущий город пользователя
+    public static final String USER_LAST_GEOPOINT = "USER_LAST_GEOPOINT";//Последнее местоположение пользователя
 }

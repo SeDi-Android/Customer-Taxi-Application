@@ -1,17 +1,31 @@
 package ru.sedi.customerclient.activitys.splash_screen;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.TextView;
 
+import com.yandex.metrica.YandexMetrica;
+
+import java.util.Set;
+
 import ru.sedi.customer.R;
 import ru.sedi.customerclient.NewDataSharing.Collections.Collections;
-import ru.sedi.customerclient.activitys.new_main.NewMainActivity;
+import ru.sedi.customerclient.NewDataSharing._Order;
+import ru.sedi.customerclient.NewDataSharing._Point;
+import ru.sedi.customerclient.NewDataSharing._Route;
+import ru.sedi.customerclient.activitys.main_2.MainActivity2;
 import ru.sedi.customerclient.base.BaseActivity;
+import ru.sedi.customerclient.classes.App;
 import ru.sedi.customerclient.classes.Helpers.AppPermissionHelper;
 import ru.sedi.customerclient.classes.Orders._OrderRegistrator;
+import ru.sedi.customerclient.common.LatLong;
+import ru.sedi.customerclient.common.LogUtil;
 import ru.sedi.customerclient.common.MessageBox.MessageBox;
 import ru.sedi.customerclient.common.MessageBox.UserChoiseListener;
 import ru.sedi.customerclient.common.SystemManagers.Device;
@@ -42,6 +56,51 @@ public class SplashScreenActivity extends BaseActivity {
         loadApplicationData();
     }
 
+    private boolean handleExternalAddresses(Uri data) {
+        if (data == null || data.getQueryParameterNames().isEmpty()) return false;
+
+        _Order order = _OrderRegistrator.me().getOrder();
+        _Route route = order.getRoute();
+
+        Set<String> parameterNames = data.getQueryParameterNames();
+        if (parameterNames.contains("from") && parameterNames.contains("from_str")) {
+            _Point p = new _Point(data.getQueryParameter("from_str"),
+                    getLocationFromData(data.getQueryParameter("from")));
+            route.addPoint(p);
+        }
+
+        if (parameterNames.contains("to") && parameterNames.contains("to_str")) {
+            _Point p = new _Point(data.getQueryParameter("to_str"),
+                    getLocationFromData(data.getQueryParameter("to")));
+            route.addPoint(p);
+        }
+
+        if (parameterNames.contains("id_calculation")){
+            String id_calculation = data.getQueryParameter("id_calculation");
+            try {
+                Integer id = Integer.valueOf(id_calculation);
+                order.setCostCalculationId(id);
+            } catch (Exception ignored){}
+        }
+
+        if (App.isMetricaInitialized) {
+            YandexMetrica.reportAppOpen(this);
+        }
+        return true;
+    }
+
+    private LatLong getLocationFromData(String parameter) {
+        if (TextUtils.isEmpty(parameter)) return new LatLong(0, 0);
+        String[] split = parameter.split(",");
+        try {
+            return new LatLong(Double.parseDouble(split[0]), Double.parseDouble(split[1]));
+        } catch (NumberFormatException e) {
+            LogUtil.log(e);
+            return new LatLong(0, 0);
+        }
+
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -59,7 +118,7 @@ public class SplashScreenActivity extends BaseActivity {
         }
 
         Collections.me().updateAllInfo();
-        startNecessaryActivity();
+        new Handler().postDelayed(this::startNecessaryActivity, 2000);
     }
 
     /**
@@ -89,18 +148,13 @@ public class SplashScreenActivity extends BaseActivity {
         try {
             _OrderRegistrator.me().setOrderCreateListener(null);
             _OrderRegistrator.me().resetLastOrder();
-            //Collections.me().updateTariffsServices();
 
-           /* Class c = MainActivity.class;
-            if (Prefs.getBool(PrefsName.ENABLED_SET_DEFAULT_ADDRESS)
-                    && AppPermissionHelper.isLocationPermissionGranted(SplashScreenActivity.this))
-                c = ExemplaryLocationActivity.class;*/
+            boolean withAddresses = handleExternalAddresses(getIntent().getData());
+            startActivity(MainActivity2.getIntent(this, withAddresses).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
 
-            startActivity(NewMainActivity.getIntent(this));
+            //MoveVersionActivity заглушка когда приложения нужно объеденить
+            //startActivity(MoveVersionActivity.getIntent(this));
 
-            /*Intent intent = new Intent(SplashScreenActivity.this, c);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);*/
             finish();
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,8 +163,6 @@ public class SplashScreenActivity extends BaseActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK)
-            return false;
-        return super.onKeyDown(keyCode, event);
+        return keyCode != KeyEvent.KEYCODE_BACK && super.onKeyDown(keyCode, event);
     }
 }

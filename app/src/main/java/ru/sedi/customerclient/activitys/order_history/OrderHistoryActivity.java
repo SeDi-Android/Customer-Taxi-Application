@@ -177,16 +177,7 @@ public class OrderHistoryActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == DriverRatingActivity.SUCCESS_RESPONSE && resultCode == RESULT_OK) {
-            if (data == null) return;
-            int orderId = data.getIntExtra(DriverRatingActivity.ID, -1);
-            int rating = data.getIntExtra(DriverRatingActivity.RATING, 0);
-            String comment = data.getStringExtra(DriverRatingActivity.COMMENT);
-
-            _Order order = mOrders.FirstOrDefault(item -> item.getID() == orderId);
-            if (order == null) return;
-
-            order.setRating(new _Rating(comment, rating));
-            mAdapter.notifyDataSetChanged();
+            loadOrdersFromServer();
         }
     }
 

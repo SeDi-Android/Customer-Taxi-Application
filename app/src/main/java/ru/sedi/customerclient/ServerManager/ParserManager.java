@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ru.sedi.customerclient.NewDataSharing.CostCalculationResult;
 import ru.sedi.customerclient.classes.Customer._Balance;
 import ru.sedi.customerclient.classes.Customer._LoginInfo;
 import ru.sedi.customerclient.classes.Orders._OrderRegistrator;
@@ -233,7 +234,7 @@ public class ParserManager {
 
         Gson gson = new Gson();
         _Point[] data = gson.fromJson(s, _Point[].class);
-        if(data == null || data.length <= 0)
+        if (data == null || data.length <= 0)
             return null;
         _Point point = data[0];
         point.setChecked(true);
@@ -242,8 +243,19 @@ public class ParserManager {
 
     public static String parseShortUrl(Server server) throws Exception {
         String s = server.getJson();
-        LogUtil.log(LogUtil.INFO, "return: " + s);
         s = getOriginalJson(s, SediJsonObject.ShortUrl);
         return s;
+    }
+
+    public static String parseHash(Server server) throws Exception {
+        return getOriginalJson(server.getJson(), SediJsonObject.Result);
+    }
+
+    public static String parseInvitation(Server server) throws Exception {
+        return getOriginalJson(server.getJson(), SediJsonObject.Result);
+    }
+
+    public static CostCalculationResult parseCostCalculationResult(Server server) throws Exception {
+        return new Gson().fromJson(server.getJson(), CostCalculationResult.class);
     }
 }

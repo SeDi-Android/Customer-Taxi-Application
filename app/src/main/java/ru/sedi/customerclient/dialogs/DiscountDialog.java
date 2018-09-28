@@ -8,7 +8,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import ru.sedi.customer.R;
-import ru.sedi.customerclient.activitys.main.MainActivity;
 import ru.sedi.customerclient.enums.PrefsName;
 import ru.sedi.customerclient.common.SystemManagers.Prefs;
 
@@ -53,7 +52,7 @@ public class DiscountDialog extends AppCompatDialog {
     private void saveDiscountCode() {
         String promo = ((EditText) findViewById(R.id.dd_etDiscountCode)).getText().toString();
         Prefs.setValue(PrefsName.PROMO_KEY, promo);
-        MainActivity.Instance.updateView();
+        //MainActivity.Instance.updateView();
         dismiss();
     }
 }

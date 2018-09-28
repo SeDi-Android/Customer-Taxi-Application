@@ -2,7 +2,13 @@ package ru.sedi.customerclient.NewDataSharing;
 
 import android.text.TextUtils;
 
+import org.apache.commons.lang3.text.StrBuilder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import ru.sedi.customerclient.common.LogUtil;
 
 
 public class LocationConverter {
@@ -35,12 +41,14 @@ public class LocationConverter {
     public static _Point convert(GoogleAutocomplete.Prediction object) {
         _Point point = new _Point();
 
-        String desc = object.getStructuredFormatting().getMainText();
-        String[] split = object.getStructuredFormatting().getSecondaryText().split(",");
-        desc += ", " + split[0];
-
-        point.setDesc(revertGoogleAddress(desc));
-        point.setPlaceId(object.getPlaceId());
+        try {
+            String desc = object.getStructuredFormatting().getMainText();
+            String secondaryText = object.getStructuredFormatting().getSecondaryText();
+            point.setGoogleStruckFormatting(object.getStructuredFormatting());
+            point.setPlaceId(object.getPlaceId());
+        } catch (Exception e) {
+            LogUtil.log(e);
+        }
         return point;
     }
 
@@ -51,26 +59,70 @@ public class LocationConverter {
                 .getGeocoderMetaData().getAddress().getComponents();
 
         point.setCountryName(getYandexAddressComponent(components, "country"));
-        point.setCityName(getYandexAddressComponent(components, "locality"));
-        point.setStreetName(getYandexAddressComponent(components, "street"));
+
+        String locality = getYandexAddressComponent(components, "locality");
+        if (TextUtils.isEmpty(locality))
+            locality = getYandexAddressComponent(components, "province", true);
+        point.setCityName(locality);
+
+        String street = getYandexAddressComponent(components, "street");
+        street = convertToSediFormat(street);
+        point.setStreetName(street);
         point.setHouseNumber(getYandexAddressComponent(components, "house"));
         point.setObjectName(getYandexAddressComponent(components, "metro"));
 
         String[] split = object.getPoint().getPos().split(" ");
         point.setGeoPoint(new _GeoPoint(Double.parseDouble(split[1]), Double.parseDouble(split[0])));
 
-        if(point.isMinimalAddress())
+        if (point.isMinimalAddress())
             point.setChecked(true);
 
         return point;
     }
 
-    private static String getYandexAddressComponent(List<YandexPointWrapper.Component> components, String name) {
-        for (YandexPointWrapper.Component component : components) {
-            if (component.getKind().equalsIgnoreCase(name))
-                return component.getName();
+    private static String convertToSediFormat(String street) {
+        if (TextUtils.isEmpty(street)) return "";
+        String[] keyword = {"проспект", "улица", "проезд", "шоссе", "переулок"};
+        String[] streetComponent = street.split(" ");
+
+        boolean needMove = false;
+        for (String s : keyword) {
+            if (s.equalsIgnoreCase(streetComponent[0])) {
+                needMove = true;
+                break;
+            }
         }
-        return null;
+        if (needMove) {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 1; i < streetComponent.length; i++) {
+                builder.append(streetComponent[i]);
+                builder.append(" ");
+            }
+            builder.append(streetComponent[0]);
+            String newString = builder.toString();
+            LogUtil.log(LogUtil.INFO, "Convert from %s to %s", street, newString);
+            return newString;
+        } else {
+            return street;
+        }
+    }
+
+    private static String getYandexAddressComponent(List<YandexPointWrapper.Component> components, String name) {
+        return getYandexAddressComponent(components, name, false);
+    }
+
+    private static String getYandexAddressComponent(List<YandexPointWrapper.Component> components, String name, boolean getLast) {
+        ArrayList<String> names = new ArrayList<>();
+        for (YandexPointWrapper.Component component : components) {
+            if (component.getKind().equalsIgnoreCase(name)) {
+                if (!getLast)
+                    return component.getName();
+                else
+                    names.add(component.getName());
+            }
+        }
+        String lastName = !names.isEmpty() ? names.get(names.size() - 1) : "";
+        return lastName;
     }
 
     private static String revertGoogleAddress(String replace) {

@@ -432,16 +432,31 @@ public class CountryCodes {
 
     /**
      * Get phone code from country sign.
+     *
      * @return return international code, or code 7 as default
      */
-    public static String getCode(Context context) {
+    public static String getCode(Context context, String packageName) {
         TelephonyManager man = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         int index = getIndex(man.getSimCountryIso());
-        return index == -1 ? "7" : getCode(index);
+        if (index == -1) {
+            return getCodeByPackage(packageName);
+        } else {
+            return getCode(index);
+        }
+    }
+
+    private static String getCodeByPackage(String packageName) {
+        switch (packageName) {
+            case "ch.taxilive.customer":
+                return "41";
+            default:
+                return "7";
+        }
     }
 
     /**
      * Get international code at provided index.
+     *
      * @param index: array index
      * @return international code
      */
@@ -451,6 +466,7 @@ public class CountryCodes {
 
     /**
      * Looks for country sign array index.
+     *
      * @param country: country sign to asyncSearch
      * @return array index. -1 if none matches.
      */

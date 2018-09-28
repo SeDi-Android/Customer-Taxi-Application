@@ -10,13 +10,16 @@ import ru.sedi.customerclient.common.SystemManagers.Prefs;
 public class _Route {
     private QueryList<_Point> Points = new QueryList<>();
     private double Length;
+    private OnRouteChangeListener listener;
 
-    public _Route() {
+    public _Route(OnRouteChangeListener listener) {
+        this.listener = listener;
     }
 
     public _Route(QueryList<_Point> points, double length) {
         Points = points;
         Length = length;
+        notifyListener();
     }
 
     public QueryList<_Point> getPoints() {
@@ -26,12 +29,14 @@ public class _Route {
     public void setPoints(QueryList<_Point> points) {
         Points = points;
         filter();
+        notifyListener();
     }
 
     public void addPoint(_Point point) {
         LogUtil.log(LogUtil.INFO, point.asString());
         Points.add(point);
         filter();
+        notifyListener();
     }
 
     public double getLength() {
@@ -71,6 +76,7 @@ public class _Route {
             LogUtil.log(LogUtil.INFO, point.asString());
             Points.add(i, point);
             filter();
+            notifyListener();
         }
 
     }
@@ -87,6 +93,7 @@ public class _Route {
         else {
             Points.set(i, point);
             filter();
+            notifyListener();
         }
         Prefs.setValue(PrefsName.LAST_CITY, point.getCityName());
     }
@@ -126,5 +133,21 @@ public class _Route {
         QueryList<_Point> where = Points.Where(item -> !item.getChecked());
         if(where.isEmpty()) return;
         Points.removeAll(where);
+        notifyListener();
     }
+
+    public void notifyListener(){
+        if(listener!=null) listener.onRouteChange();
+    }
+
+    public void setListener(OnRouteChangeListener listener) {
+        this.listener = listener;
+    }
+
+
+    //region Interfaces
+    public interface OnRouteChangeListener{
+        void onRouteChange();
+    }
+    //endregion
 }

@@ -76,6 +76,7 @@
     <string name="save_user_message">Benutzer speichern...</string>
     <string name="resend_key_question_message">Soll der Schlüssel nochmals versendet werden?</string>
 
+
     <string name="giving_address">Abholadresse</string>
     <string name="movement_address">Zieladresse</string>
     <string name="route">Route</string>
@@ -83,7 +84,7 @@
     <string name="giving_time">Wann?</string>
     <string name="service_or_option">Dienstleistungen</string>
     <string name="additional_info">Nachricht an den Fahrer</string>
-    <string name="cost_calculation">Fahrtkostenberechnung</string>
+    <string name="cost_calculation">Fahrpreis</string>
     <string name="driver_near_me">Nächstgelegene Fahrer</string>
     <string name="call_to_dispatcher_message">Das Callcenter auf folgender Nummer anrufen:\n</string>
     <string name="missing_services_message">Das genannte Unternehmen bietet keine weiteren Dienstleistungen an...</string>
@@ -186,7 +187,7 @@
     <string name="msg_EnabledCost_" formatted="false">Vorhandenes Guthaben: %.2f %s; \n</string>
     <string name="msg_CreditIs_" formatted="false">Kredit: %.2f %s; \n</string>
     <string name="msg_LocedSummIs_" formatted="false">blockierter Betrag: %.2f %s; \n</string>
-    <string name="msg_OrderNWith_" formatted="false">Auftrag №: %s von %s</string>
+    <string name="msg_OrderNWith_" formatted="false">Auftrag №: %s</string>
     <string name="msg_SetRatingQuestion">Möchten Sie die Bewertung so abgeben?</string>
     <string name="msg_RatingSetSuccess">Die Bewertung wurde erfolgreich abgegeben. Vielen Dank!</string>
     <string name="CheckedAddress">Überprüfung der Adresse</string>
@@ -299,7 +300,7 @@
     <string name="female">Weiblich</string>
     <string name="cancellation_not_possible">Stornierungen sind nicht möglich</string>
     <string name="msg_driver_phone_not_found">Dieser Fahrer hat keine Telefonnummern angegeben</string>
-    <string name="exit_message">Drücken Sie erneut auf die Zurück-Taste, um die Anwendung zu schliessen</string>
+    <string name="exit_message">Wollen Sie die Applikation wirklich verlassen?</string>
     <string name="add_card">Bankverbindung hinzufügen</string>
     <string name="my_card">Meine Bankverbindungen</string>
     <string name="remove">Entfernen</string>
@@ -361,7 +362,7 @@
     <string name="set_route_name_message">Geben Sie einen Namen an, unter dem Sie die Strecke speichern wollen</string>
     <string name="change_address_query_message" formatted="false">Was möchten Sie mit der Adresse: \"%s\" machen?</string>
     <string name="edit">Bearbeiten</string>
-    <string name="generate_invite">Создание приглашения</string>
+    <string name="generate_invite">Erstellen einer Einladung</string>
     <string name="extra">Zusätzlich</string>
     <string name="empty_route_history_message">Sie verfügen über keine gespeicherten Strecken</string>
     <string name="empty_address_history_message">Sie verfügen in Ihrem Fahrtenbuch über keine bereits angefahrenen Adressen</string>
@@ -374,7 +375,24 @@
         Накопленными бонусами, Вы сможете оплачивать услуги такси! Срок действия партнерской программы и срок использования бонусов не ограничен!</string>
     <string name="wait_calculation">Fahrpreisberechnung läuft</string>
     <string name="search_driver_process_message">Bitte warten. Fahrer wird gesucht.</string>
-    <string name="order_is_null">Не возможно получить данные о заказе (null).</string>
-    <string name="driver_is_null">Не возможно получить данные о водителе (null).</string>
-    <string name="route_is_null">Невозможно получить данные о маршруте (null).</string>
+
+    <string name="order_is_null">Auftragsdaten können nicht abgerufen werden (null).</string>
+    <string name="driver_is_null">Treiber Daten können nicht abgerufen werden (null).</string>
+    <string name="route_is_null">Routeninformationen können nicht abgerufen werden (null).</string>
+    <string name="invitation_isnt_kept_message">Der Server konnte die Einladung nicht speichern. Bitte versuchen Sie es später noch einmal.</string>
+
+    <string name="add_route_point">Einen weiteren Punkt hinzufügen</string>
+    <string name="move_map_or_click">Verschieben Sie die Karte, oder drücken Sie, um</string>
+    <string name="prelim_order_short">Vorschau. Um</string>
+    <string name="change_user">Benutzer ändern</string>
+    <string name="notification_channel_desc">Benachrichtigungen app</string>
+    <string name="incorrect_address_message">Die angegebene Adresse ist nicht korrekt.</string>
+    <string name="clear">Klar</string>
+    <string name="move_up">Raise oben</string>
+    <string name="move_on_google_play">Gehe zu Google Play</string>
+    <string name="empty" />
+    <string name="road_distance_format">%.1f km</string>
+    <string name="road_duration_format">%.1f min</string>
+    <string name="invalid_phone_number">Die Rufnummer wird nicht korrekt eingegeben.</string>
+    <string name="change_text_message">Внимание, из-за смены типа приложения был изменен текст сообщения.</string>
 </resources>

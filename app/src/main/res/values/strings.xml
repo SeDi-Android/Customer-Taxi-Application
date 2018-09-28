@@ -60,7 +60,7 @@
     <string name="your_name">Ваше имя</string>
     <string name="partner_code">Партнерский код</string>
     <string name="bad_phone_lenght_message">Для регистрации нужно заполнить все поля.\nНомер должен быть в международном формате.\n+7XXXXXXXXXX</string>
-    <string name="bad_phone_number">Номер должен быть уазан в международном формате:\n+7XXXXXXXXX</string>
+    <string name="bad_phone_number">Номер должен быть указан в международном формате:\n+7XXXXXXXXX</string>
     <string name="send_key">Оправляем ключ...</string>
     <string name="max_count_key_error_message">Вы превысили допустимое колличество отправки SMS ключей, повторную отправку можно сделать после: </string>
     <string name="send_sms">Отправить SMS</string>
@@ -186,7 +186,7 @@
     <string name="msg_EnabledCost_" formatted="false">Доступные средства: %.2f %s; \n</string>
     <string name="msg_CreditIs_" formatted="false">Кредит: %.2f %s; \n</string>
     <string name="msg_LocedSummIs_" formatted="false">Заблокированная сумма: %.2f %s; \n</string>
-    <string name="msg_OrderNWith_" formatted="false">Заказ №: %s от %s</string>
+    <string name="msg_OrderNWith_" formatted="false">Заказ №: %s</string>
     <string name="msg_SetRatingQuestion">Выставить текущий рейтинг?</string>
     <string name="msg_RatingSetSuccess">Рейтинг успешно выставлен! Спасибо!</string>
     <string name="CheckedAddress">Проверка адреса</string>
@@ -251,7 +251,7 @@
     <string name="CarIsSent">Машина подана</string>
     <string name="RecognitionSpeechLang">Язык распознования речи</string>
     <string name="Geocoder">Геокодирование</string>
-    <string name="msg_IncorrectName">Имя не может быть менее 4 символов</string>
+    <string name="msg_IncorrectName">Введите имя</string>
     <string name="msg_hasPartnerProgramm">Если есть ключ партнерской программы укажите его (не обязательно)</string>
     <string name="HasPartnerCode">У меня есть партнерский код</string>
     <string name="GetSms">Получить SMS</string>
@@ -311,7 +311,7 @@
     <string name="msg_driver_phone_not_found">У данного водителя отсутсвуют номера телефонов</string>
     <string name="remove">Удалить</string>
     <string name="active_card">Активная карта</string>
-    <string name="exit_message">Для выхода нажмите Назад еще раз.</string>
+    <string name="exit_message">Вы действительно хотите выйти из приложения?</string>
     <string name="remove_card_query">Вы действительно хотите удалить данную карту?</string>
     <string name="deactivated_card_query">Вы действительно хотите деактивировать данную карту?</string>
     <string name="activated_card_query">Вы действительно хотите активировать данную карту?</string>
@@ -385,4 +385,21 @@
     <string name="order_is_null">Невозможно получить данные о заказе (null).</string>
     <string name="driver_is_null">Невозможно получить данные о водителе (null).</string>
     <string name="route_is_null">Невозможно получить данные о маршруте (null).</string>
+    <string name="invitation_isnt_kept_message">Сервер не смог сохранить приглашение. Повторите попытку позднее.</string>
+
+    <string name="add_route_point">Добавить еще точку</string>
+    <string name="move_map_or_click">Двигайте карту или нажмите для ввода</string>
+    <string name="prelim_order_short">Предв. заказ</string>
+    <string name="change_user">Сменить пользователя</string>
+    <string name="notification_channel_desc">Уведомления приложения</string>
+    <string name="empty" />
+    <string name="incorrect_address_message">Указанный адрес не корректен.</string>
+    <string name="clear">Очистить</string>
+    <string name="move_up">Поднять выше</string>
+    <string name="move_on_google_play">Перейти на Google Play</string>
+    <string name="road_distance_format">%.1f км</string>
+    <string name="road_duration_format">%.1f мин</string>
+    <string name="invalid_phone_number">Номер телефона введен некорректно.</string>
+    <string name="change_text_message">Внимание, из-за смены типа приложения был изменен текст сообщения.</string>
+
 </resources>

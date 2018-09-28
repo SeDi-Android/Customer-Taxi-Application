@@ -20,8 +20,8 @@ public class ProfileActivity extends BaseActivity {
         updateTitle(R.string.profile, R.drawable.ic_account_card_details);
         trySetElevation(0);
 
-        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final TabLayout tabLayout = findViewById(R.id.tab_layout);
+        final ViewPager viewPager = findViewById(R.id.pager);
         new ProfileTabManager(getBaseContext(), getSupportFragmentManager(), tabLayout, viewPager);
     }
 

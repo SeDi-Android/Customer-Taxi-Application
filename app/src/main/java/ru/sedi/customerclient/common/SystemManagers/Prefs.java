@@ -15,9 +15,11 @@ public class Prefs {
     private String DEFAULT_LANG;
 
     public Prefs(Context context) {
-        DEFAULT_LANG = App.isTaxiLive ? "de" : "ru";
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        initDefaultPreference();
+        if(mSharedPreferences == null) {
+            DEFAULT_LANG = App.isExcludedApp ? "de" : "ru";
+            mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            initDefaultPreference();
+        }
     }
 
     private void initDefaultPreference() {
@@ -31,7 +33,7 @@ public class Prefs {
             setValue(PrefsName.MAP_ZOOM_LEVEL, 22);
     }
 
-    public static SharedPreferences GetSharedPreferences() {
+    public static SharedPreferences getSharedPreferences() {
         return mSharedPreferences;
     }
 
@@ -82,7 +84,7 @@ public class Prefs {
 
     public static void setValue(String key, Object value) {
         try {
-            SharedPreferences.Editor editor = GetSharedPreferences().edit();
+            SharedPreferences.Editor editor = getSharedPreferences().edit();
             if (value instanceof Integer)
                 editor.putInt(key, Integer.parseInt(value.toString()));
             if (value instanceof Long)

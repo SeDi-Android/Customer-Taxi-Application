@@ -59,29 +59,29 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/lso_l3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lso_l3"
         android:layout_below="@+id/lso_l2"
+        android:layout_toLeftOf="@+id/layout"
         android:gravity="center_vertical"
-        android:layout_toLeftOf="@+id/layout">
+        android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/lso_ivCost"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:id="@+id/lso_ivCost"
-            android:src="@drawable/ic_cash_multiple_dark"/>
+            android:src="@drawable/ic_cash_multiple_dark" />
 
         <TextView
+            android:id="@+id/lso_tvCost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="order_cost"
-            android:id="@+id/lso_tvCost"
             android:layout_marginLeft="10dp"
+            android:focusableInTouchMode="false"
+            android:text="order_cost"
             android:textColor="@color/primaryColor"
-            android:textSize="19sp"
-            android:focusableInTouchMode="false"/>
+            android:textSize="19sp" />
     </LinearLayout>
 
     <LinearLayout

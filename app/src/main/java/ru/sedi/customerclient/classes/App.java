@@ -2,7 +2,15 @@ package ru.sedi.customerclient.classes;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.support.multidex.MultiDex;
 
+import com.crashlytics.android.Crashlytics;
+import com.yandex.metrica.YandexMetrica;
+import com.yandex.metrica.YandexMetricaConfig;
+
+import io.fabric.sdk.android.Fabric;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import ru.sedi.customerclient.classes.GeoLocation.LocationService;
 import ru.sedi.customerclient.common.LogUtil;
 import ru.sedi.customerclient.common.SystemManagers.Prefs;
@@ -12,13 +20,16 @@ public class App extends android.app.Application {
     public static int RADIUS_LIMIT = 200;
     private static App mInstance;
     public static boolean isAuth = false;
-    public static boolean isTaxiLive = false;
+    public static boolean isExcludedApp = false;
+    public static boolean isMetricaInitialized;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        isTaxiLive = getApplicationInfo().packageName.contains("taxilive");
-        updateRadiusLimit();
+        Fabric.with(this, new Crashlytics());
+        initializeAppMetrica();
+        initializeRealmDb();
+
         new Prefs(this);
         LocationService.with(this);
         new LogUtil(0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE));
@@ -26,13 +37,30 @@ public class App extends android.app.Application {
     }
 
     /**
-     * Настройка (в метрах) указывающая с какой погрешностью адрес будет считать геоточкой
-     * для геокодеров.
+     * Инициализации Appmetrica от Yandex.
+     * Если в параметрах сборки приложения имеется строковый ресурс с id {@code appmetrica_key}
+     * и в этом ресурсе имеется api-ключ Appmetrica, то активируем Appmetrica.
      */
-    private void updateRadiusLimit() {
-        int resource = getResource(this, "integer", "radius_limit");
-        if (resource != -1)
-            RADIUS_LIMIT = getResources().getInteger(resource);
+    private void initializeAppMetrica() {
+        int appmetrica_res = getResource(this, "string", "appmetrica_key");
+        if (appmetrica_res <= 0) return;
+
+        String appmetrica_key = getString(appmetrica_res);
+        if (appmetrica_key.isEmpty()) return;
+
+        YandexMetricaConfig.Builder configBuilder = YandexMetricaConfig.newConfigBuilder(appmetrica_key);
+        YandexMetrica.activate(getApplicationContext(), configBuilder.build());
+        YandexMetrica.enableActivityAutoTracking(this);
+        isMetricaInitialized = true;
+    }
+
+    private void initializeRealmDb() {
+        Realm.init(this);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .schemaVersion(0)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(realmConfiguration);
     }
 
     public App() {
@@ -46,5 +74,11 @@ public class App extends android.app.Application {
     public static int getResource(Context context, String defType, String name) {
         int identifier = context.getResources().getIdentifier(name, defType, context.getPackageName());
         return identifier != 0 ? identifier : -1;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(base);
     }
 }

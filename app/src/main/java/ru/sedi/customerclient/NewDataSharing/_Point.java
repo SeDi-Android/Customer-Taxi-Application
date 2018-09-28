@@ -6,12 +6,15 @@ import android.text.TextUtils;
 import com.loopj.android.http.RequestParams;
 
 import java.util.Locale;
+import java.util.Optional;
 
 import ru.sedi.customer.R;
 import ru.sedi.customerclient.classes.App;
+import ru.sedi.customerclient.common.GeoTools.GeoPoint;
 import ru.sedi.customerclient.common.LatLong;
 import ru.sedi.customerclient.common.LogUtil;
 import ru.sedi.customerclient.common.SystemManagers.Prefs;
+import ru.sedi.customerclient.db.DbHistoryPoint;
 import ru.sedi.customerclient.enums.PrefsName;
 
 public class _Point {
@@ -31,23 +34,29 @@ public class _Point {
         }
     }
 
-    private String CountryName;
-    private String PostalCode;
-    private String CityName;
-    private String StreetName;
-    private String HouseNumber;
-    private String ObjectName;
-    private String PlaceId;
-    private String Description;
+    private String AddressString = "";
+    private String CountryName = "";
+    private String PostalCode = "";
+    private String CityName = "";
+    private String StreetName = "";
+    private String HouseNumber = "";
+    private String ObjectName = "";
+    private String PlaceId = "";
+    private String Description = "";
     private boolean Checked;
-    private int EntranceNumber;
-    private _GeoPoint GeoPoint;
+    private int EntranceNumber = -1;
+    private _GeoPoint GeoPoint = new _GeoPoint();
     private boolean Coordinatesonly;
     private int WaitTime;
-    private int ID;
+    private int ID = -1;
     private Type mType;
+    private GoogleAutocomplete.StructuredFormatting mGoogleStruckFormatting;
+
+    public _Point() {
+    }
 
     public _Point(_Point point) {
+        AddressString = point.AddressString;
         CountryName = point.CountryName;
         PostalCode = point.PostalCode;
         CityName = point.CityName;
@@ -63,22 +72,13 @@ public class _Point {
         this.ID = point.ID;
         Coordinatesonly = point.Coordinatesonly;
         mType = point.mType;
+        mGoogleStruckFormatting = point.mGoogleStruckFormatting;
     }
 
-    public _Point() {
-        CountryName = "";
-        PostalCode = "";
-        CityName = "";
-        StreetName = "";
-        HouseNumber = "";
-        ObjectName = "";
-        PlaceId = "";
-        Description = "";
-        Checked = false;
-        EntranceNumber = -1;
-        GeoPoint = new _GeoPoint();
-        WaitTime = 0;
-        this.ID = -1;
+    public _Point(String addressString, LatLong latLong) {
+        AddressString = addressString;
+        GeoPoint = new _GeoPoint(latLong.Latitude, latLong.Longitude);
+        Checked = GeoPoint.isValid();
     }
 
     public _Point(String cityName, LatLong latLong, boolean isCoordinatesonly, boolean isChecked) {
@@ -90,6 +90,26 @@ public class _Point {
 
     public _Point(String cityName, LatLong latLong, boolean isCoordinatesonly) {
         this(cityName, latLong, isCoordinatesonly, true);
+    }
+
+    public _Point(DbHistoryPoint point) {
+        CountryName = point.getCountryName();
+        PostalCode = point.getPostalCode();
+        CityName = point.getCityName();
+        StreetName = point.getStreetName();
+        HouseNumber = point.getHouseNumber();
+        ObjectName = point.getObjectName();
+        PlaceId = point.getPlaceId();
+        Checked = true;
+        EntranceNumber = point.getEntranceNumber();
+        GeoPoint = new _GeoPoint(point.getLatitude(), point.getLongetude());
+        this.ID = point.getId();
+        if (!TextUtils.isEmpty(point.getType()))
+            mType = Type.valueOf(point.getType());
+    }
+
+    public boolean isSingleStringPoint() {
+        return !TextUtils.isEmpty(AddressString);
     }
 
     public String getCountryName() {
@@ -200,6 +220,35 @@ public class _Point {
         return new _Point(this);
     }
 
+    public String asShortAddress() {
+        if (!TextUtils.isEmpty(AddressString))
+            return AddressString;
+        else if (Coordinatesonly)
+            return getLocationString();
+        else if (isMinimalAddress())
+            return getAddressOrObject();
+        else
+            return getCityName();
+    }
+
+    private String getLocationString() {
+        return String.format(Locale.ENGLISH, "%.5f, %.5f", GeoPoint.getLat(), GeoPoint.getLon());
+    }
+
+    public String getAddressOrObject() {
+        StringBuilder sb = new StringBuilder();
+        if (!TextUtils.isEmpty(getStreetName())) {
+            sb.append(getStreetName());
+
+            if (!TextUtils.isEmpty(getHouseNumber())) {
+                sb.append(", ").append(getHouseNumber());
+            }
+        } else if (!TextUtils.isEmpty(getObjectName())) {
+            sb.append(getObjectName());
+        }
+        return sb.toString();
+    }
+
     public String asString() {
         return addressInRussianFormat();
     }
@@ -213,18 +262,22 @@ public class _Point {
 
     @NonNull
     private String addressInRussianFormat() {
+        //Если адрес указан строкой, то нужно вернуть его.
+        if (!TextUtils.isEmpty(AddressString))
+            return AddressString;
+
         StringBuilder builder = new StringBuilder();
+
         try {
             if (Coordinatesonly) {
-                builder.append(String.format(Locale.ENGLISH, "%.5f, %.5f", GeoPoint.getLat(),
-                        GeoPoint.getLon()));
+                builder.append(getLocationString());
             } else {
-                if (!TextUtils.isEmpty(CityName))
+                if (!TextUtils.isEmpty(CityName)) {
                     builder.append(CityName);
+                    builder.append(", ");
+                }
 
                 if (!TextUtils.isEmpty(StreetName)) {
-                    if (builder.length() > 0)
-                        builder.append(", ");
                     builder.append(StreetName);
                 }
 
@@ -241,7 +294,11 @@ public class _Point {
                 }
 
                 if (!TextUtils.isEmpty(ObjectName)) {
-                    builder.append(String.format(", %s", ObjectName));
+                    String s = builder.toString();
+                    if (!s.endsWith(", ")) {
+                        builder.append(", ");
+                    }
+                    builder.append(String.format("%s", ObjectName));
                 }
             }
 
@@ -255,6 +312,10 @@ public class _Point {
     //Reitmenstrasse 7, Объект, 8952 Schlieren
     @NonNull
     private String addressInEuropeanFormat() {
+        //Если адрес указан строкой, то нужно вернуть его.
+        if (!TextUtils.isEmpty(AddressString))
+            return AddressString;
+
         StringBuilder builder = new StringBuilder();
         try {
             if (!TextUtils.isEmpty(StreetName))
@@ -307,7 +368,8 @@ public class _Point {
 
     public boolean isMinimalAddress() {
         return !TextUtils.isEmpty(CityName)
-                && !TextUtils.isEmpty(StreetName);
+                && (!TextUtils.isEmpty(StreetName)
+                || !TextUtils.isEmpty(ObjectName));
     }
 
     public boolean equalsAddress(_Point point) {
@@ -315,25 +377,30 @@ public class _Point {
     }
 
     public RequestParams asRequestParam(int i, RequestParams params) {
-        if (ID > 0)
-            params.put("addrid" + i, ID);
+        if (!TextUtils.isEmpty(AddressString)) {
+            params.put("addressString" + i, AddressString);
+        } else {
+            if (ID > 0)
+                params.put("addrid" + i, ID);
 
-        if (!TextUtils.isEmpty(CityName))
-            params.put("city" + i, CityName);
+            if (!TextUtils.isEmpty(CityName))
+                params.put("city" + i, CityName);
 
-        if (!TextUtils.isEmpty(StreetName))
-            params.put("street" + i, StreetName);
-        else if (!TextUtils.isEmpty(ObjectName))
-            params.put("street" + i, ObjectName);
+            if (!TextUtils.isEmpty(StreetName))
+                params.put("street" + i, StreetName);
 
-        if (!TextUtils.isEmpty(HouseNumber))
-            params.put("house" + i, HouseNumber);
+            if (!TextUtils.isEmpty(ObjectName))
+                params.put("object" + i, ObjectName);
 
-        if (EntranceNumber > 0)
-            params.put("entrace" + i, EntranceNumber);
+            if (!TextUtils.isEmpty(HouseNumber))
+                params.put("house" + i, HouseNumber);
 
-        if (Coordinatesonly)
-            params.put("coordinatesonly" + i, Coordinatesonly);
+            if (EntranceNumber > 0)
+                params.put("entrace" + i, EntranceNumber);
+
+            if (Coordinatesonly)
+                params.put("coordinatesonly" + i, Coordinatesonly);
+        }
 
         if (GeoPoint.toLatLong().isValid()) {
             params.put("lat" + i, GeoPoint.getLat());
@@ -341,10 +408,6 @@ public class _Point {
         }
 
         return params;
-    }
-
-    public boolean equalsString(String addressWithFormat) {
-        return asString(true).equalsIgnoreCase(addressWithFormat);
     }
 
     public void setCoordinatesonly(boolean coordinatesonly) {
@@ -362,5 +425,17 @@ public class _Point {
     @Override
     public String toString() {
         return getDesc();
+    }
+
+    public Type getType() {
+        return mType;
+    }
+
+    public void setGoogleStruckFormatting(GoogleAutocomplete.StructuredFormatting googleStruckFormatting) {
+        mGoogleStruckFormatting = googleStruckFormatting;
+    }
+
+    public GoogleAutocomplete.StructuredFormatting getGoogleStruckFormatting() {
+        return mGoogleStruckFormatting;
     }
 }

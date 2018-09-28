@@ -1,5 +1,6 @@
 package ru.sedi.customerclient.activitys.user_profile;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,13 +18,12 @@ import android.widget.Spinner;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ru.sedi.customer.R;
-import ru.sedi.customerclient.classes.Validator;
 import ru.sedi.customerclient.NewDataSharing.Collections.Collections;
 import ru.sedi.customerclient.NewDataSharing.PaymentSystem;
 import ru.sedi.customerclient.NewDataSharing._Bill;
 import ru.sedi.customerclient.ServerManager.ServerManager;
+import ru.sedi.customerclient.classes.Validator;
 import ru.sedi.customerclient.common.AsyncAction.AsyncAction;
 import ru.sedi.customerclient.common.AsyncAction.IActionFeedback;
 import ru.sedi.customerclient.common.AsyncAction.IFunc;
@@ -90,7 +90,7 @@ public class NewCardDialog extends AppCompatDialog {
     @OnClick(R.id.btnAddCard)
     public void onAddCardClick() {
         String mail = etEmail.getText().toString();
-        if (TextUtils.isEmpty(mail) || !Validator.Valid(Validator.EMAIL_PATTERN, mail)) {
+        if (TextUtils.isEmpty(mail) || !Validator.valid(Validator.EMAIL_PATTERN, mail)) {
             MessageBox.show(mContext, R.string.msg_IncorrectEmail, -1);
             return;
         }
@@ -105,7 +105,7 @@ public class NewCardDialog extends AppCompatDialog {
     }
 
     private void addNewCard(final String mail, final String id) {
-        final SweetAlertDialog show = ProgressDialogHelper.show(mContext);
+        final ProgressDialog show = ProgressDialogHelper.show(mContext);
         AsyncAction.run(new IFunc<_Bill>() {
             @Override
             public _Bill Func() throws Exception {

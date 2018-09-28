@@ -31,6 +31,11 @@ public class GoogleAutocomplete {
             this.status = status;
         }
 
+        public boolean isOk() {
+            return getStatus() != null
+                    && getStatus().equalsIgnoreCase("OK")
+                    && getPredictions()!=null;
+        }
     }
 
     public class MainTextMatchedSubstring {
@@ -254,6 +259,10 @@ public class GoogleAutocomplete {
             this.secondaryTextMatchedSubstrings = secondaryTextMatchedSubstrings;
         }
 
+        public boolean containCity(String city) {
+            return secondaryText != null
+                    && secondaryText.toLowerCase().contains(city.toLowerCase());
+        }
     }
 
     public class Term {

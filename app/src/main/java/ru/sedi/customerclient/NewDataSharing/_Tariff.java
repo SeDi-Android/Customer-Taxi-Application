@@ -17,8 +17,10 @@ public class _Tariff {
     private boolean IsMinimumCost;
     private String[] Details;
     private String Currency;
+    private int CostCalculationId;
 
-    public _Tariff(String type, int ID, String name, float cost, float costFull, int cars, String[] details, String currency) {
+    public _Tariff(String type, int ID, String name, float cost, float costFull, int cars,
+                   String[] details, String currency, int costCalculationId) {
         Type = type;
         this.ID = ID;
         Name = name;
@@ -27,6 +29,7 @@ public class _Tariff {
         Cars = cars;
         Details = details;
         Currency = currency;
+        CostCalculationId = costCalculationId;
     }
 
     public _Tariff() {
@@ -127,8 +130,12 @@ public class _Tariff {
         IsMinimumCost = isMinimumCost;
     }
 
+    public int getCostCalculationId() {
+        return CostCalculationId;
+    }
+
     public _Tariff copy() {
-        return new _Tariff(Type, ID, Name, Cost, CostFull, Cars, Details, Currency);
+        return new _Tariff(Type, ID, Name, Cost, CostFull, Cars, Details, Currency, CostCalculationId);
     }
 
     public NameId getNameId() {

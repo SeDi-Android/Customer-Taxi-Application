@@ -1,5 +1,7 @@
 package ru.sedi.customerclient.activitys.choose_tariff;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -11,8 +13,10 @@ import ru.sedi.customer.R;
 import ru.sedi.customerclient.NewDataSharing.Collections.Collections;
 import ru.sedi.customerclient.NewDataSharing._Order;
 import ru.sedi.customerclient.NewDataSharing._Tariff;
+import ru.sedi.customerclient.activitys.active_orders_activity.ActiveOrdersActivity;
 import ru.sedi.customerclient.base.BaseActivity;
 import ru.sedi.customerclient.classes.App;
+import ru.sedi.customerclient.classes.Helpers.Helpers;
 import ru.sedi.customerclient.classes.Orders._OrderRegistrator;
 import ru.sedi.customerclient.common.LINQ.QueryList;
 import ru.sedi.customerclient.common.MessageBox.MessageBox;
@@ -39,11 +43,6 @@ public class ChooseTariffActivity extends BaseActivity {
 
         if (getIntent().hasExtra(TARIFFS))
             setTariffs(getIntent().getByteArrayExtra(TARIFFS));
-        else {
-            mTariffs = Collections.me().getTariffs().getAll();
-            mOrder.setDistance(0);
-            mOrder.setDuration(0);
-        }
 
         updateTitle(R.string.cost_calculation, R.drawable.ic_cash_multiple);
         if (getSupportActionBar() != null)
@@ -60,11 +59,14 @@ public class ChooseTariffActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         if (mTariffs.size() == 1 && App.isAuth)
-            new OrderConfirmationDialog(ChooseTariffActivity.this,  mOrder, postRegisterAction).show();
+            new OrderConfirmationDialog(ChooseTariffActivity.this, mOrder, postRegisterAction).show();
     }
 
     private void init() {
-        postRegisterAction = () -> finish();
+        postRegisterAction = () -> {
+            startActivity(ActiveOrdersActivity.getIntent(this));
+            finish();
+        };
 
         if (App.isAuth) {
             Collections.me().getUser().updateBalance(ChooseTariffActivity.this, false);
@@ -90,7 +92,7 @@ public class ChooseTariffActivity extends BaseActivity {
 
                 _Tariff tariff = mTariffs.get(i).copy();
                 mOrder.setTariff(tariff);
-                new OrderConfirmationDialog(ChooseTariffActivity.this,  mOrder, postRegisterAction).show();
+                new OrderConfirmationDialog(ChooseTariffActivity.this, mOrder, postRegisterAction).show();
             });
 
             _Tariff tariff = mTariffs.get(0);
@@ -129,5 +131,9 @@ public class ChooseTariffActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static Intent getIntent(Context context) {
+        return new Intent(context, ChooseTariffActivity.class);
     }
 }

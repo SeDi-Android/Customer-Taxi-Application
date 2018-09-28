@@ -10,12 +10,12 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.SyncHttpClient;
 
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+import cz.msebera.android.httpclient.Header;
 import ru.sedi.customer.R;
 import ru.sedi.customerclient.NewDataSharing._Error;
 import ru.sedi.customerclient.common.LogUtil;
@@ -81,8 +81,10 @@ public class Server {
 
     public static boolean isHttp(String urlChanel) {
         return urlChanel.contains("test2")
+                || urlChanel.contains("sedikg")
                 || urlChanel.contains("krasnodar")
                 || urlChanel.contains("snt")
+                || urlChanel.contains("taxiwedo")
                 || urlChanel.contains("busvan");
     }
 
@@ -109,7 +111,7 @@ public class Server {
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
                 try {
                     mJsonString = new String(responseBody, "UTF-8");
 
@@ -124,17 +126,19 @@ public class Server {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
                 mError = new _Error(error.getMessage(), error.getMessage());
             }
+
         };
         return asyncHttpResponseHandler;
     }
 
     /**
      * Получение ключа пользователя из кукисов
+     * @param headers
      */
-    private void getActivationKey(Header[] headers) {
+    private void getActivationKey(cz.msebera.android.httpclient.Header[] headers) {
         if (!isSuccess()) return;
         try {
             for (Header header : headers) {
@@ -161,8 +165,7 @@ public class Server {
                 boolean success = object.getBoolean(SediJsonObject.Success);
                 if (!success) {
                     if (object.has(SediJsonObject.Error)) {
-                        JSONObject error = object.getJSONObject(SediJsonObject.Error);
-                        mError = new Gson().fromJson(error.toString(), _Error.class);
+                        mError = new Gson().fromJson(object.getString("Message"), _Error.class);
                     }
                 }
                 return success;
@@ -210,8 +213,22 @@ public class Server {
         return mUserKey;
     }
 
-
+//ru.sedi.customer.vederko
     public _Error getError() {
         return mError;
+    }
+
+    /**
+     * Возвращает url для использования в запросах автокомплита в SeDi.
+     * @param context context вызывающего.
+     * @return строку с url для автокомплита SeDi.
+     */
+    public static String getAutocompleteUrl(Context context) {
+        StringBuilder sb = new StringBuilder();
+        String chanelName = context.getString(R.string.groupChanel);
+        sb.append(isHttp(chanelName) ? "http://" : "https://");
+        sb.append(chanelName);
+        sb.append("/handlers/autocomplete.ashx?q=addr&types=street,object,city");
+        return sb.toString();
     }
 }

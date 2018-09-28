@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="ru.sedi.customer"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="ru.sedi.customer">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <uses-feature
         android:name="android.hardware.location"
-        android:required="true"/>
+        android:required="true" />
     <uses-feature
         android:name="android.hardware.location.gps"
-        android:required="false"/>
+        android:required="false" />
     <uses-feature
         android:name="android.telephony"
-        android:required="false"/>
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.telephony"
-        android:required="false"/>
+        android:required="false" />
 
     <application
         android:name="ru.sedi.customerclient.classes.App"
@@ -40,142 +40,107 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="ride"
+                    android:scheme="@string/schema" />
             </intent-filter>
         </activity>
         <activity
             android:name="ru.sedi.customerclient.activitys.user_registration.UserPhoneRegisterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="ru.sedi.customerclient.activitys.user_registration.UserKeyInputActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name="ru.sedi.customerclient.activitys.main.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity
-            android:name="ru.sedi.customerclient.activitys.giving_time.GivingTimeActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity
-            android:name="ru.sedi.customerclient.base.SingleFragmentDialogActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppCompatAlertDialogStyle"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
-        <activity
-            android:name="ru.sedi.customerclient.activitys.developer.DeveloperActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity
-            android:name="ru.sedi.customerclient.activitys.special_services.ServicesActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="ru.sedi.customerclient.activitys.choose_tariff.ChooseTariffActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="ru.sedi.customerclient.activitys.active_orders_activity.ActiveOrdersActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity
-            android:name="ru.sedi.customerclient.activitys.additional_info.AdditionalInfoActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="ru.sedi.customerclient.activitys.order_history.OrderHistoryActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="ru.sedi.customerclient.activitys.driver_rating.DriverRatingActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppCompatAlertDialogStyle"/>
+            android:theme="@style/AppCompatAlertDialogStyle" />
         <activity
             android:name="ru.sedi.customerclient.activitys.about_application.AboutAppActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="ru.sedi.customerclient.dialogs.OrderHistorySearchParamsDialog"
             android:screenOrientation="portrait"
             android:theme="@style/AppCompatAlertDialogStyle"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="ru.sedi.customerclient.activitys.active_order_map_activity.ActiveOrderMapActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="ru.sedi.customerclient.activitys.customer_balance.CustomerBalanceActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="ru.sedi.customerclient.activitys.settings.SettingsActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="ru.sedi.customerclient.activitys.exemplary_location.ExemplaryLocationActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity
-            android:name="ru.sedi.customerclient.activitys.route.MapInputAddressActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="ru.sedi.customerclient.activitys.user_profile.ProfileActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity
-            android:name="ru.sedi.customerclient.activitys.route.RouteActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="ru.sedi.customerclient.activitys.partner_program.PartnerProgramActivity"
-            android:parentActivityName="ru.sedi.customerclient.activitys.main.MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="ru.sedi.customerclient.activitys.new_main.NewMainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:screenOrientation="portrait" />
 
         <service
             android:name="ru.sedi.customerclient.firebase.MyFirebaseInstanceIdService"
-            android:enabled="true">
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <service
             android:name="ru.sedi.customerclient.firebase.MyFirebaseMessagingService"
-            android:enabled="true">
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name="ru.sedi.customerclient.activitys.route_editor.RouteEditorActivity">
-        </activity>
-        <activity android:name="ru.sedi.customerclient.activitys.main_activity.MainActivity2">
-        </activity>
+        <activity
+            android:name="ru.sedi.customerclient.activitys.main_2.MainActivity2"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="4f17b01d23bb620a074293d1c4d837719a04ce2d" />
+
+        <activity android:name="ru.sedi.customerclient.activitys.move_activity.MoveVersionActivity"></activity>
     </application>
 
 </manifest>

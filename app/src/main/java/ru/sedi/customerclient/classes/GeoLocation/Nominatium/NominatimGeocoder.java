@@ -18,6 +18,7 @@ import ru.sedi.customer.R;
 import ru.sedi.customerclient.NewDataSharing._Point;
 import ru.sedi.customerclient.common.LINQ.QueryList;
 import ru.sedi.customerclient.common.LatLong;
+import ru.sedi.customerclient.common.LogUtil;
 import ru.sedi.customerclient.common.Toast.ToastHelper;
 
 public class NominatimGeocoder {
@@ -32,6 +33,13 @@ public class NominatimGeocoder {
         mContext = context;
         if (!TextUtils.isEmpty(lang))
             mLang = lang;
+        mOkHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
+                .build();
+    }
+
+    public NominatimGeocoder(String lang) {
         mOkHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(5, TimeUnit.SECONDS)
                 .readTimeout(5, TimeUnit.SECONDS)
@@ -54,6 +62,7 @@ public class NominatimGeocoder {
 
         try {
             Response execute = mOkHttpClient.newCall(request).execute();
+            LogUtil.log(LogUtil.INFO, execute.request().url().toString());
             if (!execute.isSuccessful() || execute.body() == null) return new QueryList<>();
             String string = new String(execute.body().string());
             Address[] addresses = new Gson().fromJson(string, Address[].class);

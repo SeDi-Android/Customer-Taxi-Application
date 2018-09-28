@@ -3,6 +3,7 @@ package ru.sedi.customerclient.NewDataSharing;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import ru.sedi.customerclient.classes.App;
 import ru.sedi.customerclient.classes.Const;
@@ -12,7 +13,7 @@ import ru.sedi.customerclient.NewDataSharing.Collections.Collections;
 import ru.sedi.customerclient.common.DateTime;
 import ru.sedi.customerclient.common.LINQ.QueryList;
 
-public class _Order {
+public class _Order implements _Route.OnRouteChangeListener {
     private NameId Status;
     private String Date;
     private _Route Route;
@@ -28,12 +29,12 @@ public class _Order {
     private String Description;
     private double Distance; // Расстояние м-ду водителем
     private double Duration; // Расстояние м-ду водителем
-    private _Driver Driver; // может отсутствовать
+    private _Driver Driver; // может отсутствоват
     private _Rating Rating;
     private int ID;
+    private int CostCalculationId;
     private String Details;
-    private boolean Isminimumcost;
-
+    private CostCalculationResult CostCalculationResult;
     private OnChangeListener mChangeListener;
 
     public _Order(_Order order) {
@@ -53,8 +54,9 @@ public class _Order {
         Duration = order.Duration;
         Driver = order.Driver;
         Rating = order.Rating;
-        this.ID = order.ID;
+        ID = order.ID;
         Type = order.Type;
+        CostCalculationResult = order.CostCalculationResult;
     }
 
     public _Order() {
@@ -64,13 +66,36 @@ public class _Order {
         date.addMinute(20);
 
         Date = date.toString(DateTime.WEB_DATE);
-        Route = new _Route();
-        Status = new NameId(App.isTaxiLive ? "Wird registriert..." : "Регистрация", OrderStatuses.search.name());
+        Route = new _Route(this);
+        Status = new NameId(App.isExcludedApp ? "Wird registriert..." : "Регистрация", OrderStatuses.search.name());
         Tariff = new NameId();
         Customer = new _Customer();
     }
 
     //<editor-fold desc="Getter / Setter">
+
+
+    public CostCalculationResult getCostCalculationResult() {
+        return CostCalculationResult;
+    }
+
+    public void setCostCalculationResult(CostCalculationResult costCalculationResult) {
+        if (costCalculationResult != null && costCalculationResult.isSuccess()) {
+            CostCalculationResult = costCalculationResult;
+        } else {
+            CostCalculationResult = null;
+        }
+    }
+
+    public void resetCostCalculationInfo() {
+        CostCalculationResult = null;
+        CostCalculationId = Const.NoId;
+    }
+
+    public void setCostCalculationId(int costCalculationId) {
+        CostCalculationId = costCalculationId;
+    }
+
     public NameId getStatus() {
         return Status;
     }
@@ -111,6 +136,8 @@ public class _Order {
 
     public void setRoute(_Route route) {
         Route = route;
+        Route.setListener(this);
+        resetCostCalculationInfo();
     }
 
     public double getCost() {
@@ -126,16 +153,16 @@ public class _Order {
             Currency = "";
             Tariff = new NameId();
             Cost = 0;
-            Details = "";
-            Isminimumcost = false;
+            CostCalculationId = 0;
             Discount = 0;
+            Details = "";
         } else {
             Currency = tariff.getCurrency();
             Tariff = tariff.getNameId();
             Cost = tariff.getCost();
-            Details = tariff.getStringDetails();
-            Isminimumcost = tariff.isMinimumCost();
+            CostCalculationId = tariff.getCostCalculationId();
             Discount = tariff.getCostFull() - tariff.getCost();
+            Details = tariff.getStringDetails();
         }
         updateListeners();
     }
@@ -216,6 +243,7 @@ public class _Order {
 
     public void setRush(boolean rush) {
         Type = new NameId("", rush ? "rush" : "preliminary");
+        resetCostCalculationInfo();
     }
 
     public DateTime getDateTime() {
@@ -224,18 +252,11 @@ public class _Order {
 
     public void setDateTime(DateTime dateTime) {
         Date = dateTime.toString(DateTime.WEB_DATE);
+        resetCostCalculationInfo();
     }
 
     public float getDiscount() {
         return Discount;
-    }
-
-    public String getDetails() {
-        return Details;
-    }
-
-    public boolean isMinimumcost() {
-        return Isminimumcost;
     }
 
     public String getDriverCarInfo() {
@@ -315,20 +336,40 @@ public class _Order {
     }
 
     public _Order fullCopy() {
-        Gson gson = new Gson();
-        String json = gson.toJson(this);
-        return new _Order(gson.fromJson(json, _Order.class));
+        try {
+            Gson gson = new Gson();
+            String json = gson.toJson(this);
+            return new _Order(gson.fromJson(json, _Order.class));
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void setRating(_Rating rating) {
         Rating = rating;
     }
 
+    public int getCostCalculationId() {
+        return CostCalculationId;
+    }
+
+    public String getDetails() {
+        return Details;
+    }
+
+    @Override
+    public void onRouteChange() {
+        resetCostCalculationInfo();
+    }
+
     //</editor-fold>
 
     public interface OnChangeListener {
         void onSuccessCalculate(_Order order);
+
         void onStartCalculate();
+
         void OnFailureCalculate(String message);
     }
 

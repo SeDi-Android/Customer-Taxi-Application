@@ -14,8 +14,8 @@
         android:paddingTop="3dp">
 
         <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="250dp"
+            android:layout_width="match_parent"
+            android:layout_height="330dp"
             android:cacheColorHint="#00000000"
             android:id="@+id/sa_lvServices"
             android:choiceMode="multipleChoice"
@@ -25,17 +25,17 @@
             android:layout_alignParentStart="true"/>
 
         <Button
+            android:layout_below="@id/sa_lvServices"
             android:id="@+id/btn_save"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:padding="0dp"
-            android:layout_below="@+id/sa_lvServices"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
+            android:padding="0dp"
             android:text="@string/save"
-            android:textColor="@color/primaryDarkColor"/>
+            android:textColor="@color/primaryDarkColor" />
 
     </RelativeLayout>
 </RelativeLayout>

@@ -137,8 +137,8 @@ public class GoogleDetailAPI {
                 result.setObjectName(address.getString("name"));
                 //result.setStreetName(address.getString("name"));
 
-            if (streetNumber == null && (route != null && !route.equalsIgnoreCase(address.getString("name"))))
-                result.setStreetName(result.getStreetName() + " (" + address.getString("name") + ")");
+            if (route != null && !route.equalsIgnoreCase(address.getString("name")))
+                result.setObjectName(address.getString("name"));
                 //result.setStreetName(result.getStreetName() + " (" + address.getString("name") + ")");
 
             // Locality
@@ -146,6 +146,12 @@ public class GoogleDetailAPI {
             String locality = getJSONStringField(addressComponent, "long_name");
             if (locality != null)
                 result.setCityName(locality);
+
+            // Postcode
+            addressComponent = getAddressComponent(addressComponents, "postal_code");
+            String postalCode = getJSONStringField(addressComponent, "long_name");
+            if (postalCode != null)
+                result.setPostalCode(postalCode);
 
             addressComponent = getAddressComponent(addressComponents, "country");
             String country = getJSONStringField(addressComponent, "long_name");

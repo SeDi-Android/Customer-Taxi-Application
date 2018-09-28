@@ -1,5 +1,6 @@
 package ru.sedi.customerclient.activitys.customer_balance;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -23,7 +24,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ru.sedi.customer.R;
 import ru.sedi.customerclient.NewDataSharing.Collections.Collections;
 import ru.sedi.customerclient.NewDataSharing.PaymentSystem;
@@ -54,13 +54,19 @@ public class CustomerBalanceActivity extends BaseActivity {
     private PaymentSystem mSelectedPaymentSystem = null;
     private double mMissingAmount;
 
-    @BindView(R.id.etPhone) EditText etPhone;
-    @BindView(R.id.etSum) EditText etSum;
-    @BindView(R.id.spnrPaymentSystem) Spinner spnrPaymentSystem;
+    @BindView(R.id.etPhone)
+    EditText etPhone;
+    @BindView(R.id.etSum)
+    EditText etSum;
+    @BindView(R.id.spnrPaymentSystem)
+    Spinner spnrPaymentSystem;
 
-    @BindView(R.id.tvBalance) TextView tvBalance;
-    @BindView(R.id.tvCredit) TextView tvCredit;
-    @BindView(R.id.tvLocked) TextView tvLocked;
+    @BindView(R.id.tvBalance)
+    TextView tvBalance;
+    @BindView(R.id.tvCredit)
+    TextView tvCredit;
+    @BindView(R.id.tvLocked)
+    TextView tvLocked;
 
 
     @Override
@@ -107,7 +113,7 @@ public class CustomerBalanceActivity extends BaseActivity {
         etPhone.setText(paymentPhone);
 
         if (mMissingAmount > 0) {
-            etSum.setText(String.format("%.2f", mMissingAmount));
+            etSum.setText(Helpers.decimalFormat(mMissingAmount));
             ToastHelper.ShowLongToast(getString(R.string.set_need_sum_message));
         }
 
@@ -189,11 +195,7 @@ public class CustomerBalanceActivity extends BaseActivity {
         QueryList<String> names = new QueryList<>();
 
         for (PaymentSystem paySystem : paySystems) {
-            int id = mContext.getResources().getIdentifier(paySystem.getPaymentSystem().getID(), "string", mContext.getPackageName());
-            if (id > 0)
-                names.add(mContext.getString(id));
-            else
-                names.add(paySystem.getPaymentSystem().getID());
+            names.add(paySystem.getPaymentSystem().getName());
         }
         return new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, names);
     }
@@ -209,7 +211,7 @@ public class CustomerBalanceActivity extends BaseActivity {
         final double sum = getSumWithPercent(etSum.getText().toString());
 
         //Проверяем номер телефона
-        if (!Validator.Valid(Validator.PHONE_PATTERN, phone)) {
+        if (!Validator.valid(Validator.PHONE_PATTERN, phone)) {
             LogUtil.log(LogUtil.ERROR, "Номер телефона имеет неверный формат!");
             MessageBox.show(mContext, R.string.bad_phone_number, -1);
             return;
@@ -244,7 +246,7 @@ public class CustomerBalanceActivity extends BaseActivity {
     }
 
     private void perfomBill(final String phone, final double sum, final String system) {
-        final SweetAlertDialog pd = ProgressDialogHelper.show(this);
+        final ProgressDialog pd = ProgressDialogHelper.show(this);
         AsyncAction.run(() -> ServerManager.GetInstance().bill(phone, sum, system),
                 new IActionFeedback<_Bill>() {
                     @Override

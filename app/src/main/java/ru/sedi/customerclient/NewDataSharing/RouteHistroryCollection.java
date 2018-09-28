@@ -2,19 +2,25 @@ package ru.sedi.customerclient.NewDataSharing;
 
 import android.support.annotation.UiThread;
 
-import java.util.Arrays;
-
+import io.realm.Realm;
+import io.realm.RealmResults;
 import ru.sedi.customerclient.adapters.RouteHistoryAdapter;
 import ru.sedi.customerclient.common.AsyncAction.IAction;
-import ru.sedi.customerclient.common.LINQ.IWhere;
 import ru.sedi.customerclient.common.LINQ.QueryList;
+import ru.sedi.customerclient.db.DBHistoryRoute;
 
 
 public class RouteHistroryCollection {
 
     private static RouteHistroryCollection mThis;
-    private QueryList<RouteHistory> mRouteHistories = new QueryList<>();
+    private final Realm mRealm;
+    private final RealmResults<DBHistoryRoute> mRouteHistories;
     private RouteHistoryAdapter mHistoryAdapter;
+
+    public RouteHistroryCollection() {
+        mRealm = Realm.getDefaultInstance();
+        mRouteHistories = mRealm.where(DBHistoryRoute.class).findAll();
+    }
 
     public static RouteHistroryCollection me() {
         if (mThis == null)
@@ -22,49 +28,43 @@ public class RouteHistroryCollection {
         return mThis;
     }
 
-    public boolean add(RouteHistory history) throws Exception {
-        for (RouteHistory routeHistory : mRouteHistories) {
-            if (routeHistory.equals(history)) {
+    public boolean add(DBHistoryRoute history) throws Exception {
+        for (DBHistoryRoute DBHistoryRoute : mRouteHistories) {
+            if (DBHistoryRoute.equals(history)) {
                 throw new Exception("Маршрут с таким названием уже существует");
             }
         }
-        mRouteHistories.add(history);
-        updateAdapter();
+        mRealm.executeTransactionAsync(realm -> {
+            realm.copyToRealm(history);
+        }, this::updateAdapter);
         return true;
     }
 
-    public void remove(final RouteHistory history) {
-        QueryList<RouteHistory> where = mRouteHistories.Where(new IWhere<RouteHistory>() {
-            @Override
-            public boolean Condition(RouteHistory item) {
-                return item.equals(history);
-            }
-        });
-        mRouteHistories.removeAll(where);
-        updateAdapter();
+    public void remove(final DBHistoryRoute history) {
+        mRealm.executeTransactionAsync(realm -> {
+            RealmResults<DBHistoryRoute> all = realm.where(DBHistoryRoute.class)
+                    .equalTo("mName", history.getName())
+                    .findAll();
+            all.deleteAllFromRealm();
+        }, this::updateAdapter);
     }
 
-    public QueryList<RouteHistory> getAll() {
+    public RealmResults<DBHistoryRoute> getAll() {
         return mRouteHistories;
     }
 
-    public RouteHistory[] getAsArray() {
-        return mRouteHistories.toArray(new RouteHistory[mRouteHistories.size()]);
+    public DBHistoryRoute[] getAsArray() {
+        return mRouteHistories.toArray(new DBHistoryRoute[mRouteHistories.size()]);
     }
 
-    public void set(RouteHistory[] history) {
-        mRouteHistories.clear();
-        mRouteHistories.addAll(Arrays.asList(history));
-    }
-
-    public RouteHistoryAdapter getAdapter(IAction<RouteHistory> action) {
-        mHistoryAdapter = new RouteHistoryAdapter(mRouteHistories, action);
+    public RouteHistoryAdapter getAdapter(IAction<DBHistoryRoute> action) {
+        mHistoryAdapter = new RouteHistoryAdapter(null, action);
         return mHistoryAdapter;
     }
 
-    public boolean contains(QueryList<_Point> points){
-        for (RouteHistory routeHistory : mRouteHistories) {
-            if(routeHistory.getRoute().equals(points))
+    public boolean contains(QueryList<_Point> points) {
+        for (DBHistoryRoute DBHistoryRoute : mRouteHistories) {
+            if (DBHistoryRoute.getRoute().equals(points))
                 return true;
         }
         return false;
