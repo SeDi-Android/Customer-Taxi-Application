@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -31,6 +31,7 @@ import ru.sedi.customerclient.classes.Helpers.Helpers;
 import ru.sedi.customerclient.classes.PartnerMessageHolder;
 import ru.sedi.customerclient.classes.Validator;
 import ru.sedi.customerclient.common.CountryCodes;
+import ru.sedi.customerclient.common.LogUtil;
 import ru.sedi.customerclient.common.MessageBox.MessageBox;
 import ru.sedi.customerclient.common.Toast.ToastHelper;
 import ru.sedi.customerclient.enums.InvitationTypes;
@@ -55,6 +56,9 @@ public class PartnerProgramActivity extends BaseActivity {
     @BindView(R.id.tvInfo)
     TextView tvInfo;
     private int mAccountId;
+
+    private UserTypes mLastUserType = UserTypes.employee;
+    private InvitationTypes mLastInvitationTypes = InvitationTypes.ByDistributorAccountId;
 
 
     public static Intent getIntent(Context context) {
@@ -93,7 +97,6 @@ public class PartnerProgramActivity extends BaseActivity {
         if (!TextUtils.isEmpty(phone))
             invitationType = InvitationTypes.ByPhoneNumber;
 
-
         requestInvitationMessage(userType, invitationType);
     }
 
@@ -103,7 +106,7 @@ public class PartnerProgramActivity extends BaseActivity {
         String restoredMessage = getSavedInvitationMessage(userType, invitationType);
 
         if (!TextUtils.isEmpty(restoredMessage)) {
-            setMessageText(restoredMessage);
+            updateMessageView(restoredMessage, invitationType);
             return;
         }
 
@@ -115,10 +118,42 @@ public class PartnerProgramActivity extends BaseActivity {
                 )
                 .onSuccess(message -> {
                     saveMessageText(message, userType, invitationType);
-                    setMessageText(message);
+                    updateMessageView(message, invitationType);
                 })
                 .onFailure(exception -> MessageBox.show(this, exception.getMessage()))
                 .buildAndExecute();
+    }
+
+    private boolean isDefaultTextChanged() {
+        String lastMessage = etMessage.getText().toString();
+        String savedInvitationMessage = getSavedInvitationMessage(mLastUserType, mLastInvitationTypes);
+        return mLastUserType == getSelectedUserType()
+                && !TextUtils.isEmpty(lastMessage)
+                && !TextUtils.isEmpty(savedInvitationMessage)
+                && !lastMessage.equalsIgnoreCase(savedInvitationMessage);
+    }
+
+    private void updateMessageView(String message, InvitationTypes invitationType) {
+
+        if (isDefaultTextChanged()) {
+            showChangeToDefaultMessageDialog(message);
+        } else {
+            setMessageText(message);
+        }
+
+        mLastUserType = getSelectedUserType();
+        mLastInvitationTypes = invitationType;
+    }
+
+    private void showChangeToDefaultMessageDialog(String message) {
+        new AlertDialog.Builder(this)
+                .setMessage(getString(R.string.partner_programm_change_text_format, message))
+                .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
+                    setMessageText(message);
+                })
+                .setNegativeButton(R.string.no, null)
+                .create()
+                .show();
     }
 
     //endregion

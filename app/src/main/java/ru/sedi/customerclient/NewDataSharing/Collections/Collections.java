@@ -148,7 +148,7 @@ public class Collections {
     }
 
     public boolean enableEasyCostCalculate() {
-        return App.isExcludedApp;
+        return App.isTaxiLive;
         /*return getTariffs().getAll().size() == 1
                 && getOwner().getPhones().isEmpty();*/
     }

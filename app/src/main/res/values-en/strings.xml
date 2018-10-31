@@ -400,4 +400,6 @@
     <string name="road_duration_format">%.1f мин</string>
     <string name="invalid_phone_number">Номер телефона введен некорректно.</string>
     <string name="change_text_message">Внимание, из-за смены типа приложения был изменен текст сообщения.</string>
+    <string name="partner_programm_change_text_format">Для данного типа приглашения есть альтернативный текст:\n\n\"%s\"\n\nИспользовать новый текст приглашения?</string>
+    <string name="text_successed_copied">Текст успешно скопирован</string>
 </resources>

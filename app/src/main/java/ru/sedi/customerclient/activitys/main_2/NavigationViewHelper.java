@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import ru.sedi.customerclient.activitys.about_application.AboutAppActivity;
 import ru.sedi.customerclient.activitys.active_orders_activity.ActiveOrdersActivity;
 import ru.sedi.customerclient.activitys.customer_balance.CustomerBalanceActivity;
 import ru.sedi.customerclient.activitys.order_history.OrderHistoryActivity;
+import ru.sedi.customerclient.activitys.partner_program.PartnerProgramActivity;
 import ru.sedi.customerclient.activitys.settings.SettingsActivity;
 import ru.sedi.customerclient.activitys.user_profile.ProfileActivity;
 import ru.sedi.customerclient.activitys.user_registration.UserPhoneRegisterActivity;
@@ -68,7 +70,7 @@ public class NavigationViewHelper implements NavigationView.OnNavigationItemSele
         mNavigationView.getMenu().findItem(R.id.menu_writeUs).setVisible(!TextUtils.isEmpty(email));
         mNavigationView.getMenu().findItem(R.id.menu_logout).setVisible(App.isAuth);
 
-        if (App.isExcludedApp) {
+        if (App.isTaxiLive) {
             MenuItem item = mNavigationView.getMenu().findItem(R.id.menu_customer_balance);
             if (item != null)
                 item.setVisible(false);
@@ -101,7 +103,7 @@ public class NavigationViewHelper implements NavigationView.OnNavigationItemSele
                             mContext.getString(R.string.Balance),
                             balance.getBalance(),
                             balance.getCurrency()));
-            tvBalance.setVisibility(App.isExcludedApp ? View.GONE : View.VISIBLE);
+            tvBalance.setVisibility(App.isTaxiLive ? View.GONE : View.VISIBLE);
         }
     }
 

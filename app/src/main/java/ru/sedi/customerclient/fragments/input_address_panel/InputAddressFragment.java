@@ -485,7 +485,7 @@ public class InputAddressFragment extends Fragment {
                 requestBySedi(mCity, param);
             }
 
-            AutocompleteQuery query = new AutocompleteQuery(mCity, stringAddress, param.second, App.isExcludedApp);
+            AutocompleteQuery query = new AutocompleteQuery(mCity, stringAddress, param.second, App.isTaxiLive);
             if (externalAutocomplete != null) {
                 requestCounter++;
                 externalAutocomplete.find(query, new ExternalAutocomplete.ExternalAutocompleteResponse() {

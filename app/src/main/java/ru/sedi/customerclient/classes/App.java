@@ -20,7 +20,7 @@ public class App extends android.app.Application {
     public static int RADIUS_LIMIT = 200;
     private static App mInstance;
     public static boolean isAuth = false;
-    public static boolean isExcludedApp = false;
+    public static boolean isTaxiLive = false;
     public static boolean isMetricaInitialized;
 
     @Override
@@ -30,6 +30,7 @@ public class App extends android.app.Application {
         initializeAppMetrica();
         initializeRealmDb();
 
+        isTaxiLive = getApplicationInfo().packageName.contains("taxilive");
         new Prefs(this);
         LocationService.with(this);
         new LogUtil(0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE));

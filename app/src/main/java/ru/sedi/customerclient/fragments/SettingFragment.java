@@ -11,6 +11,7 @@ import ru.sedi.customerclient.Otto.LocaleChangeEvent;
 import ru.sedi.customerclient.Otto.SediBus;
 import ru.sedi.customerclient.activitys.settings.SettingsActivity;
 import ru.sedi.customerclient.classes.App;
+import ru.sedi.customerclient.common.SystemManagers.Prefs;
 import ru.sedi.customerclient.enums.PrefsName;
 
 public class SettingFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -43,7 +44,7 @@ public class SettingFragment extends PreferenceFragmentCompat implements SharedP
     @Override
     public void onStart() {
         super.onStart();
-        getPreferenceScreen().findPreference("LOCALE_CODE").setVisible(!App.isExcludedApp);
+        getPreferenceScreen().findPreference("LOCALE_CODE").setVisible(!App.isTaxiLive);
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
     }

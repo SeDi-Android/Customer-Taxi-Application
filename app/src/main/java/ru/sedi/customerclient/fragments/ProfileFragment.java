@@ -3,9 +3,11 @@ package ru.sedi.customerclient.fragments;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +28,11 @@ import ru.sedi.customerclient.NewDataSharing.Collections.Collections;
 import ru.sedi.customerclient.ServerManager.ServerManager;
 import ru.sedi.customerclient.classes.App;
 import ru.sedi.customerclient.classes.Customer._LoginInfo;
+import ru.sedi.customerclient.classes.Helpers.Helpers;
 import ru.sedi.customerclient.common.DateTime;
 import ru.sedi.customerclient.common.MessageBox.MessageBox;
 import ru.sedi.customerclient.common.MessageBox.UserChoiseListener;
+import ru.sedi.customerclient.common.Toast.ToastHelper;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -37,14 +41,21 @@ public class ProfileFragment extends Fragment {
 
     public static final int LAYOUT = R.layout.fragment_profile;
 
-    @BindView(R.id.tvAccountId) TextView tvAccountId;
-    @BindView(R.id.etSecondname) EditText etSecondname;
-    @BindView(R.id.etName) EditText etName;
-    @BindView(R.id.etBirthday) EditText etBirthday;
-    @BindView(R.id.etPhone) EditText etPhone;
-    @BindView(R.id.etGender) EditText etGender;
+    @BindView(R.id.tvAccountId)
+    TextView tvAccountId;
+    @BindView(R.id.etSecondname)
+    EditText etSecondname;
+    @BindView(R.id.etName)
+    EditText etName;
+    @BindView(R.id.etBirthday)
+    EditText etBirthday;
+    @BindView(R.id.etPhone)
+    EditText etPhone;
+    @BindView(R.id.etGender)
+    EditText etGender;
 
-    @BindView(R.id.llBirthday) LinearLayout llBirthday;
+    @BindView(R.id.llBirthday)
+    LinearLayout llBirthday;
     private Context mContext;
     private _LoginInfo mInfo;
 
@@ -57,7 +68,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(LAYOUT, container, false);
         ButterKnife.bind(this, view);
-        llBirthday.setVisibility(App.isExcludedApp ? GONE : VISIBLE);
+        llBirthday.setVisibility(App.isTaxiLive ? GONE : VISIBLE);
         mInfo = Collections.me().getUser();
         return view;
     }
@@ -82,12 +93,20 @@ public class ProfileFragment extends Fragment {
         etName.setText(profile.getName());
         if (!profile.getPhones().isEmpty())
             etPhone.setText(profile.getPhones().get(0).getNumber());
-        tvAccountId.setText(String.valueOf(profile.getAccountID()));
+
+        String accountId = String.valueOf(profile.getAccountID());
+        tvAccountId.setText(Helpers.fromHtml("<u>" + accountId + "</u>"));
+        tvAccountId.setOnClickListener(view -> onAccountClick(accountId));
 
         etGender.setText(getString(profile.getGender() ? R.string.male : R.string.female));
         etGender.setOnClickListener(v -> showGenderPicker());
         etBirthday.setText(profile.getBirthday().toString(DateTime.DATE));
         etBirthday.setOnClickListener(v -> showDatePicker(etBirthday.getText().toString()));
+    }
+
+    private void onAccountClick(String accountId) {
+        Helpers.copyToClipboard(getContext(), accountId);
+        ToastHelper.showShortToast(getString(R.string.text_successed_copied));
     }
 
     private void showGenderPicker() {

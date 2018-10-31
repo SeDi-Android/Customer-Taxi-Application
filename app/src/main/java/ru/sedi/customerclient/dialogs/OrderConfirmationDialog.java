@@ -91,7 +91,7 @@ public class OrderConfirmationDialog extends AlertDialog.Builder {
         tvMessage.setText(Html.fromHtml(getFullOrderData()));
         tvMessage.setMovementMethod(new ScrollingMovementMethod());
 
-        cbCashless.setVisibility(App.isExcludedApp ? View.GONE : View.VISIBLE);
+        cbCashless.setVisibility(App.isTaxiLive ? View.GONE : View.VISIBLE);
         cbSaveRoute.setOnCheckedChangeListener((buttonView, isChecked) ->
                 etRouteTitle.setVisibility(cbSaveRoute.isChecked() ? View.VISIBLE : View.GONE));
 

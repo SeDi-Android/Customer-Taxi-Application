@@ -28,7 +28,7 @@ public class SediOsmrManager extends OSRMRoadManager {
 
     public SediOsmrManager(Context context, boolean useShortInfo) {
         super(context);
-        super.setService(App.isExcludedApp ? TAXILIVE_URL : BASE_URL);
+        super.setService(App.isTaxiLive ? TAXILIVE_URL : BASE_URL);
         mUseShortInfo = useShortInfo;
     }
 

@@ -16,7 +16,7 @@ public class Prefs {
 
     public Prefs(Context context) {
         if(mSharedPreferences == null) {
-            DEFAULT_LANG = App.isExcludedApp ? "de" : "ru";
+            DEFAULT_LANG = App.isTaxiLive ? "de" : "ru";
             mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             initDefaultPreference();
         }

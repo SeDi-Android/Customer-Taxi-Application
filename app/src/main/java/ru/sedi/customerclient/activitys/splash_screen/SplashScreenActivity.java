@@ -75,12 +75,18 @@ public class SplashScreenActivity extends BaseActivity {
             route.addPoint(p);
         }
 
-        if (parameterNames.contains("id_calculation")){
+        if (parameterNames.contains("id_calculation")) {
             String id_calculation = data.getQueryParameter("id_calculation");
             try {
                 Integer id = Integer.valueOf(id_calculation);
                 order.setCostCalculationId(id);
-            } catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
+        }
+
+        if (parameterNames.contains("oid")) {
+            String order_id = data.getQueryParameter("oid");
+            order.setExternalOrderId(order_id);
         }
 
         if (App.isMetricaInitialized) {

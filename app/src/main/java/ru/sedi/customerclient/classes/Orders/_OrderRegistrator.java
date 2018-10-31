@@ -187,6 +187,15 @@ public class _OrderRegistrator {
             params.put("phone", contactNumber);
             params.put("comment", mOrder.getDescription());
             params.put("cashless", mOrder.isCashless());
+
+            if (!TextUtils.isEmpty(mOrder.getExternalOrderId())) {
+                params.put("externalorderid", mOrder.getExternalOrderId());
+            }
+
+            int chanelTypeId = mOrder.getChanelTypeId();
+            if (chanelTypeId > 0) {
+                params.put("channeltypeid", chanelTypeId);
+            }
         }
         return params;
     }

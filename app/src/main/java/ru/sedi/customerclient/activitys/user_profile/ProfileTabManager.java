@@ -29,7 +29,7 @@ public class ProfileTabManager {
         mTabLayout.addTab(mTabLayout.newTab().setText(mContext.getString(R.string.profile)));
 
         //Для TaxiLive кредикти убиравем
-        if (!App.isExcludedApp)
+        if (!App.isTaxiLive)
             mTabLayout.addTab(mTabLayout.newTab().setText(mContext.getString(R.string.my_card)));
         else {
             mTabLayout.setVisibility(View.GONE);

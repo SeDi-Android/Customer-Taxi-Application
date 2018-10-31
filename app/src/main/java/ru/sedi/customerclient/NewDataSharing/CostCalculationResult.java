@@ -5,6 +5,7 @@ public class CostCalculationResult {
     private double RouteDuration;
     private _Tariff Tariff;
     private String ApiKey;
+    private int ChannelTypeID;
     private boolean Success;
 
     public double getRouteDistance() {
@@ -25,5 +26,9 @@ public class CostCalculationResult {
 
     public boolean isSuccess() {
         return Success;
+    }
+
+    public int getChannelTypeID() {
+        return ChannelTypeID;
     }
 }

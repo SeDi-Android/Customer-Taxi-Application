@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -22,6 +23,7 @@ import ru.sedi.customerclient.classes.GeoLocation.LocationService;
 import ru.sedi.customerclient.common.GeoTools.GeoTools;
 import ru.sedi.customerclient.common.GeoTools.Units;
 import ru.sedi.customerclient.common.LatLong;
+import ru.sedi.customerclient.common.LogUtil;
 import ru.sedi.customerclient.common.SystemManagers.Prefs;
 import ru.sedi.customerclient.enums.PrefsName;
 
@@ -46,7 +48,7 @@ public class LocationGeocodeTask extends AsyncTask<LatLong, Void, _Point> {
         LatLong param = params[0];
         _Point point;
         try {
-            if (App.isExcludedApp) {
+            if (App.isTaxiLive) {
                 point = new GoogleGeocoder(mContext, Prefs.getString(PrefsName.LOCALE_CODE))
                         .syncGeocode(param.Latitude, param.Longitude);
             } else {

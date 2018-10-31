@@ -5,7 +5,10 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -99,9 +102,10 @@ public class Helpers {
     /**
      * Показывает сообщение о приемуществах партнерской программы, для групп
      * {@see Const.MASTER_PACKAGE_NAME}, {@see Const.T24_PACKAGE_NAME}
-     * @param context контекст.
+     *
+     * @param context  контекст.
      * @param packName имя пакета для уведомления.
-     * @param args 2 процента (стартовый и от заказа).
+     * @param args     2 процента (стартовый и от заказа).
      */
     @SuppressLint("StringFormatMatches")
     public static void showPartnerInviteMessage(Context context, String packName, Object... args) {
@@ -128,4 +132,13 @@ public class Helpers {
     }
 
 
+    public static Spanned fromHtml(String htmlString) {
+        Spanned htmlFormattedText;
+        if (Build.VERSION.SDK_INT >= 24) {
+            htmlFormattedText = Html.fromHtml(htmlString, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            htmlFormattedText = Html.fromHtml(htmlString);
+        }
+        return htmlFormattedText;
+    }
 }

@@ -1,6 +1,7 @@
 package ru.sedi.customerclient.activitys.main_2;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -165,7 +166,6 @@ public class MainActivity2 extends BaseActivity implements ILocationChangeListen
 
     private boolean mIsWaitingUserLocation;
 
-
     //<editor-fold desc="Static block">
     public static Intent getIntent(Context context, boolean withAddresses) {
         Intent intent = new Intent(context, MainActivity2.class);
@@ -214,7 +214,7 @@ public class MainActivity2 extends BaseActivity implements ILocationChangeListen
 
     private void prepareCallButton() {
         Drawable drawable = ContextCompat.getDrawable(this,
-                App.isExcludedApp ? R.drawable.small_logo : R.drawable.ic_phone_in_talk);
+                App.isTaxiLive ? R.drawable.small_logo : R.drawable.ic_phone_in_talk);
         ibtn_call_dispatcher.setImageDrawable(drawable);
     }
 
@@ -511,7 +511,7 @@ public class MainActivity2 extends BaseActivity implements ILocationChangeListen
                 ? getString(R.string.now_time)
                 : order.getDateTime().toString(DateTime.DATE_TIME);
 
-        if (!order.isRush() && App.isExcludedApp)
+        if (!order.isRush() && App.isTaxiLive)
             dateTime += " Uhr";
         return dateTime;
     }
@@ -869,7 +869,7 @@ public class MainActivity2 extends BaseActivity implements ILocationChangeListen
     @OnClick({R.id.ibtn_call_dispatcher})
     @SuppressWarnings(Const.UNUSED)
     public void onCallDispatcherBtnClick() {
-        if (App.isExcludedApp) {
+        if (App.isTaxiLive) {
             startActivity(AboutAppActivity.getIntent(this));
         } else {
             showDispatcherPhone();

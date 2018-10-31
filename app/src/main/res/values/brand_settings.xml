@@ -8,8 +8,7 @@
     <color name="primaryColor">#FF8C00</color>
     <color name="primaryDarkColor">#FFA500</color>
     <color name="splashBackgroundColor">#ececec</color>
-    <string name="schema"></string>
-    <string name="appmetrica_key"></string>
-
+    <string name="schema" translatable="false"></string>
+    <string name="appmetrica_key" translatable="false"></string>
 
 </resources>

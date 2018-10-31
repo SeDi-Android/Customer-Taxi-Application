@@ -13,6 +13,7 @@ import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.Overlay;
@@ -45,7 +46,7 @@ public class OsmMapController {
 
         mDefaultPoint = getUserLastLocation();
         if(mDefaultPoint == null) {
-            mDefaultPoint = App.isExcludedApp
+            mDefaultPoint = App.isTaxiLive
                     ? new GeoPoint(47.378390, 8.541411) // Цюрих
                     : new GeoPoint(55.749046, 37.617999); //Москва
         }

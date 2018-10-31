@@ -36,6 +36,8 @@ public class _Order implements _Route.OnRouteChangeListener {
     private String Details;
     private CostCalculationResult CostCalculationResult;
     private OnChangeListener mChangeListener;
+    private String ExternalOrderId;
+    private String ExternalAppName;
 
     public _Order(_Order order) {
         Status = new NameId(order.Status);
@@ -57,6 +59,7 @@ public class _Order implements _Route.OnRouteChangeListener {
         ID = order.ID;
         Type = order.Type;
         CostCalculationResult = order.CostCalculationResult;
+        ExternalOrderId = order.ExternalOrderId;
     }
 
     public _Order() {
@@ -67,7 +70,7 @@ public class _Order implements _Route.OnRouteChangeListener {
 
         Date = date.toString(DateTime.WEB_DATE);
         Route = new _Route(this);
-        Status = new NameId(App.isExcludedApp ? "Wird registriert..." : "Регистрация", OrderStatuses.search.name());
+        Status = new NameId(App.isTaxiLive ? "Wird registriert..." : "Регистрация", OrderStatuses.search.name());
         Tariff = new NameId();
         Customer = new _Customer();
     }
@@ -94,6 +97,11 @@ public class _Order implements _Route.OnRouteChangeListener {
 
     public void setCostCalculationId(int costCalculationId) {
         CostCalculationId = costCalculationId;
+    }
+
+    public int getChanelTypeId() {
+        CostCalculationResult calculationResult = getCostCalculationResult();
+        return calculationResult != null ? calculationResult.getChannelTypeID() : 0;
     }
 
     public NameId getStatus() {
@@ -361,6 +369,22 @@ public class _Order implements _Route.OnRouteChangeListener {
     @Override
     public void onRouteChange() {
         resetCostCalculationInfo();
+    }
+
+    public void setExternalOrderId(String externalOrderId) {
+        ExternalOrderId = externalOrderId;
+    }
+
+    public String getExternalOrderId() {
+        return ExternalOrderId;
+    }
+
+    public void setExternalAppName(String appName) {
+        ExternalAppName = appName;
+    }
+
+    public String getExternalAppName() {
+        return ExternalAppName;
     }
 
     //</editor-fold>
